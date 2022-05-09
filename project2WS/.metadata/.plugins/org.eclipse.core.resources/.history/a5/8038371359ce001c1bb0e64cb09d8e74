@@ -1,0 +1,13 @@
+package application.controller;
+
+import application.service.UserService;
+
+public class UserController {
+	private UserService service;
+
+	public UserController(UserService service) {
+		this.service = service;
+	}
+	
+	
+}

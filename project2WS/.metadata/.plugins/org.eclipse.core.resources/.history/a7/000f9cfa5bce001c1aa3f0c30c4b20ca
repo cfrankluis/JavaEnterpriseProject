@@ -1,0 +1,20 @@
+package application.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import application.dao.UserDao;
+
+@Service("userService")
+public class UserService {
+	private UserDao dao;
+	
+	@Autowired
+	public UserService(UserDao dao) {
+		this.dao = dao;
+	}
+	
+	public String testMethod() {
+		return "Hello Spring";
+	}
+}

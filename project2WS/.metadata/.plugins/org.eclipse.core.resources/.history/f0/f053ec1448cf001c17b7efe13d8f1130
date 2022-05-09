@@ -1,0 +1,19 @@
+server:
+  port: 9022
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${datachanURL}/mydatabase
+    username: ${datachanUsername}
+    password: ${datachanPassword}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+      
+  web:
+    resources:
+      static-locations:
+      - classpath:/html

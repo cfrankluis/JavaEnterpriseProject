@@ -1,0 +1,38 @@
+package application.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import application.model.User;
+import application.service.UserService;
+
+@RestController
+public class UserController {
+	private UserService userService;
+
+	@Autowired
+	public UserController(UserService service) {
+		this.userService = service;
+	}
+	
+	@GetMapping("/test")
+	public String testController(String name) {
+		String outputString = userService.testMethod() + " " + name;
+		System.out.println(outputString);
+		return outputString;
+	}
+	
+	@PostMapping("/login")
+	public String login(User user) {
+		String validUsername = "Kratos";
+		String validPassword = "Deimos";
+		
+		if(user.getEmail() == validUsername && user.getPassword() == validPassword) {
+			return "You are logged in";
+		} else {
+			return "Invalid Credentials " + user.getEmail() + " " +user.getPassword();
+		}
+	}
+}
