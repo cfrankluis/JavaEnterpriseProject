@@ -17,6 +17,8 @@ import lombok.NoArgsConstructor;
 @Data
 @Table(name="user_table")
 public class User {
+	private String username;
+	private String page;
 	
 	@Id
 	@Column(name="user_id")
@@ -34,7 +36,7 @@ public class User {
 	
 	@Column(name="password", nullable=false)
 	private String password;
-
+	
 	public User(String firstName, String lastName, String email, String password) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -42,5 +44,56 @@ public class User {
 		this.password = password;
 	}
 	
+	
+		/**
+	 * @param username
+	 * @param password
+	 * @param email
+	 */
+	public User(String username, String password, String email) {
+		this.username = username;
+		this.password = password;
+		this.email = email;
+	}
+	
+	public User() {}
+		
+	
+
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setPage(String page) {
+		this.page = page;
+	}
+
+	public String getUsername() {
+		return this.username;
+	}
+
+
+	public String getPassword() {
+		return this.password;
+	}
+
+
+	public String getPage() {
+		return this.page;		
+	}
+
+
+	public String getEmail() {
+		return this.email;		
+	}
 	
 }
