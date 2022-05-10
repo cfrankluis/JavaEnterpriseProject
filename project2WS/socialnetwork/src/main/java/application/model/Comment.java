@@ -1,6 +1,7 @@
 package application.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -44,15 +46,15 @@ public class Comment {
 	@JoinColumn(name="post_FK")
 	private Post post;
 	
-	@Column(name="comment_likes")
-	private int likes;
+	@ManyToMany(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
+	@JoinColumn(name="liker_FK")
+	private List<User> likers;
 
 	//INSERT COMMENTS CONSTRUCTOR
 	public Comment(String content, User author, Post post) {
 		this.content = content;
 		this.author = author;
 		this.post = post;
-		this.likes = 0;
 		this.dateCreated = new Date();
 	}
 }

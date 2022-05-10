@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -43,15 +44,15 @@ public class Post {
 	
 	@OneToMany(mappedBy="post",fetch=FetchType.LAZY)
 	private List<Comment> comments;
-	
-	@Column(name="post_likes")
-	private int likes;
+		
+	@ManyToMany(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
+	@JoinColumn(name="liker_FK")
+	private List<User> likers;
 
 	//INSERT POST CONSTRUCTOR
 	public Post(String content, User author) {
 		this.content = content;
 		this.author = author;
-		this.likes = 0;
 		this.dateCreated = new Date();
 	}
 }
