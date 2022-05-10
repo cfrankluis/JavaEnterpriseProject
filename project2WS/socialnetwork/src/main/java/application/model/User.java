@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
 public class User {
 	private String username;
 	private String page;
+	private boolean loggedIn;
 	
 	@Id
 	@Column(name="user_id")
@@ -81,7 +82,13 @@ public class User {
 		return this.username;
 	}
 
+	public void setLoggedIn(boolean loggedIn) {
+		this.loggedIn = loggedIn;
+	}
 
+
+
+	
 	public String getPassword() {
 		return this.password;
 	}
@@ -95,5 +102,11 @@ public class User {
 	public String getEmail() {
 		return this.email;		
 	}
-	
+
+	public boolean getLoggedIn() {
+		return this.loggedIn;		
+	}
+
+
+
 }

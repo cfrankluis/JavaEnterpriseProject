@@ -1,14 +1,14 @@
-package com.controller;
+package application.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.modle.User;
-import com.service.UserService;
-
+import application.model.User;
+import application.service.UserService;
 import lombok.Data;
 
 @Data
@@ -17,25 +17,27 @@ public class LogController {
 	
 	UserService userSer;
 	
-	// no arg and all arg Autowire
-//	@Autowire
-//	public (!)
+	@Autowired
+	public LogController(UserService userSer) {
+		this.userSer = userSer;
+	}
 	
 	
 	@PostMapping("/login/*")
-	public String login(HttpSession session, @RequestBody User currentUser) {
+	public String login(HttpSession session, @RequestBody User sentUser) {
 
-		String myPath;
+		User currentUser;
+		String myPath = "start";
+//		System.out.println("in login " + sentUser);
+		
+		currentUser = userSer.getLogin(sentUser.getUsername(), sentUser.getPassword());
 
-//		userSer = new UserService();
 
-		try {
-			userSer.getLogin(currentUser.getUsername(), currentUser.getPassword());
-		} catch (Exception e) {
-			currentUser = null;
-		}
+//		System.out.println("curent user: " + currentUser);
+
 
 		if (currentUser != null) {
+//			System.out.println("it should work?");
 			session.setAttribute("user", currentUser);
 
 			// need logic to properly make the url.
@@ -58,17 +60,16 @@ public class LogController {
 
 	// not exactly sure how to send an email change return type when we learn,
 	// probably void ad call emailing method below.
-	public String forgetPassword(HttpSession session, @RequestBody User currentUser) {
+	@PostMapping("/forgotPassword/*")
+	public String forgotPassword(HttpSession session, @RequestBody User currentUser) {
 
-//		System.out.println(currentUser);
 		if (currentUser.equals(null)) {
 			return "No account found";
 		} else if (currentUser.getEmail() != null) {
 			// this of call a method and give it the email
-			return currentUser.getEmail();// spring email
+			return "it worked";// spring email
 
 		} else if (currentUser.getUsername() != null) {
-			userSer = new UserService();
 //			System.out.println(currentUser.getUsername());
 			// could switch this out for if statement. if we make an account checker. 
 			try {
@@ -78,7 +79,7 @@ public class LogController {
 			}
 //			System.out.println(currentUser+ " " + currentUser.getEmail());
 			// this of call a method and give it the email
-			return currentUser.getEmail();
+			return "it worked"; // spring email
 		} else {
 			return "No account found";
 		}

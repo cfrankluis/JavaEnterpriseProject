@@ -15,6 +15,11 @@ public class UserService {
 	public UserService(UserDao dao) {
 		this.dao = dao;
 	}
+	
+//	public UserService() {
+//		this.dao = new UserDao();
+//	}
+	
 
 	public User getLogin(String username, String password) {
 		// TODO Auto-generated method stub
