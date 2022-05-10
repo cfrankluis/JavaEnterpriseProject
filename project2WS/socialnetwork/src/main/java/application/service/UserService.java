@@ -15,11 +15,7 @@ public class UserService {
 	public UserService(UserDao dao) {
 		this.dao = dao;
 	}
-	
-	public String testMethod() {
-		return "Hello Spring";
-	}
-	
+		
 	public User createUser(User user) {
 		return dao.save(user);
 	}

@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://${datachanURL}/mydatabase
+    url: jdbc:postgresql://${datachanURL}/project2
     username: ${datachanUsername}
     password: ${datachanPassword}
     driver-class-name: org.postgresql.Driver
@@ -11,4 +11,4 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
