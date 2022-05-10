@@ -37,4 +37,10 @@ public class SecurityAnswer {
 	
 	@Column(name="answer", nullable=false)
 	private String answer;
+
+	public SecurityAnswer(User user, SecurityQuestion question, String answer) {
+		this.user = user;
+		this.question = question;
+		this.answer = answer;
+	}
 }

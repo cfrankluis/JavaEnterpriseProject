@@ -25,4 +25,10 @@ public class SecurityQuestion {
 	
 	@Column(name="question", nullable=false)
 	private String question;
+
+	public SecurityQuestion(String question) {
+		this.question = question;
+	}
+	
+	
 }
