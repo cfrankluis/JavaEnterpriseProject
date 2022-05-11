@@ -6,14 +6,12 @@
     <fullyQualifiedTypeName name="application.dao.UserDao"/>
     <fullyQualifiedTypeName name="application.service.UserService"/>
     <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
-    <fullyQualifiedTypeName name="application.model.User"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
     <fullyQualifiedTypeName name="java.util.Date"/>
     <fullyQualifiedTypeName name="javax.persistence.CascadeType"/>
     <fullyQualifiedTypeName name="javax.persistence.Id"/>
     <fullyQualifiedTypeName name="application.model.Post"/>
     <fullyQualifiedTypeName name="application.model.Comment"/>
-    <fullyQualifiedTypeName name="application.model.SecurityQuestion"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ResponseStatus"/>
     <fullyQualifiedTypeName name="org.springframework.http.HttpStatus"/>
     <fullyQualifiedTypeName name="application.dao.CommentDao"/>
@@ -26,5 +24,8 @@
     <fullyQualifiedTypeName name="application.controller.SecurityAnswerController"/>
     <fullyQualifiedTypeName name="application.controller.SecurityQuestionController"/>
     <fullyQualifiedTypeName name="application.service.SecurityQuestionService"/>
+    <fullyQualifiedTypeName name="application.model.SecurityQuestion"/>
+    <fullyQualifiedTypeName name="application.model.SecurityAnswer"/>
     <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="application.model.User"/>
 </qualifiedTypeNameHistroy>
