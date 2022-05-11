@@ -1,0 +1,9 @@
+package application.model;
+
+public class PostLike {
+	
+	private Post post;
+	
+	
+	private User user;
+}

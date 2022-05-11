@@ -1,0 +1,18 @@
+package application.controller;
+
+import org.springframework.web.bind.annotation.PostMapping;
+
+import application.service.SecurityQuestionService;
+
+public class SecurityQuestionController {
+	private SecurityQuestionService securityQuestionService;
+	
+	public SecurityQuestionController(SecurityQuestionService securityQuestionService) {
+		this.securityQuestionService = securityQuestionService;
+	}
+	
+	@PostMapping(value="/seedquestions")
+	public String loadQuestions() {
+		securityQuestionService.seedQuestions();
+	}
+}

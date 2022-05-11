@@ -1,0 +1,14 @@
+server:
+  port: 9022
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${datachanURL}/project2
+    username: ${datachanUsername}
+    password: ${datachanPassword}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop

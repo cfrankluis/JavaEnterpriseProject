@@ -1,0 +1,7 @@
+package application.model;
+
+
+public class SecurityQuestions {
+	private int id;
+	private String question;
+}

@@ -1,0 +1,15 @@
+package application.model;
+
+import java.util.Date;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+public class SecurityQuestions {
+	private int id;
+	private String question;
+}

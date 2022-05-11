@@ -1,0 +1,12 @@
+package application.controller;
+
+import application.service.SecurityAnswerService;
+
+@RestController
+public class SecurityAnswerController {
+	private SecurityAnswerService securityAnswerService;
+	
+	public SecurityAnswerController(SecurityAnswerService securityAnswerService) {
+		this.securityAnswerService = securityAnswerService;
+	}
+}
