@@ -19,29 +19,28 @@ public class SecurityQuestionService {
 	}
 	
 	/**
-	 * Adds all the security questions to a lookup table
+	 * Adds all the security questions to a lookup table and returns them when.
 	 */
-	public void seedQuestions() {
+	public List<SecurityQuestion> seedQuestions() {
 	
 		//Create a list of security questions
-		ArrayList<SecurityQuestion> questions = new ArrayList<>();
+		List<SecurityQuestion> questions = new ArrayList<>();
 		questions.add(new SecurityQuestion("What is your middle name?"));
 		questions.add(new SecurityQuestion("Who did you go to prom with?"));
 		questions.add(new SecurityQuestion("What was the brand of your first car"));
 		questions.add(new SecurityQuestion("What is your mother's maiden name?"));
 		
 		//Add List to the database
-		if(dao.count() != questions.size())
-			dao.saveAll(questions);
+		if(dao.count() != questions.size()) {
+			dao.deleteAll();
+			return dao.saveAll(questions);
+		}
+		else {
+			return questions;
+		}
+
 	}
-	
-	/**
-	 * @return All security questions as a <code>List</code>
-	 */
-	public List<SecurityQuestion> getAllQuestions(){
-		return dao.findAll();
-	}
-	
+		
 	/**
 	 * @param id
 	 * @return

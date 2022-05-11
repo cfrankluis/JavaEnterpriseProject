@@ -20,13 +20,7 @@ public class SecurityQuestionController {
 	}
 	
 	@PostMapping(value="/seedquestions")
-	public String loadQuestions() {
-		securityQuestionService.seedQuestions();
-		return "All Questions are available";
-	}
-	
-	@GetMapping(value="/allquestions")
-	public List<SecurityQuestion> loadAllQuestions(){
-		return securityQuestionService.getAllQuestions();
+	public List<SecurityQuestion> loadQuestions() {
+		return securityQuestionService.seedQuestions();
 	}
 }
