@@ -1,0 +1,14 @@
+server:
+  port: 9022
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${AWS_URL}/mydatabase
+    username: ${DB_USER}
+    password: ${DB_PASS}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+    hibernate:
+      ddl-auto: none
