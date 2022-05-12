@@ -2,7 +2,6 @@ package application.model;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,8 +23,10 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name="user_table")
+@JsonIgnoreProperties(value={"posts","comments", "securityQuestions","hibernateLazyInitializer", "handler"}, allowSetters= true)
 public class User {
 	
+	//Required Columns
 	@Id
 	@Column(name="user_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -43,8 +46,9 @@ public class User {
 	
 	@Column(name="password", nullable=false)
 	private String password;
-
-	@OneToMany(mappedBy="author", fetch=FetchType.EAGER)
+	
+	//Reference Objects
+	@OneToMany(mappedBy="author", fetch=FetchType.LAZY)
 	private List<Post> posts;
 	
 	@OneToMany(mappedBy="author",fetch=FetchType.LAZY)

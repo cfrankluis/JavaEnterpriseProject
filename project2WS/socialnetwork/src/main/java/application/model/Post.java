@@ -16,6 +16,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +31,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name="post_table")
+@JsonIgnoreProperties(value={"comments","hibernateLazyInitializer", "handler"}, allowSetters= true)
 public class Post {
 	
 	@Id
