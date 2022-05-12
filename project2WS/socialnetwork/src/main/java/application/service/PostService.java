@@ -30,4 +30,8 @@ public class PostService {
 		
 		dao.save(post);
 	}
+	
+	public Post getPostById(int id) {
+		return dao.getById(id);
+	}
 }

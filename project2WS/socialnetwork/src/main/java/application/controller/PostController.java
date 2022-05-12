@@ -26,8 +26,19 @@ public class PostController {
 		return postService.getAllPost();
 	}
 	
-	@PostMapping("/like")
-	public void likePost(@RequestBody Post post, @RequestBody User user) {
-		postService.LikePost(post, user);
+	@PostMapping(value="/like", consumes="application/json")
+	public void likePost(@RequestBody Post post) {
+		//Get User info from the session attribute
+		User testUser = new User();
+		testUser.setId(1);
+		testUser.setEmail("email");
+		testUser.setFirstName("firstname");
+		testUser.setLastName("lastname");
+		testUser.setPassword("password");
+		testUser.setUsername("username");
+		//Get full information about the post
+		post = postService.getPostById(post.getId());
+		
+		postService.LikePost(post, testUser);
 	}
 }
