@@ -3607,3 +3607,4 @@ Caused by: org.apache.lucene.store.AlreadyClosedException: Underlying file chang
 2022-05-12 10:42:47,838 [Worker-28: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
 2022-05-12 10:42:47,841 [Worker-28: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2022-05-12 10:42:47,841 [Worker-28: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2022-05-12 10:42:47,841 [Worker-28: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\cfran\OneDrive\Desktop\revature\git_repos\JavaEnterpriseProject\project2WS\socialnetwork\src\test\resources
