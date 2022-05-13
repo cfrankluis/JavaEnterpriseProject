@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Package Files #
 *.jar
 *.war
@@ -56,3 +57,6 @@ nbdist/
 # System Files
 .DS_Store
 Thumbs.db
+=======
+/.metadata/
+>>>>>>> 60526c5cca5aca460121f89d03a2c53f8b054516

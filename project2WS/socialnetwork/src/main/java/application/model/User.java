@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package application.model;
 
 import java.util.List;
@@ -66,3 +67,5 @@ public class User {
 	
 	
 }
+
+>>>>>>> 60526c5cca5aca460121f89d03a2c53f8b054516

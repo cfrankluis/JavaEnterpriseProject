@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 server:
   port: 9022
 
@@ -12,3 +13,5 @@ spring:
     show-sql: false
     hibernate:
       ddl-auto: none
+
+>>>>>>> 60526c5cca5aca460121f89d03a2c53f8b054516

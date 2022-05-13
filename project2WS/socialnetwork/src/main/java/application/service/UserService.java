@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package application.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,5 +58,17 @@ public class UserService {
 	public User getUserByEmail(String email) {
 		return dao.findByEmail(email);
 	}
+public User getLogin(String username, String password) {
+		// TODO Auto-generated method stub
+		User user = new User();
+		return user;
+	}
 
+	public User getUserByUsername(String username) {
+		// TODO Auto-generated method stub
+		User user = new User();
+		return user;
+	}
 }
+
+>>>>>>> 60526c5cca5aca460121f89d03a2c53f8b054516
