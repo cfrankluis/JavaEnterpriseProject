@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://${datachanURL}/mydatabase
-    username: ${datachanUsername}
-    password: ${datachanPassword}
+    url: jdbc:postgresql://datachan.ctfk86dmi2gc.us-west-1.rds.amazonaws.com:5432/p2media
+    username: DataChan
+    password: p4ssw0rd
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
