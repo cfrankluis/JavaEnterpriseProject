@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package application.controller;
 
 import java.util.ArrayList;
@@ -153,3 +154,5 @@ public class UserController {
 		return "message";
 	}
 }
+
+>>>>>>> 96de458cb9bb11fcd9c6e041e7844fb99f59256a

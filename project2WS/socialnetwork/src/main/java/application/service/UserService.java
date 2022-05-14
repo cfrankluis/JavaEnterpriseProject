@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package application.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,5 +62,12 @@ public class UserService {
 	public User getUserById(int id) {
 		return dao.getById(id);
 	}
+	public User getLogin(String username, String password) {
+		// TODO Auto-generated method stub
+		User user = new User();
+		return user;
+	}
 
 }
+
+>>>>>>> 96de458cb9bb11fcd9c6e041e7844fb99f59256a

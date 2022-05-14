@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package application.model;
 
 import java.util.List;
@@ -24,6 +25,10 @@ import lombok.NoArgsConstructor;
 @Table(name="user_table")
 public class User {
 	
+private String username;
+	private String page;
+	private boolean loggedIn;
+
 	@Id
 	@Column(name="user_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -46,6 +51,9 @@ public class User {
 	
 	@Column(name="bio", nullable=true)
 	private String bio;
+
+	@Column(name="confirmed")
+	private boolean  confirmed = false;
 
 	@OneToMany(mappedBy="author", fetch=FetchType.EAGER)
 	private List<Post> posts;
@@ -86,7 +94,65 @@ public class User {
 		this.password = password;
 		this.bio = bio;
 	}
+
+	/**
+	 * @param username
+	 * @param password
+	 * @param email
+	 */
+	public User(String username, String password, String email) {
+		this.username = username;
+		this.password = password;
+		this.email = email;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setPage(String page) {
+		this.page = page;
+	}
+
+	public String getUsername() {
+		return this.username;
+	}
+
+	public void setLoggedIn(boolean loggedIn) {
+		this.loggedIn = loggedIn;
+	}
+
+
+
+	
+	public String getPassword() {
+		return this.password;
+	}
+
+
+	public String getPage() {
+		return this.page;		
+	}
+
+
+	public String getEmail() {
+		return this.email;		
+	}
+
+	public boolean getLoggedIn() {
+		return this.loggedIn;		
+	}
 	
 	
 	
 }
+
+>>>>>>> 96de458cb9bb11fcd9c6e041e7844fb99f59256a
