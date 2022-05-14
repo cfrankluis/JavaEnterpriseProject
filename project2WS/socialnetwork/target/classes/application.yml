@@ -4,9 +4,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://${datachanURL}/project2
-    username: ${datachanUsername}
-    password: ${datachanPassword}
+    url: jdbc:postgresql://${AWS_URL}/mydatabase
+    username: ${DB_USER}
+    password: ${DB_PASS}
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect

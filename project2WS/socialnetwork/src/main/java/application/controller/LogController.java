@@ -54,32 +54,35 @@ public class LogController {
 		return "path to home screen";
 	}
 
+	
+	// add findbyusername to userservice
+	
 	// not exactly sure how to send an email change return type when we learn,
 	// probably void ad call emailing method below.
-	@PostMapping("/forgotPassword/*")
-	public String forgotPassword(HttpSession session, @RequestBody User currentUser) {
-
-		if (currentUser.equals(null)) {
-			return "No account found";
-		} else if (currentUser.getEmail() != null) {
-			// this of call a method and give it the email
-			return "it worked";// spring email
-
-		} else if (currentUser.getUsername() != null) {
-//			System.out.println(currentUser.getUsername());
-			// could switch this out for if statement. if we make an account checker. 
-			try {
-				currentUser = userSer.getUserByUsername(currentUser.getUsername());
-			} catch (Exception e) {
-				return "No account found";
-			}
-//			System.out.println(currentUser+ " " + currentUser.getEmail());
-			// this of call a method and give it the email
-			return "it worked"; // spring email
-		} else {
-			return "No account found";
-		}
-
-	}
+//	@PostMapping("/forgotPassword/*")
+//	public String forgotPassword(HttpSession session, @RequestBody User currentUser) {
+//
+//		if (currentUser.equals(null)) {
+//			return "No account found";
+//		} else if (currentUser.getEmail() != null) {
+//			// this of call a method and give it the email
+//			return "it worked";// spring email
+//
+//		} else if (currentUser.getUsername() != null) {
+////			System.out.println(currentUser.getUsername());
+//			// could switch this out for if statement. if we make an account checker. 
+//			try {
+//				currentUser = userSer.getByUsername(currentUser.getUsername());
+//			} catch (Exception e) {
+//				return "No account found";
+//			}
+////			System.out.println(currentUser+ " " + currentUser.getEmail());
+//			// this of call a method and give it the email
+//			return "it worked"; // spring email
+//		} else {
+//			return "No account found";
+//		}
+//
+//	}
 
 }

@@ -1,10 +1,7 @@
-
 package application.model;
 
 import java.util.List;
 
-
-import javax.persistence.CascadeType;
 
 import java.util.Objects;
 
@@ -34,7 +31,7 @@ import lombok.NoArgsConstructor;
 public class User {
 	
 
-private String username;
+
 	private String page;
 	private boolean loggedIn;
 
@@ -58,10 +55,6 @@ private String username;
 	
 	@Column(name="email", unique=true, nullable=false)
 
-	@Column(name="user_name", nullable=false)
-	private String username;
-	
-	@Column(name="email", nullable=false)
 
 	private String email;
 	
@@ -75,9 +68,6 @@ private String username;
 	@Column(name="confirmed")
 	private boolean  confirmed = false;
 
-	@OneToMany(mappedBy="author", fetch=FetchType.EAGER)
-	private List<Post> posts;
-	
 	@OneToMany(mappedBy="author",fetch=FetchType.LAZY)
 	private List<Comment> comments;
 	
@@ -88,38 +78,32 @@ private String username;
 	@OneToMany(mappedBy="author", fetch=FetchType.LAZY)
 	private List<Post> posts;
 	
-	@OneToMany(mappedBy="author",fetch=FetchType.LAZY)
-	private List<Comment> comments;
-	
-	@OneToMany(mappedBy="user",fetch=FetchType.LAZY)
-	private List<SecurityAnswer> securityQuestions;
+
 
 
 	//INSERT ACCOUNT CONSTRUCTOR
-	public User(String firstName, String lastName, String username, String email, String password,
-			List<SecurityAnswer> securityQuestions) {
+	public User(String firstName, String lastName, String username, String email, String password
+			) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.username = username;
-
 		this.email = email;
 		this.password = password;
-		this.securityQuestions = securityQuestions;
+		
 	}
 
-	public User(int id, String firstName, String lastName, String username, String email, String password) {
+	public User(int id, String firstName, String lastName, String username, String email, String password, List<SecurityAnswer> securityQuestions) {
 		super();
-		this.id = id;
+		this.userId = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.username = username;
-
 		this.email = email;
 		this.password = password;
 		this.securityQuestions = securityQuestions;
 	}
 
-<<<<<<< HEAD
+
 	public User(String firstName, String lastName, String username, String email, String password, String bio) {
 		super();
 		this.firstName = firstName;

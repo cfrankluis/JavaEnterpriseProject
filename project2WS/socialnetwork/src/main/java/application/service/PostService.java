@@ -1,9 +1,9 @@
 package application.service;
 
-import javax.servlet.http.HttpSession;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +34,7 @@ public class PostService {
 	 */
 	public void createPost(HttpSession session, String description, String imgUrl) {
 		
-		session.setAttribute("loggedinUser", new User(1, "dillon", "meier", "abc", "abc.123@youNme.com", "123"));
+		session.setAttribute("loggedinUser", new User( "dillon", "meier", "abc", "abc.123@youNme.com", "123"));
 		
 		if(imgUrl.contentEquals("https://buckylebucket.s3.us-east-2.amazonaws.com/PostPics/"+ session.getAttribute("Session Id").toString() +"/")) {
 			String blankUrl = null;
@@ -44,6 +44,7 @@ public class PostService {
 		Post post = new Post(description, imgUrl, currentUser);
 		
 		dao.save(post);
+	}
 	
 	/**
 	 * @author Frank Carag

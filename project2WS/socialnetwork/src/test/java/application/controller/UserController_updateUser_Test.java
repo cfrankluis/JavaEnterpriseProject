@@ -28,7 +28,7 @@ class UserController_updateUser_Test {
 	void updateUserTest() {
 		// Arrange
 		List<SecurityAnswer> securityQuestions = null;
-		User myUser = new User("Appa", "Aang", "Momo", "theGAang@biosnmail.com", "123", securityQuestions);
+		User myUser = new User(1, "Appa", "Aang", "Momo", "theGAang@biosnmail.com", "123", securityQuestions);
 		when(((User) mySesh.getAttribute("loggedInAccount"))).thenReturn(myUser);
 		when(myService.updateUser(myUser)).thenReturn(myUser);
 		// Act

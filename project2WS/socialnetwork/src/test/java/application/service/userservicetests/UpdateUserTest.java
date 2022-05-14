@@ -27,7 +27,7 @@ class UpdateUserTest {
 	void updateUserTest_1() {
 		// Arrange
 		List<SecurityAnswer> securityQuestions = null;
-		User updatedUser = new User("Appa", "Aang", "Momo", "theGAang@biosnmail.com", "123", securityQuestions);
+		User updatedUser = new User(1, "Appa", "Aang", "Momo", "theGAang@biosnmail.com", "123", securityQuestions);
 		when(myDao.save(updatedUser)).thenReturn(updatedUser);
 		// Act
 		User user = myService.updateUser(updatedUser);

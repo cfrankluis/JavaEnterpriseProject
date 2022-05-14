@@ -1,9 +1,6 @@
 
 package application.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,16 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import application.model.SecurityAnswer;
-import application.model.SecurityQuestion;
 import application.model.User;
 import application.service.UserService;
 
@@ -43,52 +33,30 @@ public class UserController {
 	@GetMapping("")
 	public String showHomePage() {
 		return "index.html";
-
-	@GetMapping("/test")
-	public User testUser() {
-		User testUser = new User();
-		int id = 1;
-		String firstName = "Zeke";
-		String lastName = "Yaeger";
-		String email = "beast@titan.com";
-		String password = "Eren";
-		
-		//Security Questions
-		SecurityQuestion q1 = new SecurityQuestion(1,"What is your name?");
-		SecurityQuestion q2 = new SecurityQuestion(2,"Who's your father?");
-		
-		SecurityAnswer a1 = new SecurityAnswer(testUser, q1, "Zeke");
-		SecurityAnswer a2 = new SecurityAnswer(testUser, q2, "Grisha");
-		List<SecurityAnswer> securityQuestions = new ArrayList<>();
-		securityQuestions.add(a1);
-		securityQuestions.add(a2);
-		
-		testUser = new User(firstName, lastName, lastName, email, password, securityQuestions);
-		return userService.createUser(testUser);
 	}
+//	@GetMapping("/test")
+//	public User testUser() {
+//		User testUser = new User();
+//		int id = 1;
+//		String firstName = "Zeke";
+//		String lastName = "Yaeger";
+//		String email = "beast@titan.com";
+//		String password = "Eren";
+//		
+//		//Security Questions
+//		SecurityQuestion q1 = new SecurityQuestion(1,"What is your name?");
+//		SecurityQuestion q2 = new SecurityQuestion(2,"Who's your father?");
+//		
+//		SecurityAnswer a1 = new SecurityAnswer(testUser, q1, "Zeke");
+//		SecurityAnswer a2 = new SecurityAnswer(testUser, q2, "Grisha");
+//		List<SecurityAnswer> securityQuestions = new ArrayList<>();
+//		securityQuestions.add(a1);
+//		securityQuestions.add(a2);
+//		
+//		testUser = new User(firstName, lastName, lastName, email, password, securityQuestions);
+//		return userService.createUser(testUser);
+//	}
 	
-	@GetMapping("/test")
-	public User testUser() {
-		User testUser = new User();
-		int id = 1;
-		String firstName = "Zeke";
-		String lastName = "Yaeger";
-		String email = "beast@titan.com";
-		String password = "Eren";
-
-		// Security Questions
-		SecurityQuestion q1 = new SecurityQuestion(1, "What is your name?");
-		SecurityQuestion q2 = new SecurityQuestion(2, "Who's your father?");
-
-		SecurityAnswer a1 = new SecurityAnswer(testUser, q1, "Zeke");
-		SecurityAnswer a2 = new SecurityAnswer(testUser, q2, "Grisha");
-		List<SecurityAnswer> securityQuestions = new ArrayList<>();
-		securityQuestions.add(a1);
-		securityQuestions.add(a2);
-
-		testUser = new User(firstName, lastName, lastName, email, password, securityQuestions);
-		return userService.createUser(testUser);
-	}
 
 	@PostMapping(value = "/login", produces = "application/json", consumes = "application/json")
 	public User login(@RequestBody User user) {
@@ -113,7 +81,7 @@ public class UserController {
 	 * @Author Dillon Meier
 	 * @return URI redirect String
 	 */
-	@PostMapping(value = "/register")
+	@PostMapping(value = "/register1")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public String register(HttpSession session, @RequestBody User user) {
 
@@ -140,7 +108,7 @@ public class UserController {
 	@PostMapping(value = "/updateUserDetails")
 	@ResponseStatus(code = HttpStatus.ACCEPTED)
 	public void updateUser(HttpSession session, @RequestBody User user) {
-		user.setId(((User) session.getAttribute("loggedInAccount")).getId());
+		user.setUserId(((User) session.getAttribute("loggedInAccount")).getUserId());
 		System.out.println(user);
 
 		User updatedUser = userService.updateUser(user);
