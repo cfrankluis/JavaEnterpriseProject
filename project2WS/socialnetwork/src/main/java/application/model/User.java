@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package application.model;
 
 import java.util.List;
@@ -64,8 +63,17 @@ public class User {
 		this.password = password;
 		this.securityQuestions = securityQuestions;
 	}
+
+	public User(int id, String firstName, String lastName, String username, String email, String password) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+	}
+	
 	
 	
 }
-
->>>>>>> 60526c5cca5aca460121f89d03a2c53f8b054516

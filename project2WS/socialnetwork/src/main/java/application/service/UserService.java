@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package application.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ public class UserService {
 
 	/**
 	 * Method receives a User object to insert into the DB. Sending a User object
-	 * that violate the user table's unique key constraints will throw an exception,
+	 * that violates the user table's unique key constraints will throw an exception,
 	 * so the Username and Email are checked against the existing Users in the
 	 * table. If any account is returned then the account creation will abort, print
 	 * a failed message to the console, and return null. If the creation is a
@@ -58,17 +57,9 @@ public class UserService {
 	public User getUserByEmail(String email) {
 		return dao.findByEmail(email);
 	}
-public User getLogin(String username, String password) {
-		// TODO Auto-generated method stub
-		User user = new User();
-		return user;
+	
+	public User getUserById(int id) {
+		return dao.getById(id);
 	}
 
-	public User getUserByUsername(String username) {
-		// TODO Auto-generated method stub
-		User user = new User();
-		return user;
-	}
 }
-
->>>>>>> 60526c5cca5aca460121f89d03a2c53f8b054516

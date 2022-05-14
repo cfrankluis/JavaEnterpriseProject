@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package application.model;
 
 import java.util.Date;
@@ -36,6 +35,9 @@ public class Post {
 	@Column(name="post_content", nullable=false)
 	private String content;
 		
+	@Column(name="post_img", nullable=true)
+	private String img;
+	
 	@Column(name="date_created", nullable=false)
 	private Date dateCreated;
 	
@@ -51,11 +53,10 @@ public class Post {
 	private List<User> likers;
 
 	//INSERT POST CONSTRUCTOR
-	public Post(String content, User author) {
+	public Post(String content, String img, User author) {
 		this.content = content;
+		this.img = img;
 		this.author = author;
 		this.dateCreated = new Date();
 	}
 }
-
->>>>>>> 60526c5cca5aca460121f89d03a2c53f8b054516

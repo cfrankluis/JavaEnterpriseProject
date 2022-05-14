@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package application;
 
 import org.springframework.boot.SpringApplication;
@@ -11,4 +10,3 @@ public class SocialnetworkApplication {
 		SpringApplication.run(SocialnetworkApplication.class, args);
 	}
 }
->>>>>>> 60526c5cca5aca460121f89d03a2c53f8b054516

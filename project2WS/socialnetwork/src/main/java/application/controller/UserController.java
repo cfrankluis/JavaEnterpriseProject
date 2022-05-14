@@ -1,28 +1,28 @@
-<<<<<<< HEAD
 package application.controller;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionActivationListener;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import application.model.SecurityAnswer;
 import application.model.SecurityQuestion;
 import application.model.User;
 import application.service.UserService;
 
-@RestController
+@Controller
 @RequestMapping
 public class UserController {
 	private UserService userService;
@@ -31,7 +31,12 @@ public class UserController {
 	public UserController(UserService service) {
 		this.userService = service;
 	}
-
+	
+	@GetMapping("")
+	public String showHomePage() {
+		return "index.html";
+	}
+	
 	@GetMapping("/test")
 	public User testUser() {
 		User testUser = new User();
@@ -55,7 +60,16 @@ public class UserController {
 		return userService.createUser(testUser);
 	}
 
-	
+	@PostMapping(value = "/login", produces = "application/json", consumes = "application/json")
+	public User login(@RequestBody User user) {
+		User testUser = userService.getUserByEmail(user.getEmail());
+
+		if (testUser == null || !testUser.getPassword().equals(user.getPassword())) {
+			return null;
+		}
+
+		return testUser;
+	}
 
 	/**
 	 * This method receives a User object in the form of a JSON which is parsed
@@ -103,7 +117,25 @@ public class UserController {
 		session.setAttribute("loggedInAccount", updatedUser);
 		System.out.println(session.getAttribute("loggedInAccount"));
 	}
-
 	
->>>>>>> 60526c5cca5aca460121f89d03a2c53f8b054516
+	@PostMapping("/upload")
+	public String uploadProfilePic(HttpSession session, String description, @RequestParam("file") MultipartFile multipart, Model model) {
+		session.setAttribute("Session Id", 1);
+		
+		String fileName = multipart.getOriginalFilename();
+
+		System.out.println("File name: " + fileName);
+
+		String message = "";
+
+		try {
+			S3Controller.uploadPic("ProfilePic", fileName, multipart.getInputStream(), session);
+			message = "Your file has been uploaded Successfully!";
+		} catch (Exception ex) {
+			message = "Error uploading file: " + ex.getMessage();
+		}
+		
+		model.addAttribute("message", message);
+		return "message";
+	}
 }
