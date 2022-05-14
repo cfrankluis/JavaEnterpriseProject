@@ -1,6 +1,7 @@
 package application.model;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +31,7 @@ public class User {
 	@Id
 	@Column(name="user_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	private int userId;
 	
 	@Column(name="first_name", nullable=false)
 	private String firstName;
@@ -67,6 +68,31 @@ public class User {
 		this.password = password;
 		this.securityQuestions = securityQuestions;
 	}
+
+
+	@Override
+	public String toString() {
+		return "\nUser [id=" + userId  + "]";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		return this.userId == other.getUserId();
+	}
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(userId);
+	}
+
 	
 	
 }

@@ -1,6 +1,8 @@
 package application.service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,20 +20,45 @@ public class PostService {
 		this.dao = dao;
 	}
 	
+	/**
+	 * @author Frank Carag
+	 * @return
+	 * A list of all posts in the database.
+	 */
 	public List<Post> getAllPost(){
 		return dao.findAll();
 	}
 	
-	public void LikePost(Post post, User user) {
-		if(!post.getLikers().contains(user))
-			post.getLikers().add(user);
-		else
-			post.getLikers().remove(user);
-		
-		dao.save(post);
+	/**
+	 * Adds the user to the list of likers in a post and saves
+	 * changes to the database
+	 * @author Frank Carag
+	 */
+	public Post likePost(Post post, User user) {
+		Set<User> likers = post.getLikers();
+
+		if(likers.contains(user)) {
+			likers.remove(user);
+		} else {
+			likers.add(user);
+		}
+			
+		post.setLikers(likers);
+			
+		return dao.save(post);
 	}
 	
+	/**
+	 * Uses the given id parameter and returns
+	 * a post with the given id
+	 * @author Frank Carag
+	 * @return
+	 * A post object with the given id
+	 */
 	public Post getPostById(int id) {
-		return dao.getById(id);
+		if(dao.existsById(id))
+			return dao.getById(id);
+		else
+			return null;
 	}
 }

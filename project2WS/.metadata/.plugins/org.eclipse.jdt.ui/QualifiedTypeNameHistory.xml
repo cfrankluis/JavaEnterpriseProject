@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="lombok.NoArgsConstructor"/>
     <fullyQualifiedTypeName name="lombok.AllArgsConstructor"/>
     <fullyQualifiedTypeName name="javax.persistence.Entity"/>
     <fullyQualifiedTypeName name="application.dao.UserDao"/>
@@ -10,7 +9,6 @@
     <fullyQualifiedTypeName name="java.util.Date"/>
     <fullyQualifiedTypeName name="javax.persistence.CascadeType"/>
     <fullyQualifiedTypeName name="javax.persistence.Id"/>
-    <fullyQualifiedTypeName name="application.model.Comment"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ResponseStatus"/>
     <fullyQualifiedTypeName name="org.springframework.http.HttpStatus"/>
     <fullyQualifiedTypeName name="application.dao.CommentDao"/>
@@ -26,6 +24,12 @@
     <fullyQualifiedTypeName name="application.model.SecurityQuestion"/>
     <fullyQualifiedTypeName name="application.model.SecurityAnswer"/>
     <fullyQualifiedTypeName name="application.model.Post"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="org.mockito.Mockito"/>
     <fullyQualifiedTypeName name="application.model.User"/>
+    <fullyQualifiedTypeName name="org.springframework.data.annotation.CreatedDate"/>
+    <fullyQualifiedTypeName name="javax.persistence.Transient"/>
+    <fullyQualifiedTypeName name="lombok.NoArgsConstructor"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="application.model.Comment"/>
+    <fullyQualifiedTypeName name="org.hibernate.annotations.CreationTimestamp"/>
 </qualifiedTypeNameHistroy>

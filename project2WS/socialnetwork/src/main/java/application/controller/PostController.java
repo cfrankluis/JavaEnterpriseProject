@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import application.model.Comment;
 import application.model.Post;
 import application.model.User;
 import application.service.PostService; 
@@ -21,24 +22,81 @@ public class PostController {
 		this.postService = postService;
 	}
 	
-	@GetMapping("/global")
-	public List<Post> sendAllPost(){
-		return postService.getAllPost();
-	}
-	
-	@PostMapping(value="/like", consumes="application/json")
-	public void likePost(@RequestBody Post post) {
-		//Get User info from the session attribute
+	//GET RID OF THIS METHOD ONCE WE CAN
+	//GET A USER FROM A SESSION
+	private User sampleUser() {
 		User testUser = new User();
-		testUser.setId(1);
+		testUser.setUserId(1);
 		testUser.setEmail("email");
 		testUser.setFirstName("firstname");
 		testUser.setLastName("lastname");
 		testUser.setPassword("password");
 		testUser.setUsername("username");
-		//Get full information about the post
-		post = postService.getPostById(post.getId());
 		
-		postService.LikePost(post, testUser);
+		return testUser;
+	}
+	
+	/**
+	 * Calls the <code>getAllPost</code> method
+	 * from the <code>postService</code> object and
+	 * sends the result to the client
+	 * @author Frank Carag
+	 */
+	@GetMapping(value="/global", produces="application/json")
+	public List<Post> sendAllPost(){
+		return postService.getAllPost();
+	}
+	
+	/**
+	 * Takes a post from the client and a user
+	 * from the session. The user is added to a
+	 * list in the post object that references the
+	 * users who liked the post.
+	 * @author Frank Carag
+	 */
+	@PostMapping(value="/postlike", consumes="application/json")
+	public Post likePost(@RequestBody Post post) {
+		/*
+		 * JSON BODY FORMAT
+		 * {
+		 * 	"postId" : postId
+		 * }
+		 */		
+		
+		//REPLACE THIS USER OBJECT
+		//Get User info from the session attribute
+		User testUser = sampleUser();
+		testUser.setUserId(1);
+		
+		//Get full information about the post
+		post = postService.getPostById(post.getPostId());
+		System.out.println(post.getLikers());
+		return postService.likePost(post, testUser);
+	}
+	
+	@PostMapping(value="/postlikeTwo", consumes="application/json")
+	public Post likePostTwo(@RequestBody Post post) {
+		/*
+		 * JSON BODY FORMAT
+		 * {
+		 * 	"id" : postId
+		 * }
+		 */		
+		
+		//REPLACE THIS USER OBJECT
+		//Get User info from the session attribute
+		User testUser = sampleUser();
+		testUser.setUserId(2);
+		
+		//Get full information about the post
+		post = postService.getPostById(post.getPostId());
+		System.out.println(post.getLikers());
+		return postService.likePost(post, testUser);
+	}
+	
+	@GetMapping(value="/commentbypost", produces="application/json")
+	public List<Comment> getCommentByPost(@RequestBody Post post){
+		post = postService.getPostById(post.getPostId());
+		return post.getComments();
 	}
 }
