@@ -38,6 +38,9 @@ public class User {
 	@Column(name="password", nullable=false)
 	private String password;
 	
+	@Column(name="confirmed")
+	private boolean  confirmed = false;
+	
 	public User(String firstName, String lastName, String email, String password) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -57,7 +60,6 @@ public class User {
 		this.email = email;
 	}
 	
-	public User() {}
 		
 	
 

@@ -28,12 +28,8 @@ public class LogController {
 
 		User currentUser;
 		String myPath = "start";
-//		System.out.println("in login " + sentUser);
 		
 		currentUser = userSer.getLogin(sentUser.getUsername(), sentUser.getPassword());
-
-
-//		System.out.println("curent user: " + currentUser);
 
 
 		if (currentUser != null) {
