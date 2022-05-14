@@ -43,6 +43,9 @@ public class User {
 	
 	@Column(name="password", nullable=false)
 	private String password;
+	
+	@Column(name="bio", nullable=true)
+	private String bio;
 
 	@OneToMany(mappedBy="author", fetch=FetchType.EAGER)
 	private List<Post> posts;
@@ -72,6 +75,16 @@ public class User {
 		this.username = username;
 		this.email = email;
 		this.password = password;
+	}
+
+	public User(String firstName, String lastName, String username, String email, String password, String bio) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.bio = bio;
 	}
 	
 	

@@ -19,6 +19,16 @@ public class PostService {
 		this.dao = dao;
 	}
 
+	/**
+	 * This method is called with a session object, a string to display, and another
+	 * string with the URL of an image to be posted if the user chose to add one. If
+	 * the URL has no URI, then the value is set to null, as the user did not upload
+	 * a file. A new Post object is created and saved to the Database.
+	 * 
+	 * @Author Dillon Meier
+	 * @param
+	 * 
+	 */
 	public void createPost(HttpSession session, String description, String imgUrl) {
 		
 		session.setAttribute("loggedinUser", new User(1, "dillon", "meier", "abc", "abc.123@youNme.com", "123"));

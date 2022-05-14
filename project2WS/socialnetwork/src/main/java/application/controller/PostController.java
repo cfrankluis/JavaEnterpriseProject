@@ -20,6 +20,20 @@ public class PostController {
 		this.postService = postService;
 	}
 
+	/**
+	 * This method receives current session information, a description String, a
+	 * MultipartFile object containing the uploaded image, and a model interface to
+	 * add a message attribute to the return value. The file name of the uploaded
+	 * item is saved as fileName, an imgUrl string is filled with the URL of the
+	 * image once uploaded, and a message String is initialized. Within a try-catch
+	 * block, a method from the S3Controller is called to upload the file to the S3
+	 * bucket which returns a string message which varies depending on the outcome.
+	 * The given message String is added as an attribute to the "message" forward so
+	 * that the user can see what happened.
+	 * 
+	 * @Author Dillon Meier
+	 * @param
+	 */
 	@PostMapping("/post")
 	public String uploadPost(HttpSession session, String description, @RequestParam("file") MultipartFile multipart,
 			Model model) {
@@ -35,9 +49,14 @@ public class PostController {
 		String message = "";
 
 		try {
-			S3Controller.uploadPic("PostPic", fileName, multipart.getInputStream(), session);
-			message = "Your file has been uploaded Successfully!";
-			postService.createPost(session, description, imgUrl);
+			message = S3Controller.uploadPic("PostPic", fileName, multipart.getInputStream(), session);
+				if(message.contentEquals("Your file has been uploaded Successfully!")) {
+					postService.createPost(session, description, imgUrl);
+				}
+				else {
+					message = "Post could not be uploaded: " + message;
+				}
+			
 		} catch (Exception ex) {
 			message = "Error uploading file: " + ex.getMessage();
 		}
