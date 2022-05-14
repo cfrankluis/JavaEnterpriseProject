@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package application.model;
 
 import java.util.Date;
@@ -56,3 +57,5 @@ public class Post {
 		this.dateCreated = new Date();
 	}
 }
+
+>>>>>>> 60526c5cca5aca460121f89d03a2c53f8b054516

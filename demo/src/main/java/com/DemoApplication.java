@@ -1,14 +1,13 @@
-<<<<<<< HEAD
-package application;
+package com;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SocialnetworkApplication {
+public class DemoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SocialnetworkApplication.class, args);
+		SpringApplication.run(DemoApplication.class, args);
 	}
+
 }
->>>>>>> 60526c5cca5aca460121f89d03a2c53f8b054516

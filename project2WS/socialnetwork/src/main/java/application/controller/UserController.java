@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package application.controller;
 
 import java.util.ArrayList;
@@ -54,16 +55,7 @@ public class UserController {
 		return userService.createUser(testUser);
 	}
 
-	@PostMapping(value = "/login", produces = "application/json", consumes = "application/json")
-	public User login(@RequestBody User user) {
-		User testUser = userService.getUserByEmail(user.getEmail());
-
-		if (testUser == null || !testUser.getPassword().equals(user.getPassword())) {
-			return null;
-		}
-
-		return testUser;
-	}
+	
 
 	/**
 	 * This method receives a User object in the form of a JSON which is parsed
@@ -111,4 +103,7 @@ public class UserController {
 		session.setAttribute("loggedInAccount", updatedUser);
 		System.out.println(session.getAttribute("loggedInAccount"));
 	}
+
+	
+>>>>>>> 60526c5cca5aca460121f89d03a2c53f8b054516
 }
