@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 package application.controller;
 
 import java.util.ArrayList;
@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,9 +39,32 @@ public class UserController {
 		this.userService = service;
 	}
 	
+
 	@GetMapping("")
 	public String showHomePage() {
 		return "index.html";
+
+	@GetMapping("/test")
+	public User testUser() {
+		User testUser = new User();
+		int id = 1;
+		String firstName = "Zeke";
+		String lastName = "Yaeger";
+		String email = "beast@titan.com";
+		String password = "Eren";
+		
+		//Security Questions
+		SecurityQuestion q1 = new SecurityQuestion(1,"What is your name?");
+		SecurityQuestion q2 = new SecurityQuestion(2,"Who's your father?");
+		
+		SecurityAnswer a1 = new SecurityAnswer(testUser, q1, "Zeke");
+		SecurityAnswer a2 = new SecurityAnswer(testUser, q2, "Grisha");
+		List<SecurityAnswer> securityQuestions = new ArrayList<>();
+		securityQuestions.add(a1);
+		securityQuestions.add(a2);
+		
+		testUser = new User(firstName, lastName, lastName, email, password, securityQuestions);
+		return userService.createUser(testUser);
 	}
 	
 	@GetMapping("/test")
@@ -68,6 +97,8 @@ public class UserController {
 		if (testUser == null || !testUser.getPassword().equals(user.getPassword())) {
 			return null;
 		}
+
+
 
 		return testUser;
 	}
@@ -119,6 +150,7 @@ public class UserController {
 		System.out.println(session.getAttribute("loggedInAccount"));
 	}
 	
+
 	
 	/**
 	 * This method receives current session information, a MultipartFile object
@@ -155,4 +187,5 @@ public class UserController {
 	}
 }
 
->>>>>>> 96de458cb9bb11fcd9c6e041e7844fb99f59256a
+	
+

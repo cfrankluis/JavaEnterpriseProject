@@ -11,7 +11,6 @@ import application.model.SecurityQuestion;
 
 @Service("securityQuestionService")
 public class SecurityQuestionService {
-	
 	private SecurityQuestionDao dao;
 	
 	@Autowired
@@ -40,6 +39,8 @@ public class SecurityQuestionService {
 		else {
 			return questions;
 		}
+		
+
 	}
 		
 	/**

@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 package application.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +17,7 @@ public class UserService {
 		this.dao = dao;
 	}
 
+
 	/**
 	 * Method receives a User object to insert into the DB. Sending a User object
 	 * that violates the user table's unique key constraints will throw an exception,
@@ -29,6 +30,9 @@ public class UserService {
 	 * @param
 	 * @return A User object or null
 	 */
+
+		
+
 	public User createUser(User user) {
 		System.out.println("Attempting to create account: " + user);
 		User user1 = dao.findByEmail(user.getEmail());
@@ -70,4 +74,4 @@ public class UserService {
 
 }
 
->>>>>>> 96de458cb9bb11fcd9c6e041e7844fb99f59256a
+

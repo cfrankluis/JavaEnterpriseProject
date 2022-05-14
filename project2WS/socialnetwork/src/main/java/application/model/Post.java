@@ -2,6 +2,8 @@ package application.model;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,6 +18,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,12 +32,13 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name="post_table")
+@JsonIgnoreProperties(value={"comments","likers","hibernateLazyInitializer", "handler"}, allowSetters= true)
 public class Post {
 	
 	@Id
 	@Column(name="post_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	private int postId;
 	
 	@Column(name="post_content", nullable=false)
 	private String content;
@@ -50,8 +58,14 @@ public class Post {
 		
 	@ManyToMany(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
 	@JoinColumn(name="liker_FK")
-	private List<User> likers;
 
+private Set<User> likers;
+@Transient
+	private int numOfLikes;
+	
+	public int getNumOfLikes() {
+		return likers == null ? 0 : likers.size();
+	}
 	//INSERT POST CONSTRUCTOR
 	public Post(String content, String img, User author) {
 		this.content = content;
@@ -59,4 +73,5 @@ public class Post {
 		this.author = author;
 		this.dateCreated = new Date();
 	}
+
 }
