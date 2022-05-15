@@ -23,7 +23,7 @@ public class S3Controller {
 	/**
 	 * Method takes input containing a String value dictating which folder the image
 	 * will be stored in in the bucket, a String value holding the uploaded file
-	 * name, an InputStream object holding the image file, and a session. The incoming file type is verified to be: .jpg, .png, or ,gif. The file
+	 * name, an InputStream object holding the image file, and a session. The file
 	 * name is appended to the format: ["ProfilePics/" + {Logged in User Id} +
 	 * "/ProfilePic" + {original file type}] or ["PostPics/" + {Logged in User Id} +
 	 * "/" + {original file name}] Then, using AWS S3 dependencies, a
@@ -43,13 +43,6 @@ public class S3Controller {
 	public static String uploadPic(String type, String fileName, InputStream inputStream, HttpSession session)
 			throws S3Exception, AwsServiceException, SdkClientException, IOException {
 		String newFileName;
-		String fileType = fileName.substring(fileName.length()-4);
-		
-		if(fileType != ".jpg" && fileType != ".JPG" && fileType != ".png" && fileType != ".PNG" && fileType != ".gif" && fileType != ".GIF") {
-			return "Invalid file format; try again with the following types: jpg, png, or gif";
-			
-		}
-		
 		
 		if (type.contentEquals("ProfilePic")) {
 			newFileName = "ProfilePics/" 

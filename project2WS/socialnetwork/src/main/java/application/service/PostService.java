@@ -34,7 +34,7 @@ public class PostService {
 	 */
 	public void createPost(HttpSession session, String description, String imgUrl) {
 		
-		session.setAttribute("loggedinUser", new User( "dillon", "meier", "abc", "abc.123@youNme.com", "123"));
+		session.setAttribute("loggedinUser", new User(1, "dillon", "meier", "abc", "abc.123@youNme.com", "123", null));
 		
 		if(imgUrl.contentEquals("https://buckylebucket.s3.us-east-2.amazonaws.com/PostPics/"+ session.getAttribute("Session Id").toString() +"/")) {
 			String blankUrl = null;

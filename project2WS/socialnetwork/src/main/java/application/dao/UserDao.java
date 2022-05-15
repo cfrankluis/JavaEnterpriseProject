@@ -6,5 +6,6 @@ import application.model.User;
 
 public interface UserDao extends JpaRepository<User, Integer>{
 	public User findByEmail(String email);
-	public User findByUsername(String username);
+
+	public User findByUsername(String user_name);
 }
