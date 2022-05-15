@@ -60,16 +60,23 @@ public class PostController {
 			message = S3Controller.uploadPic("PostPic", fileName, multipart.getInputStream(), session);
 				if(message.contentEquals("Your file has been uploaded Successfully!")) {
 					postService.createPost(session, description, imgUrl);
+					System.out.println(message);
 				}
 				else {
 					message = "Post could not be uploaded: " + message;
+					System.out.println(message);
+				
 				}
 			
 		} catch (Exception ex) {
 			message = "Error uploading file: " + ex.getMessage();
+			System.out.println(message);
+		
 		}
 
 		model.addAttribute("message", message);
+		System.out.println(message);
+	
 		return "message";
 
 	}
