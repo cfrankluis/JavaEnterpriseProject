@@ -32,6 +32,16 @@ public class CommentController {
 		return testUser;
 	}
 	
+	/**
+	 * Takes a user object from a session and a comment
+	 * object from the request body. The user object is set
+	 * to be the author of the comment and added to the database
+	 * via a service.
+	 * @author Frank Carag
+	 * @param comment
+	 * @return
+	 * A full detail of the added comment
+	 */
 	@PostMapping(value="/comment", consumes="application/json")
 	public Comment makeComment(@RequestBody Comment comment) {
 		/*
@@ -48,6 +58,19 @@ public class CommentController {
 		return commentService.createComment(comment);
 	}
 	
+	
+	
+	/**
+	 * Takes a user object from a session and a comment
+	 * object from the request body. The full information is
+	 * acquired from the database and the user from the session
+	 * is inserted in the comment's list of likers. The comment is then
+	 * updated in the database.
+	 * @author Frank Carag
+	 * @param comment
+	 * @return
+	 * A full detail of the added comment
+	 */
 	@PostMapping(value="/commlike", consumes="application/json")
 	public Comment likeComment(@RequestBody Comment comment) {
 		/*

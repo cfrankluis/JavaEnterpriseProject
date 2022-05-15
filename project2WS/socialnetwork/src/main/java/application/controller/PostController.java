@@ -2,6 +2,8 @@ package application.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +23,17 @@ public class PostController {
 	public PostController(PostService postService) {
 		this.postService = postService;
 	}
+	
+	@GetMapping("/sessiontest")
+	public String sessionTest(HttpServletRequest req) {
+		Integer num = (Integer)req.getSession(false).getAttribute("testNum");
+		if(num == null) {
+			return "There is a session";
+		} else {
+			return "There is no session";
+		}
+	}
+	
 	
 	//GET RID OF THIS METHOD ONCE WE CAN
 	//GET A USER FROM A SESSION
@@ -45,6 +58,19 @@ public class PostController {
 	@GetMapping(value="/global", produces="application/json")
 	public List<Post> sendAllPost(){
 		return postService.getAllPost();
+	}
+	
+	/**
+	 * Takes a post from the request body and returns the 
+	 * list of comments associated with the post.
+	 * @author Frank Carag
+	 * @param post
+	 * @return
+	 */
+	@GetMapping(value="/commentbypost", produces="application/json")
+	public List<Comment> getCommentByPost(@RequestBody Post post){
+		post = postService.getPostById(post.getPostId());
+		return post.getComments();
 	}
 	
 	/**
@@ -94,9 +120,5 @@ public class PostController {
 		return postService.likePost(post, testUser);
 	}
 	
-	@GetMapping(value="/commentbypost", produces="application/json")
-	public List<Comment> getCommentByPost(@RequestBody Post post){
-		post = postService.getPostById(post.getPostId());
-		return post.getComments();
-	}
+	
 }

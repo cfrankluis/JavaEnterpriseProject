@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -97,13 +98,40 @@ class CommentServiceTest {
 		User testUser2 = new User();
 		testUser2.setUserId(2);
 		
+		when(mockDao.save(testComment)).thenReturn(testComment);
+		
 		//ACT
 		Comment result = service.LikeComment(testComment, testUser1);
 		result = service.LikeComment(testComment, testUser2);
 		
 		//ASSERT
-//		Set<User> afterLike = result.getLikers();
-//		assertTrue()
+		Set<User> afterLike = result.getLikers();
+		assertTrue(afterLike.contains(testUser1));
+		assertTrue(afterLike.contains(testUser2));
+	}
+	
+	@Test
+	void testLikeCommentDuplicate() {
+		//ARRANGE
+		Comment testComment = new Comment();
+		testComment.setLikers(new HashSet<>());
+		
+		User testUser1 = new User();
+		testUser1.setUserId(1);
+		
+		User testUser2 = new User();
+		testUser2.setUserId(1);
+		
+		when(mockDao.save(testComment)).thenReturn(testComment);
+		
+		//ACT
+		Comment result = service.LikeComment(testComment, testUser1);
+		result = service.LikeComment(testComment, testUser2);
+		
+		//ASSERT
+		Set<User> afterLike = result.getLikers();
+		assertFalse(afterLike.contains(testUser1));
+		assertFalse(afterLike.contains(testUser2));
 	}
 
 
