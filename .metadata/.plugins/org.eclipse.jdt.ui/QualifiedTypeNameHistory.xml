@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="org.springframework.boot.context.event.ApplicationReadyEvent"/>
+    <fullyQualifiedTypeName name="application.model.Confirmation"/>
+    <fullyQualifiedTypeName name="application.service.UserService"/>
+    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+    <fullyQualifiedTypeName name="application.model.User"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="application.service.EmailService"/>
+    <fullyQualifiedTypeName name="application.toolbox.Verification"/>
+</qualifiedTypeNameHistroy>

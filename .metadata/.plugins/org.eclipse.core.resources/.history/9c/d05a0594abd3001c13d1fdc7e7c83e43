@@ -1,0 +1,10 @@
+package application.dao;
+
+
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository("confirmationDao")
+public interface ConfirmationDao extends JpaRepository<ConfirmationToken, String> {
+    ConfirmationToken findByConfirmationToken(String confirmationToken);
+}

@@ -1,0 +1,12 @@
+package application.toolbox;
+
+public class sandbox {
+	
+	public static void main(String[] args) {
+		
+		System.out.println(Profanity.replaceBadWords("fluffing fr@ck. I hate this cu22. jeepers"));
+		
+			
+	}
+
+}

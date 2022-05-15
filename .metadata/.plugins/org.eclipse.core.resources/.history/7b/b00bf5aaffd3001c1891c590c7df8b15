@@ -1,0 +1,19 @@
+package application.toolbox;
+
+public class sandbox {
+	
+	public static void main(String[] args) {
+		
+		System.out.println("the result: " + Profanity.replaceBadWords("fluffing cuss I hate you. barnacle!!!1!!"));
+		
+//		String str = "testing this out a bit";
+//		String replace = null;
+//		String toRep = "th";
+//		replace = str.replaceAll(toRep, "pk");
+//		
+//		System.out.println(str);
+//		System.out.println(replace);
+			
+	}
+
+}
