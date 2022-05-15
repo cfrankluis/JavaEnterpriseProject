@@ -1,1 +1,0 @@
-INDEX VERSION 1.4+C:\Users\cfran\OneDrive\Desktop\revature\git_repos\project2\project2WS\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
