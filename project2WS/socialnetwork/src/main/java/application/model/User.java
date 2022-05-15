@@ -124,6 +124,22 @@ public class User {
 		this.password = password;
 		this.email = email;
 	}
+	
+	
+	/**
+	 * for password reset
+	 * @param email
+	 */
+	public User(String email) {
+		this.email = email;
+	}
+	
+	
+	
+	
+	
+	
+	
 
 	public void setUsername(String username) {
 		this.username = username;

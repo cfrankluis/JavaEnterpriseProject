@@ -12,8 +12,9 @@ public class Verification {
 	 * @param email
 	 * @param checkEmail
 	 * @return
+	 * @author Gibbons
 	 */
-	private static boolean checkUserInput(String email) {
+	public static boolean checkUserInput(String email) {
 		if (email == null)
 			return false;
 

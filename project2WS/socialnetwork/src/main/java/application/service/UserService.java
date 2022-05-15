@@ -66,12 +66,11 @@ public class UserService {
 	public User getUserById(int id) {
 		return dao.getById(id);
 	}
-	public User getLogin(String username, String password) {
-		// TODO Auto-generated method stub
-		User user = new User();
-		return user;
+	
+	public User getByUsername(String username) {
+		return dao.getByUsername(username);
 	}
-
+	
 }
 
 

@@ -43,7 +43,8 @@ public class EmailService {
 
 	
 	public void sendEmail(SimpleMailMessage email) {
-        mailSender.send(email);
+		email.setFrom("socialmedianow63@gmail.com");
+		mailSender.send(email);
     }
 	
 	
