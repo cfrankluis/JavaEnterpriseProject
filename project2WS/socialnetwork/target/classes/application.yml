@@ -1,16 +1,18 @@
+
 server:
   port: 9022
 
 spring:
   datasource:
-    url: jdbc:postgresql://${datachanURL}/mydatabase
-    username: ${datachanUsername}
-    password: ${datachanPassword}
+    url: jdbc:postgresql://${AWS_URL}/mydatabase
+    username: ${DB_USER}
+    password: ${DB_PASS}
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-    show-sql: true
+    show-sql: false
     hibernate:
+
       ddl-auto: none
       
       
@@ -24,7 +26,6 @@ spring.mail.properties.mail.smtp.auth: true #needs to be here for email to work,
 spring.mail.properties.mail.smtp.starttls.enable: true #needs to be here for email to work, ignore the warning
 
 
-#jdbc:postgresql://${datachanURL}/mydatabase
 
-#${datachanUsername}
-#${datachanPassword}
+      
+
