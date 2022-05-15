@@ -2705,3 +2705,11 @@ Caused by: org.codehaus.plexus.util.xml.pull.XmlPullParserException: processing 
 2022-05-15 17:11:16,106 [Worker-143: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2022-05-15 17:11:16,106 [Worker-143: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
 2022-05-15 17:11:16,106 [Worker-143: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Gibbo\OneDrive\Desktop\coding\git repos\JavaEnterpriseProject\gibbons branch\JavaEnterpriseProject\project2WS\socialnetwork\src\test\resources
+2022-05-15 17:52:23,537 [Worker-151: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.example:socialnetwork:0.0.1-SNAPSHOT @ C:\Users\Gibbo\OneDrive\Desktop\coding\git repos\JavaEnterpriseProject\gibbons branch\JavaEnterpriseProject\project2WS\socialnetwork\pom.xml.
+2022-05-15 17:52:24,338 [Worker-151: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-05-15 17:52:24,338 [Worker-151: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2022-05-15 17:52:24,342 [Worker-151: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2022-05-15 17:52:24,371 [Worker-151: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 12 resources
+2022-05-15 17:52:24,404 [Worker-151: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-05-15 17:52:24,404 [Worker-151: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
+2022-05-15 17:52:24,404 [Worker-151: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Gibbo\OneDrive\Desktop\coding\git repos\JavaEnterpriseProject\gibbons branch\JavaEnterpriseProject\project2WS\socialnetwork\src\test\resources
