@@ -2,9 +2,7 @@ package application.model;
 
 import java.util.List;
 
-
 import java.util.Objects;
-
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,78 +19,58 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name="user_table")
-@JsonIgnoreProperties(value={"posts","comments", "securityQuestions","hibernateLazyInitializer", "handler"}, allowSetters= true)
+@Table(name = "user_table")
+@JsonIgnoreProperties(value = { "posts", "comments", "securityQuestions", "hibernateLazyInitializer",
+		"handler" }, allowSetters = true)
 public class User {
-	
-
 
 	private String page;
 	private boolean loggedIn;
 
-
-	//Required Columns
+	// Required Columns
 
 	@Id
-	@Column(name="user_id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "user_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int userId;
-	
-	@Column(name="first_name", nullable=false)
+
+	@Column(name = "first_name", nullable = false)
 	private String firstName;
-	
-	@Column(name="last_name", nullable=false)
+
+	@Column(name = "last_name", nullable = false)
 	private String lastName;
-	
 
-	@Column(name="user_name", unique=true, nullable=false)
+	@Column(name = "user_name", unique = true, nullable = false)
 	private String username;
-	
-	@Column(name="email", unique=true, nullable=false)
 
-
+	@Column(name = "email", unique = true, nullable = false)
 	private String email;
-	
-	@Column(name="password", nullable=false)
-	private String password;
-	
 
-	@Column(name="bio", nullable=true)
+	@Column(name = "password", nullable = false)
+	private String password;
+
+	@Column(name = "bio", nullable = true)
 	private String bio;
 
-	@Column(name="confirmed")
-	private boolean  confirmed = false;
+	@Column(name = "confirmed")
+	private boolean confirmed = false;
 
-	@OneToMany(mappedBy="author",fetch=FetchType.LAZY)
+	@OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
 	private List<Comment> comments;
-	
-	@OneToMany(mappedBy="user",fetch=FetchType.LAZY)
+
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	private List<SecurityAnswer> securityQuestions;
 
-	//Reference Objects
-	@OneToMany(mappedBy="author", fetch=FetchType.LAZY)
+	// Reference Objects
+	@OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
 	private List<Post> posts;
-	
 
-
-
-	//INSERT ACCOUNT CONSTRUCTOR
-	public User(String firstName, String lastName, String username, String email, String password
-			) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.username = username;
-		this.email = email;
-		this.password = password;
-		
-	}
-
-	public User(int id, String firstName, String lastName, String username, String email, String password, List<SecurityAnswer> securityQuestions) {
+	// Session ACCOUNT CONSTRUCTOR
+	public User(int id, String firstName, String lastName, String username, String email, String password, String bio) {
 		super();
 		this.userId = id;
 		this.firstName = firstName;
@@ -100,9 +78,22 @@ public class User {
 		this.username = username;
 		this.email = email;
 		this.password = password;
-		this.securityQuestions = securityQuestions;
+		this.bio = bio;
+
 	}
 
+	public User(int id, String firstName, String lastName, String username, String email, String password, String bio,
+			List<SecurityAnswer> securityQuestions) {
+		super();
+		this.userId = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.bio = bio;
+		this.securityQuestions = securityQuestions;
+	}
 
 	public User(String firstName, String lastName, String username, String email, String password, String bio) {
 		super();
@@ -141,6 +132,7 @@ public class User {
 	
 	
 
+	// Getters and Setters
 	public void setUsername(String username) {
 		this.username = username;
 	}
@@ -165,33 +157,24 @@ public class User {
 		this.loggedIn = loggedIn;
 	}
 
-
-
-	
 	public String getPassword() {
 		return this.password;
 	}
 
-
 	public String getPage() {
-		return this.page;		
+		return this.page;
 	}
 
-
 	public String getEmail() {
-		return this.email;		
+		return this.email;
 	}
 
 	public boolean getLoggedIn() {
-		return this.loggedIn;		
+		return this.loggedIn;
 	}
+
+// Overrides
 	
-
-
-	@Override
-	public String toString() {
-		return "\nUser [id=" + userId  + "]";
-	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -205,15 +188,15 @@ public class User {
 		return this.userId == other.getUserId();
 	}
 
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(userId);
 	}
 
+	@Override
+	public String toString() {
+		return "\nUser [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", username="
+				+ username + ", email=" + email + ", password=" + password + ", bio=" + bio + "]";
+	}
 
-	
-	
 }
-
-

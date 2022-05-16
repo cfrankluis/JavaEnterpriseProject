@@ -8,7 +8,7 @@ window.onload = function () {
 
 
 function getUser() {
-
+console.log("in get user")
     // STEP 1: create the XMLHttpRequest Object
     let xhttp = new XMLHttpRequest();
 

@@ -1,6 +1,9 @@
 
 package application.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,45 +33,22 @@ public class UserController {
 	}
 	
 
-	@GetMapping("")
-	public String showHomePage() {
-		return "index.html";
-	}
-//	@GetMapping("/test")
-//	public User testUser() {
-//		User testUser = new User();
-//		int id = 1;
-//		String firstName = "Zeke";
-//		String lastName = "Yaeger";
-//		String email = "beast@titan.com";
-//		String password = "Eren";
-//		
-//		//Security Questions
-//		SecurityQuestion q1 = new SecurityQuestion(1,"What is your name?");
-//		SecurityQuestion q2 = new SecurityQuestion(2,"Who's your father?");
-//		
-//		SecurityAnswer a1 = new SecurityAnswer(testUser, q1, "Zeke");
-//		SecurityAnswer a2 = new SecurityAnswer(testUser, q2, "Grisha");
-//		List<SecurityAnswer> securityQuestions = new ArrayList<>();
-//		securityQuestions.add(a1);
-//		securityQuestions.add(a2);
-//		
-//		testUser = new User(firstName, lastName, lastName, email, password, securityQuestions);
-//		return userService.createUser(testUser);
-//	}
 	
 
-	@PostMapping(value = "/login", produces = "application/json", consumes = "application/json")
-	public User login(@RequestBody User user) {
-		User testUser = userService.getUserByEmail(user.getEmail());
+	@PostMapping(value = "/login")
+	public String loginAttempt(HttpSession session,@RequestBody User user) {
 
-		if (testUser == null || !testUser.getPassword().equals(user.getPassword())) {
-			return null;
+		User tryLogin = userService.getLogin(user.getUsername(), user.getPassword());
+	
+		
+		if (tryLogin.equals(null)) {
+			System.out.println("failed");
+			return "redirect: /html/welcome.html";
 		}
 
-
-
-		return testUser;
+		session.setAttribute("loggedInAccount", tryLogin);
+		System.out.println(tryLogin);
+		return "redirect:/html/globalfeedpage.html";
 	}
 
 	/**
@@ -89,9 +69,9 @@ public class UserController {
 
 		if (newUser != null) {
 			session.setAttribute("loggedInAccount", newUser);
-			return "redirect: /home.html";
+			return "redirect: /html/home.html";
 		} else {
-			return "redirect: /index.html";
+			return "redirect: /html/index.html";
 		}
 	}
 
@@ -153,18 +133,40 @@ public class UserController {
 		model.addAttribute("message", message);
 		return "message";
 	}
+
 	
 	
 	@PostMapping("/curentUser")
 	public User uploadProfilePic(HttpSession session) {
 //		ublic User(String firstName, String lastName, String username, String email, String password
-		User userTest = new User("bob", "test", "asdf", "asdf@test.com", "password");
+		User userTest = new User("bob", "test", "asdf", "asdf@test.com", "password", null);
 		session.setAttribute("loggInAccount", userTest);
 		User user = (User) session.getAttribute("loggedInAccount");
 		System.out.println(" back to js");
 		return user;
 	}
-}
 
+
+	/**
+	 * This method receives session information and returns a list of all
+	 * users/friends excluding the logged in user.
+	 * 
+	 * @Author Dillon Meier
+	 * @param session
+	 * @return
+	 */
+	@PostMapping("/friends")
+	public String getAllFriends(@RequestBody User user, Model model){
+	//	User currentUser = (User) session.getAttribute("loggedInUser");
+		List<User> list = userService.getAllUsers(user);
+		model.addAttribute("friends", null);
+		model.addAttribute("friends", list);
+		return "friends";
+	}
 	
-
+	@PostMapping("logout")
+	public String logOut(HttpServletRequest req) {
+		req.getSession().invalidate();
+		return "redirect: /index.html";
+	}
+}

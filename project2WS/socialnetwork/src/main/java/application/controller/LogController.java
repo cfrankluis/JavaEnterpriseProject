@@ -35,35 +35,35 @@ public class LogController {
 	}
 	
 	
-	@PostMapping("/login/*")
-	public String login(HttpSession session, @RequestBody User sentUser) {
-
-		User currentUser;
-		String myPath = "start";
-		
-		currentUser = userService.getByUsername(sentUser.getUsername());
-
-
-		if (currentUser != null) {
-//			System.out.println("it should work?");
-			session.setAttribute("user", currentUser);
-
-			// need logic to properly make the url.
-			myPath = currentUser.getPage();
-
-		} else {
-			myPath = "http://localhost:9001/(?)/incorrectcredentials";
-		}
-
-		return myPath;
-	}
-
-	@PostMapping("/logout/*")
-	public String logout(HttpSession session) {
-
-		session.invalidate();
-		return "path to home screen";
-	}
+//	@PostMapping("/login/*")
+//	public String login(HttpSession session, @RequestBody User sentUser) {
+//
+//		User currentUser;
+//		String myPath = "start";
+//		
+//		currentUser = userService.getByUsername(sentUser.getUsername());
+//
+//
+//		if (currentUser != null) {
+////			System.out.println("it should work?");
+//			session.setAttribute("user", currentUser);
+//
+//			// need logic to properly make the url.
+//			myPath = currentUser.getPage();
+//
+//		} else {
+//			myPath = "http://localhost:9001/(?)/incorrectcredentials";
+//		}
+//
+//		return myPath;
+//	}
+//
+//	@PostMapping("/logout/*")
+//	public String logout(HttpSession session) {
+//
+//		session.invalidate();
+//		return "path to home screen";
+//	}
 
 
 	@PostMapping("/forgotPassword")
