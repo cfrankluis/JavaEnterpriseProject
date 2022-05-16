@@ -1,13 +1,14 @@
 
 package application.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
+import application.model.Post;
 import application.model.User;
 import application.service.UserService;
 
@@ -144,12 +146,36 @@ public class UserController {
 
 	
 	
-	@PostMapping("/curentUser")
-	public User uploadProfilePic(HttpSession session) {
-//		ublic User(String firstName, String lastName, String username, String email, String password
-		User userTest = new User("bob", "test", "asdf", "asdf@test.com", "password", null);
-		session.setAttribute("loggInAccount", userTest);
+	/**
+	 * returns the user that is currently logged in
+	 * @param session
+	 * @return
+	 * @Auther Gibbons
+	 */
+	@GetMapping("/currentUser")
+	public @ResponseBody User curentUser(HttpSession session) {
+		System.out.println("in current user");
+//		public User(String firstName, String lastName, String username, String email, String password
+		User userTest = new User("bob", "test", "asdf", "asdf@test.com", "password", null);//Dumby user
+		userTest.setUserId(1);
+		userTest.setBio("go away");
+		List<Post> post = new ArrayList<Post>();
+		
+//		Post(String content, String img, User author)
+		Post post1 = new Post("first post", "image @", userTest);
+		post.add(post1);
+		
+		Post post2 = new Post("second post", "image @", userTest);
+		post.add(post2);
+		
+		Post post3 = new Post("last post", "image @", userTest);
+		post.add(post3);
+		
+		userTest.setPosts(post);
+		session.setAttribute("loggedInAccount", userTest);//Dumby logic
+		
 		User user = (User) session.getAttribute("loggedInAccount");
+		System.out.println(user);
 		System.out.println(" back to js");
 		return user;
 	}

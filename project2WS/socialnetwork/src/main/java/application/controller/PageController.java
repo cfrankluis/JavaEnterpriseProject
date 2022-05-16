@@ -18,10 +18,13 @@ public class PageController {
 		return "/html/globalfeedpage.html";
 	}
 
-
-
 	@GetMapping("/profilepage")
 	public String greeting() {
 		return "/html/profilepage.html";
 	}
+	
+//	@GetMapping("/forgot-password")
+//	public String forgotPassword() {
+//		return "/html/forgot-password.html";
+//	}
 }

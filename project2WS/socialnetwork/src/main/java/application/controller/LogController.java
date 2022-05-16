@@ -1,16 +1,17 @@
 package application.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import application.model.Confirmation;
 import application.model.User;
@@ -20,7 +21,8 @@ import application.service.UserService;
 import lombok.Data;
 
 @Data
-@Controller
+@RestController
+@RequestMapping
 public class LogController {
 	
 	UserService userService;
@@ -103,29 +105,30 @@ public class LogController {
 
 
 		@GetMapping(value = "/reset-password/*", params= {"token"} )
-		public String showResetPasswordPage( String token, HttpSession session) {
+		public void showResetPasswordPage( String token, HttpSession session, HttpServletResponse response) throws IOException {
+		    
 			
 			Confirmation theToken = confirmationService.findByConfirmationToken(token);
 			User user = userService.getUserByEmail(theToken.getUser().getEmail());
 		    session.setAttribute("token", theToken);
 		    if (user == null) {
 		    	session.setAttribute("message", "Invalid Token");
-		        return "message";
 		    }
-		    return "reset_password_page";// send them to the html page. that will reference the "processResetPassword" method
+		    response.sendRedirect("http://localhost:9022/html/reset-password.html");// send them to the html page. that will reference the "processResetPassword" method
 		}
 		
 		
-		@PostMapping("/reset-password/*")
-		public String processResetPassword(HttpServletRequest request, HttpSession session) {
-		    String resetToken = request.getParameter("token");
-		    String password = request.getParameter("password");
+		@PostMapping(value = "/reset-password/*", consumes = "application/json")
+		public String processResetPassword(@RequestBody User jsonUser, HttpSession session) {
+			System.out.println("in the reset password");
+			System.out.println(jsonUser);
+		    String password = jsonUser.getPassword();
+		    String username = jsonUser.getUsername();
 		    
-		    Confirmation token = confirmationService.findByConfirmationToken(resetToken);
-			User user = userService.getUserByEmail(token.getUser().getEmail());
+		    
+		    User user = userService.getUserByUsername(username);
 		     
 		    session.setAttribute("title", "Reset your password");
-		     
 		    if (user == null) {
 		    	session.setAttribute("message", "Invalid Token");
 		        return "message";

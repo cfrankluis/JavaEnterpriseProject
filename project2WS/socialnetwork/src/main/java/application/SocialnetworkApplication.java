@@ -15,7 +15,9 @@ public class SocialnetworkApplication {
 //		public void sendMail() {
 //			test.sendEmail("socialmedianow63@gmail.com", "test", "did it work?");
 //		}
-//	
+//
+	
+
 }
 
 
