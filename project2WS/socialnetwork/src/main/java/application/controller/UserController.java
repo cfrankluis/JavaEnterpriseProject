@@ -88,11 +88,19 @@ public class UserController {
 	@PostMapping(value = "/updateUserDetails")
 	@ResponseStatus(code = HttpStatus.ACCEPTED)
 	public void updateUser(HttpSession session, @RequestBody User user) {
-		user.setUserId(((User) session.getAttribute("loggedInAccount")).getUserId());
-		System.out.println(user);
+		User temp = (User) session.getAttribute("loggedInAccount");
+		System.out.println(temp + "   1");
+		String password = user.getPassword();
+		String bio = user.getBio();
+		if(password!=null) {
+			temp.setPassword(password);
+		}
+		if(bio!=null) {
+			temp.setBio(bio);
+		}
 
-		User updatedUser = userService.updateUser(user);
-		System.out.println(updatedUser);
+		User updatedUser = userService.updateUser(temp);
+		System.out.println(updatedUser + "   2");
 
 		session.setAttribute("loggedInAccount", updatedUser);
 		System.out.println(session.getAttribute("loggedInAccount"));
