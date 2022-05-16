@@ -3,6 +3,7 @@ package application.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,23 +33,22 @@ public class UserController {
 	}
 	
 
-	@GetMapping("")
-	public String showHomePage() {
-		return "index.html";
-	}
+	
 
-	@GetMapping(value = "/login")
-	public String loginAttempt(HttpSession session,@RequestBody User userLogin) {
+	@PostMapping(value = "/login")
+	public String loginAttempt(HttpSession session,@RequestBody User user) {
 
-		User tryLogin = userService.getLogin(userLogin.getUsername(), userLogin.getPassword());
-
-		if (tryLogin == null) {
-			return "redirect: index.html";
+		User tryLogin = userService.getLogin(user.getUsername(), user.getPassword());
+	
+		
+		if (tryLogin.equals(null)) {
+			System.out.println("failed");
+			return "redirect: /html/welcome.html";
 		}
 
 		session.setAttribute("loggedInAccount", tryLogin);
-
-		return "redirect: home.html";
+		System.out.println(tryLogin);
+		return "redirect:/html/globalfeedpage.html";
 	}
 
 	/**
@@ -69,9 +69,9 @@ public class UserController {
 
 		if (newUser != null) {
 			session.setAttribute("loggedInAccount", newUser);
-			return "redirect: /home.html";
+			return "redirect: /html/home.html";
 		} else {
-			return "redirect: /index.html";
+			return "redirect: /html/index.html";
 		}
 	}
 
@@ -149,5 +149,11 @@ public class UserController {
 		model.addAttribute("friends", null);
 		model.addAttribute("friends", list);
 		return "friends";
+	}
+	
+	@PostMapping("logout")
+	public String logOut(HttpServletRequest req) {
+		req.getSession().invalidate();
+		return "redirect: /index.html";
 	}
 }
