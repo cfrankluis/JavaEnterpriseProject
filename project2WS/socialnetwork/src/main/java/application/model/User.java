@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name = "user_table")
-@JsonIgnoreProperties(value = { "posts", "comments", "securityQuestions", "hibernateLazyInitializer",
+@JsonIgnoreProperties(value = { "comments", "securityQuestions", "hibernateLazyInitializer",
 		"handler" }, allowSetters = true)
 public class User {
 

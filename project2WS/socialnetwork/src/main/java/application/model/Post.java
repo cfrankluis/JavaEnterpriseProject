@@ -47,6 +47,7 @@ public class Post {
 	@Column(name = "date_created", nullable = false)
 	private Date dateCreated;
 
+	@JsonIgnoreProperties( value = {"posts", "hibernateLazyInitializer", "handler"} , allowSetters = true)
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_FK")
 	private User author;

@@ -174,6 +174,10 @@ public class UserController {
 		userTest.setPosts(post);
 		session.setAttribute("loggedInAccount", userTest);//Dumby logic
 		
+		System.out.println(userTest.getPosts().get(0));
+		System.out.println(userTest.getPosts().get(1));
+		System.out.println(userTest.getPosts().get(2));
+		
 		User user = (User) session.getAttribute("loggedInAccount");
 		System.out.println(user);
 		System.out.println(" back to js");

@@ -34,23 +34,6 @@ function getUser() {
 
 
 
-
-// function getRequests(){
-//     let xhttp = new XMLHttpRequest();
-//     xhttp.onreadystatechange = function (){
-//         if(xhttp.readyState==4 && xhttp.status ==200){
-//             console.log("readyState is 4!!! AND status is 200!!!");
-//             let requestObj = JSON.parse(xhttp.responseText);
-//             console.log(requestObj);
-//             ourDOMManipulation(requestObj);
-//         }
-//     }
-//     xhttp.open('POST', http://localhost:9001/ExpenseReimbursementSystem/json/pastrequests);
-//     xhttp.send();
-// }
-
-
-
 function printUsername(user) {
 
     console.log("in username " + user)
@@ -76,40 +59,40 @@ function printBio(user) {
 
 function getPosts(user) {
 
-    console.log("in getPosts " + user)
-    let posts = document.getElementById("bio")
-    posts.innerHTML = "";
-    posts.innerHTML = user.posts;
+    console.log("in getPosts " + user);
+    console.log(user);
+    console.log(user.posts);
 
-    user.posts.author
-    user.posts.img
-    user.posts.content
-    
-    
-    let varOl = document.getElementById("displayedPost");
-    varOl.innerHTML = "";
-        for (let i = 0; i < user.length; i++) {
-            console.log(i)
-            let spaceing = document.createTextNode("  -  ");
-            let varLi = document.createElement("li");
-            
-            //order, spacing, and what varables to print
-            varLi.appendChild(document.createTextNode(user.posts.author));
-            varLi.appendChild(spaceing.cloneNode());
-            
-            varLi.appendChild(document.createTextNode(user[i].amount));
-            varLi.appendChild(spaceing.cloneNode());
-            
-            varLi.appendChild(document.createTextNode(user[i].description));
-            varLi.appendChild(spaceing.cloneNode());
-            
-            // varLi.appendChild(document.createTextNode(reimbur[i].statusId));
-            // varLi.appendChild(spaceing.cloneNode());
-            varLi.appendChild(document.createTextNode(user[i].status));
-            varLi.appendChild(spaceing.cloneNode());
-            
-            varLi.appendChild(document.createTextNode(user[i].type));
-            //each reimburement on its own line
-            varOl.appendChild(varLi);
-        }//for
+    let post = document.getElementById("posts");
+
+    let postsAuthor = document.getElementById("postsAuthor");
+    let postsContent = document.getElementById("postsContent");
+    // let postsImg = document.getElementById("postsImg");
+
+
+    // post.innerHTML =""
+    postsAuthor.innerHTML = "";
+    postsContent.innerHTML = "";
+    // postsImg.innerHTML = "";
+
+
+    for (let i = 0; i < user.posts.length; i++) {
+        console.log("i = " + i);
+        postsAuthor = document.createElement("h5");
+        // .posts[i].author
+        author =  document.createTextNode(user.username);
+        postsAuthor.appendChild(author);
+        post.appendChild(postsAuthor);
+
+        postsContent = document.createElement("p");
+        content =  document.createTextNode(user.posts[i].content);
+        postsContent.appendChild(content);
+        post.appendChild(postsContent);
+
+        // postsImg = document.createElement("img");
+        // img =  document.createTextNode(user.posts[i].img);
+        // postsImg.appendChild(img);
+        // post.appendChild(postsImg);
+
+    }//for
 }//getPosts
