@@ -153,6 +153,17 @@ public class UserController {
 		model.addAttribute("message", message);
 		return "message";
 	}
+	
+	
+	@PostMapping("/curentUser")
+	public User uploadProfilePic(HttpSession session) {
+//		ublic User(String firstName, String lastName, String username, String email, String password
+		User userTest = new User("bob", "test", "asdf", "asdf@test.com", "password");
+		session.setAttribute("loggInAccount", userTest);
+		User user = (User) session.getAttribute("loggedInAccount");
+		System.out.println(" back to js");
+		return user;
+	}
 }
 
 	
