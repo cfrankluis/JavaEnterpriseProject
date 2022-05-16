@@ -19,14 +19,13 @@ public class UserService {
 		this.dao = dao;
 	}
 
-
 	/**
 	 * Method receives a User object to insert into the DB. Sending a User object
-	 * that violates the user table's unique key constraints will throw an exception,
-	 * so the Username and Email are checked against the existing Users in the
-	 * table. If any account is returned then the account creation will abort, print
-	 * a failed message to the console, and return null. If the creation is a
-	 * success, then it returns the newly added user object.
+	 * that violates the user table's unique key constraints will throw an
+	 * exception, so the Username and Email are checked against the existing Users
+	 * in the table. If any account is returned then the account creation will
+	 * abort, print a failed message to the console, and return null. If the
+	 * creation is a success, then it returns the newly added user object.
 	 * 
 	 * @Author Dillon Meier
 	 * @param
@@ -66,32 +65,29 @@ public class UserService {
 	 * @param user
 	 * @return
 	 */
-	public List<User> getAllUsers(User user){
-		List<User> allUsers= dao.findAll();
-		allUsers.remove(user.getUserId()-1);
+	public List<User> getAllUsers(User user) {
+		List<User> allUsers = dao.findAll();
+		allUsers.remove(user.getUserId() - 1);
 		return allUsers;
 	}
-	
-	
+
 	public User getUserByEmail(String email) {
 		return dao.findByEmail(email);
 	}
-	
+
 	public User getUserById(int id) {
 		return dao.getById(id);
 	}
+
 	public User getLogin(String username, String password) {
-		User uN =  dao.findByUsername(username);
+		User uN = dao.findByUsername(username);
 		String pW = uN.getPassword();
-		if(pW.contentEquals(password)) {
+		if (pW.contentEquals(password)) {
 			return uN;
-		}
-		else {
+		} else {
 			return null;
 		}
-		
+
 	}
 	
 }
-
-
