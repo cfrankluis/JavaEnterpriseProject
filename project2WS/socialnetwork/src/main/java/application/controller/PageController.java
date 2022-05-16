@@ -17,4 +17,9 @@ public class PageController {
 	public String showBlock() {
 		return "/html/globalfeedpage.html";
 	}
+	
+	@GetMapping("/reset-password/*")
+	public String resetPassword() {
+		return "/html/reset-password.html";
+	}
 }

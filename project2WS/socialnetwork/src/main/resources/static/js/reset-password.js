@@ -1,18 +1,20 @@
 window.onload = function(){
-    document.getElementById("resetpw").addEventListener("click", forgotPassword);
-}
-
-function Previous() {
-    window.history.back()
+    console.log("asdf");
+    document.getElementById("myPassword").addEventListener("click", newPassword);
 }
 
 
-function forgotPassword(){
-    let myEmail = document.getElementById("email").value;
 
+
+
+
+function newPassword(){
+    let myPassword = document.getElementById("newPassword").value;
+    let myUsername = document.getElementById("username").value;
       
     let user = {
-        "email" : myEmail
+        "password" : myPassword,
+        "username" : myUsername
     }
     //step 1
       let xhttp = new XMLHttpRequest();
@@ -25,27 +27,27 @@ function forgotPassword(){
         console.log("readyState is changing: ", xhttp.readyState);
         
         if(xhttp.readyState==4 && xhttp.status ==200){
+            console.log("readyState is 4!!! AND status is 200!!!");
             alert(xhttp.responseText);
-            if(xhttp.responseText === "A password reset link has been emailed to you"){
-                location.assign("http://localhost:9022/html/welcome.html");
-            }
-            if(xhttp.responseText === "Email Address could not be found; Try again"){
+            if(xhttp.responseText = "Username did not match any records"){
                 location.reload();
+            }
+            if(xhttp.responseText = "Password Sucessfully Reset!"){
+                location.assign("http://localhost:9022/html/welcome.html");
             }
         }
     }
     
-        
-        
+         
   
    // STEP 3: prepare connection/request details
-    xhttp.open('post', `http://localhost:9022/forgotPassword`);
+    xhttp.open('post', `http://localhost:9022/reset-password/`);
+    
     
     
     
    // STEP 4: send the request, providing any body object the request needs    
    
-   console.log(user)
     //into json
     xhttp.setRequestHeader("content-type", "application/json")
     xhttp.send(JSON.stringify(user));

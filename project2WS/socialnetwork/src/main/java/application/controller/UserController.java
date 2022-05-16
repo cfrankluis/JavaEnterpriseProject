@@ -5,9 +5,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,12 +15,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import application.model.User;
 import application.service.UserService;
+import application.toolbox.Verification;
 
 @Controller
 @RequestMapping
@@ -43,7 +44,7 @@ public class UserController {
 		}
 
 		session.setAttribute("loggedInAccount", tryLogin);
-		System.out.println(tryLogin);
+		System.out.println("Account signed in: " + tryLogin);
 		return "redirect:/html/globalfeedpage.html";
 	}
 
@@ -57,19 +58,27 @@ public class UserController {
 	 * @Author Dillon Meier
 	 * @return URI redirect String
 	 */
-	@PostMapping(value = "/register1")
+	@PostMapping(value = "/register")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public String register(HttpSession session, @RequestBody User user) {
-		System.out.println(user);
-		User newUser = userService.createUser(user);
-		User test = new User();
-		if (!newUser.equals(test)) {
-			session.setAttribute("loggedInAccount", newUser);
-			System.out.println(session.getAttribute("loggedInAccount"));
-			return "redirect:/html/globalfeedpage.html";
-		} else {
-			return "";
+	public @ResponseBody String register(HttpSession session, @RequestBody User user) {
+		String message;
+		if (user.getFirstName().isBlank() || user.getLastName().isBlank() || user.getEmail().isBlank()
+				|| user.getUsername().isBlank() || user.getPassword().isBlank()) {
+			message = "Field values cannot be blank.";
+			return message;
 		}
+		if(!Verification.checkUserInput(user.getEmail())) {
+			message = "Please enter a valid email address.";
+			return message;
+		}
+		User newUser = userService.createUser(user);
+		if (newUser != null) {
+			session.setAttribute("loggedInAccount", newUser);
+			message = "Account Creation Sucessfull!!!";
+		} else {
+			message = "Account Creation failed...";
+		}
+		return message;
 	}
 
 	/**
@@ -103,6 +112,8 @@ public class UserController {
 
 		return "redirect:/html/globalfeedpage.html";
 	}
+	
+	
 
 	/**
 	 * This method receives current session information, a MultipartFile object
@@ -119,8 +130,8 @@ public class UserController {
 	 */
 	@PostMapping("/upload")
 	@ResponseStatus(code = HttpStatus.ACCEPTED)
-	public String uploadProfilePic(HttpSession session, @RequestBody @RequestParam("file") MultipartFile multipart) {
-	
+	public @ResponseBody String uploadProfilePic(HttpSession session,
+			@RequestBody @RequestParam("file") MultipartFile multipart) {
 
 		String fileName = multipart.getOriginalFilename();
 
@@ -158,8 +169,9 @@ public class UserController {
 
 	@GetMapping("/logout")
 	public String logOut(HttpServletRequest req) {
+		User userSigningOut = (User)req.getSession().getAttribute("loggedInAccount");
 		req.getSession().invalidate();
-		System.out.println("now signed out");
+		System.out.println("User signed out: " + userSigningOut);
 		return "redirect:/html/welcome.html";
 	}
 }

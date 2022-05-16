@@ -23,25 +23,38 @@ function registerUser() {
     }
 
     let xhttp = new XMLHttpRequest();
-    xhttp.open('Post', `http://localhost:9022/register1`);
+    xhttp.open('Post', `http://localhost:9022/register`);
     xhttp.setRequestHeader("Accept", "application/json");
     xhttp.setRequestHeader("Content-Type", "application/json");
 
     xhttp.onreadystatechange = function () {
         console.log("readyState is changing: ", xhttp.readyState);
 
-
         if (xhttp.readyState == 4 && xhttp.status == 201) {
             console.log("readyState is 4!!! AND status is 200!!!");
-                alert("Account Creation Succeeded!!!");
-                location.assign('/html/globalfeedpage.html');
+            let message = xhttp.responseText;
+            alert(message);
+            if (message === "Field values cannot be blank." || message === "Account Creation failed..." || message === "Please enter a valid email address."){
+                location.reload();
+            }
+            if (message === "Account Creation Sucessfull!!!") {
+                verifyEmail();
+                location.assign("http://localhost:9022/html/globalfeedpage.html");
+            }
         }
-        if(xhttp.readyState == 4 && xhttp.status == 500){
-            alert("Account already exists");
-            location.reload();
-        }
-
     }
     data = JSON.stringify(newUser);
     xhttp.send(data);
+}
+
+function verifyEmail(){
+    let xhttp = new XMLHttpRequest();
+    xhttp.open('Post', `http://localhost:9022/register1`);
+    xhttp.onreadystatechange = function () {
+        console.log("readyState is changing: ", xhttp.readyState);
+        if (xhttp.readyState == 4 && xhttp.status == 201) {
+            console.log("readyState is 4!!! AND status is 200!!!");
+        }
+    }
+    xhttp.send();
 }

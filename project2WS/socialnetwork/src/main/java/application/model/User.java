@@ -162,7 +162,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "\nUser [userId=" + userId + ", username=" + username + ", email=" + email + ", password=" + password
+		return "\tUser [userId=" + userId + ", username=" + username + ", email=" + email + ", password=" + password
 				+ ", firstName=" + firstName + ", lastName=" + lastName + ", bio=" + bio + ", loggedIn=" + loggedIn
 				+ ", confirmed=" + confirmed + ", page=" + page + "]";
 	}
