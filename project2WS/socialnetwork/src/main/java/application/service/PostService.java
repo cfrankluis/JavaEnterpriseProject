@@ -1,5 +1,8 @@
 package application.service;
 
+import java.util.List;
+import java.util.Set;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +16,7 @@ import application.model.User;
 public class PostService {
 	
 	private PostDao dao;
-
+	
 	@Autowired
 	public PostService(PostDao dao) {
 		this.dao = dao;
@@ -31,7 +34,7 @@ public class PostService {
 	 */
 	public void createPost(HttpSession session, String description, String imgUrl) {
 		
-		session.setAttribute("loggedinUser", new User(1, "dillon", "meier", "abc", "abc.123@youNme.com", "123"));
+		session.setAttribute("loggedinUser", new User(1, "dillon", "meier", "abc", "abc.123@youNme.com", "123", null));
 		
 		if(imgUrl.contentEquals("https://buckylebucket.s3.us-east-2.amazonaws.com/PostPics/"+ session.getAttribute("Session Id").toString() +"/")) {
 			String blankUrl = null;
@@ -41,5 +44,47 @@ public class PostService {
 		Post post = new Post(description, imgUrl, currentUser);
 		
 		dao.save(post);
+	}
+	
+	/**
+	 * @author Frank Carag
+	 * @return
+	 * A list of all posts in the database.
+	 */
+	public List<Post> getAllPost(){
+		return dao.findAll();
+	}
+	
+	/**
+	 * Adds the user to the list of likers in a post and saves
+	 * changes to the database
+	 * @author Frank Carag
+	 */
+	public Post likePost(Post post, User user) {
+		Set<User> likers = post.getLikers();
+
+		if(likers.contains(user)) {
+			likers.remove(user);
+		} else {
+			likers.add(user);
+		}
+			
+		post.setLikers(likers);
+			
+		return dao.save(post);
+	}
+	
+	/**
+	 * Uses the given id parameter and returns
+	 * a post with the given id
+	 * @author Frank Carag
+	 * @return
+	 * A post object with the given id
+	 */
+	public Post getPostById(int id) {
+		if(dao.existsById(id))
+			return dao.getById(id);
+		else
+			return null;
 	}
 }

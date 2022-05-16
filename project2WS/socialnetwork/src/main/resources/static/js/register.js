@@ -1,38 +1,47 @@
-window.onload = function(){
-    loadQuestions();
+window.onload = function () {
+    document.getElementById("create").addEventListener("click", registerUser);
 }
 
-function getAllQuestions(){
+function Previous() {
+    window.history.back()
+}
+
+function registerUser() {
+
+    let FirstName = document.getElementById('FirstName').value;
+    let LastName = document.getElementById('LastName').value;
+    let Email = document.getElementById('Email').value;
+    let UserName = document.getElementById('Username').value;
+    let Password = document.getElementById('Password').value;
+
+    newUser = {
+        "firstName": FirstName,
+        "lastName": LastName,
+        "email": Email,
+        "username": UserName,
+        "password": Password
+    }
+
     let xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function(){
-        if(xhttp.readyState==4 && xhttp.status ==200){
-            let responseJson = JSON.parse(xhttp.responseText);
-            console.log(responseJson);
-            //generateOption(responseJson);
+    xhttp.open('Post', `http://localhost:9022/register1`);
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.setRequestHeader("Content-Type", "application/json");
+
+    xhttp.onreadystatechange = function () {
+        console.log("readyState is changing: ", xhttp.readyState);
+
+
+        if (xhttp.readyState == 4 && xhttp.status == 201) {
+            console.log("readyState is 4!!! AND status is 200!!!");
+                alert("Account Creation Succeeded!!!");
+                location.assign('/html/globalfeedpage.html');
         }
-    }
-
-    xhttp.open('GET', "http://localhost:9022/allquestions");
-    xhttp.send();
-}
-
-function generateOption(questions){
-    let parentSelect = document.getElementById("securityQuestions");
-    for(let index in questions){
-
-    }
-
-}
-
-function loadQuestions(){
-    let xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function(){
-        if(xhttp.readyState==4 && xhttp.status ==200){
-            let responseJson = JSON.parse(xhttp.responseText);
-            console.log(responseJson);
+        if(xhttp.readyState == 4 && xhttp.status == 500){
+            alert("Account already exists");
+            location.reload();
         }
-    }
 
-    xhttp.open('GET', "http://localhost:9022/seedquestions");
-    xhttp.send();
+    }
+    data = JSON.stringify(newUser);
+    xhttp.send(data);
 }

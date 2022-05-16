@@ -29,7 +29,7 @@ class CreateUserTest {
 	void createUserTest_1() {
 		// Arrange
 		List<SecurityAnswer> securityQuestions = null;
-		User newUser = new User("Appa", "Aang", "Momo", "theGAang@biosnmail.com", "123", securityQuestions);
+		User newUser = new User(1, "Appa", "Aang", "Momo", "theGAang@biosnmail.com", "123", securityQuestions);
 		when(myDao.findByEmail(newUser.getEmail())).thenReturn(null);
 		when(myDao.findByUsername(newUser.getUsername())).thenReturn(null);
 		when(myDao.save(newUser)).thenReturn(newUser);
@@ -45,7 +45,7 @@ class CreateUserTest {
 	void createUserTest_2() {
 		// Arrange
 		List<SecurityAnswer> securityQuestions = null;
-		User newUser = new User("Appa", "Aang", "Momo", "theGAang@biosnmail.com", "123", securityQuestions);
+		User newUser = new User(1, "Appa", "Aang", "Momo", "theGAang@biosnmail.com", "123", securityQuestions);
 		when(myDao.findByEmail(newUser.getEmail())).thenReturn(newUser);
 		when(myDao.findByUsername(newUser.getUsername())).thenReturn(null);
 		when(myDao.save(newUser)).thenReturn(newUser);
@@ -61,7 +61,7 @@ class CreateUserTest {
 	void createUserTest_3() {
 		// Arrange
 		List<SecurityAnswer> securityQuestions = null;
-		User newUser = new User("Appa", "Aang", "Momo", "theGAang@biosnmail.com", "123", securityQuestions);
+		User newUser = new User(1, "Appa", "Aang", "Momo", "theGAang@biosnmail.com", "123", securityQuestions);
 		when(myDao.findByEmail(newUser.getEmail())).thenReturn(null);
 		when(myDao.findByUsername(newUser.getUsername())).thenReturn(newUser);
 		when(myDao.save(newUser)).thenReturn(newUser);

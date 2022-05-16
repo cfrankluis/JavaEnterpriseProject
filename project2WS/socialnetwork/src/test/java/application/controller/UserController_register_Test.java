@@ -30,7 +30,7 @@ class UserController_register_Test {
 	void registerTest_1() {
 		// Arrange
 		List<SecurityAnswer> securityQuestions = null;
-		User myUser = new User("Appa", "Aang", "Momo", "theGAang@biosnmail.com", "123", securityQuestions);
+		User myUser = new User(1, "Appa", "Aang", "Momo", "theGAang@biosnmail.com", "123", securityQuestions);
 		when(myService.createUser(myUser)).thenReturn(myUser);
 		String expectedUri = "redirect: /home.html";
 		// Act
@@ -43,7 +43,7 @@ class UserController_register_Test {
 	void registerTest_2() {
 		// Arrange
 		List<SecurityAnswer> securityQuestions = null;
-		User myUser = new User("Appa", "Aang", "Momo", "theGAang@biosnmail.com", "123", securityQuestions);
+		User myUser = new User(1, "Appa", "Aang", "Momo", "theGAang@biosnmail.com", "123", securityQuestions);
 		when(myService.createUser(myUser)).thenReturn(null);
 		String expectedUri = "redirect: /index.html";
 		// Act

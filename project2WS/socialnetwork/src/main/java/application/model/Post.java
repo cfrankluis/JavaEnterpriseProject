@@ -2,6 +2,7 @@ package application.model;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,6 +17,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,35 +29,43 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name="post_table")
+@Table(name = "post_table")
+@JsonIgnoreProperties(value = { "comments", "likers", "hibernateLazyInitializer", "handler" }, allowSetters = true)
 public class Post {
-	
-	@Id
-	@Column(name="post_id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
-	
-	@Column(name="post_content", nullable=false)
-	private String content;
-		
-	@Column(name="post_img", nullable=true)
-	private String img;
-	
-	@Column(name="date_created", nullable=false)
-	private Date dateCreated;
-	
-	@ManyToOne(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
-	@JoinColumn(name="user_FK")
-	private User author;
-	
-	@OneToMany(mappedBy="post",fetch=FetchType.LAZY)
-	private List<Comment> comments;
-		
-	@ManyToMany(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
-	@JoinColumn(name="liker_FK")
-	private List<User> likers;
 
-	//INSERT POST CONSTRUCTOR
+	@Id
+	@Column(name = "post_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int postId;
+
+	@Column(name = "post_content", nullable = false)
+	private String content;
+
+	@Column(name = "post_img", nullable = true)
+	private String img;
+
+	@Column(name = "date_created", nullable = false)
+	private Date dateCreated;
+
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_FK")
+	private User author;
+
+	@OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+	private List<Comment> comments;
+
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JoinColumn(name = "liker_FK")
+	private Set<User> likers;
+
+	@Transient
+	private int numOfLikes;
+
+	public int getNumOfLikes() {
+		return likers == null ? 0 : likers.size();
+	}
+
+	// INSERT POST CONSTRUCTOR
 	public Post(String content, String img, User author) {
 		this.content = content;
 		this.img = img;

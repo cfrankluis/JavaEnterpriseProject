@@ -1,0 +1,24 @@
+window.onload = function () {
+    document.getElementById("button").addEventListener("click", uploadProfilePic);
+}
+
+function Previous() {
+    window.history.back()
+}
+
+function uploadProfilePic() {
+    let formData = new FormData();
+    formData.append("file", fileupload.files[0]);
+    try {
+        let xhttp = new XMLHttpRequest();
+        xhttp.open('Post', `http://localhost:9022/upload`);
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState == 4) {
+                alert("Profile pic has been updated.")
+                location.assign("http://localhost:9022/html/profilepage.html");
+            }
+        }
+        xhttp.send(formData);
+    } catch (error) {
+    }
+}

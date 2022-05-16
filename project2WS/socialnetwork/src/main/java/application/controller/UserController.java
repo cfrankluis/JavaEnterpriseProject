@@ -1,11 +1,13 @@
+
 package application.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,12 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import application.model.SecurityAnswer;
-import application.model.SecurityQuestion;
 import application.model.User;
 import application.service.UserService;
 
@@ -31,44 +31,20 @@ public class UserController {
 	public UserController(UserService service) {
 		this.userService = service;
 	}
-	
-	@GetMapping("")
-	public String showHomePage() {
-		return "index.html";
-	}
-	
-	@GetMapping("/test")
-	public User testUser() {
-		User testUser = new User();
-		int id = 1;
-		String firstName = "Zeke";
-		String lastName = "Yaeger";
-		String email = "beast@titan.com";
-		String password = "Eren";
 
-		// Security Questions
-		SecurityQuestion q1 = new SecurityQuestion(1, "What is your name?");
-		SecurityQuestion q2 = new SecurityQuestion(2, "Who's your father?");
+	@PostMapping(value = "/login")
+	public String loginAttempt(HttpSession session, @RequestBody User user) {
 
-		SecurityAnswer a1 = new SecurityAnswer(testUser, q1, "Zeke");
-		SecurityAnswer a2 = new SecurityAnswer(testUser, q2, "Grisha");
-		List<SecurityAnswer> securityQuestions = new ArrayList<>();
-		securityQuestions.add(a1);
-		securityQuestions.add(a2);
+		User tryLogin = userService.getLogin(user.getUsername(), user.getPassword());
 
-		testUser = new User(firstName, lastName, lastName, email, password, securityQuestions);
-		return userService.createUser(testUser);
-	}
-
-	@PostMapping(value = "/login", produces = "application/json", consumes = "application/json")
-	public User login(@RequestBody User user) {
-		User testUser = userService.getUserByEmail(user.getEmail());
-
-		if (testUser == null || !testUser.getPassword().equals(user.getPassword())) {
-			return null;
+		if (tryLogin.equals(null)) {
+			System.out.println("failed");
+			return "redirect: /html/welcome.html";
 		}
 
-		return testUser;
+		session.setAttribute("loggedInAccount", tryLogin);
+		System.out.println(tryLogin);
+		return "redirect:/html/globalfeedpage.html";
 	}
 
 	/**
@@ -81,17 +57,18 @@ public class UserController {
 	 * @Author Dillon Meier
 	 * @return URI redirect String
 	 */
-	@PostMapping(value = "/register")
+	@PostMapping(value = "/register1")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public String register(HttpSession session, @RequestBody User user) {
-
+		System.out.println(user);
 		User newUser = userService.createUser(user);
-
-		if (newUser != null) {
+		User test = new User();
+		if (!newUser.equals(test)) {
 			session.setAttribute("loggedInAccount", newUser);
-			return "redirect: /home.html";
+			System.out.println(session.getAttribute("loggedInAccount"));
+			return "redirect:/html/globalfeedpage.html";
 		} else {
-			return "redirect: /index.html";
+			return "";
 		}
 	}
 
@@ -106,19 +83,27 @@ public class UserController {
 	 * @Return void
 	 */
 	@PostMapping(value = "/updateUserDetails")
-	@ResponseStatus(code = HttpStatus.ACCEPTED)
-	public void updateUser(HttpSession session, @RequestBody User user) {
-		user.setId(((User) session.getAttribute("loggedInAccount")).getId());
-		System.out.println(user);
+	public String updateUser(HttpSession session, @RequestBody User user) {
+		User temp = (User) session.getAttribute("loggedInAccount");
+		System.out.println(temp + "   1");
+		String password = user.getPassword();
+		String bio = user.getBio();
+		if (password != null) {
+			temp.setPassword(password);
+		}
+		if (bio != null) {
+			temp.setBio(bio);
+		}
 
-		User updatedUser = userService.updateUser(user);
-		System.out.println(updatedUser);
+		User updatedUser = userService.updateUser(temp);
+		System.out.println(updatedUser + "   2");
 
 		session.setAttribute("loggedInAccount", updatedUser);
 		System.out.println(session.getAttribute("loggedInAccount"));
+
+		return "redirect:/html/globalfeedpage.html";
 	}
-	
-	
+
 	/**
 	 * This method receives current session information, a MultipartFile object
 	 * containing the uploaded image, and a model interface to add a message
@@ -133,9 +118,10 @@ public class UserController {
 	 * @param
 	 */
 	@PostMapping("/upload")
-	public String uploadProfilePic(HttpSession session, @RequestParam("file") MultipartFile multipart, Model model) {
-		session.setAttribute("Session Id", 1);
-		
+	@ResponseStatus(code = HttpStatus.ACCEPTED)
+	public String uploadProfilePic(HttpSession session, @RequestBody @RequestParam("file") MultipartFile multipart) {
+	
+
 		String fileName = multipart.getOriginalFilename();
 
 		System.out.println("File name: " + fileName);
@@ -143,13 +129,37 @@ public class UserController {
 		String message = "";
 
 		try {
+			System.out.println("in try block");
 			message = S3Controller.uploadPic("ProfilePic", fileName, multipart.getInputStream(), session);
-		} 
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			message = "Error uploading file: " + ex.getMessage();
+			System.out.println("in catch block");
 		}
-		
-		model.addAttribute("message", message);
-		return "message";
+		System.out.println(message);
+		return message;
+	}
+
+	/**
+	 * This method receives session information and returns a list of all
+	 * users/friends excluding the logged in user.
+	 * 
+	 * @Author Dillon Meier
+	 * @param session
+	 * @return
+	 */
+	@PostMapping("/friends")
+	public String getAllFriends(@RequestBody User user, Model model) {
+		// User currentUser = (User) session.getAttribute("loggedInUser");
+		List<User> list = userService.getAllUsers(user);
+		model.addAttribute("friends", null);
+		model.addAttribute("friends", list);
+		return "friends";
+	}
+
+	@GetMapping("/logout")
+	public String logOut(HttpServletRequest req) {
+		req.getSession().invalidate();
+		System.out.println("now signed out");
+		return "redirect:/html/welcome.html";
 	}
 }
