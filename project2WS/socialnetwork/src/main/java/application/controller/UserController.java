@@ -31,16 +31,12 @@ public class UserController {
 	public UserController(UserService service) {
 		this.userService = service;
 	}
-	
-
-	
 
 	@PostMapping(value = "/login")
-	public String loginAttempt(HttpSession session,@RequestBody User user) {
+	public String loginAttempt(HttpSession session, @RequestBody User user) {
 
 		User tryLogin = userService.getLogin(user.getUsername(), user.getPassword());
-	
-		
+
 		if (tryLogin.equals(null)) {
 			System.out.println("failed");
 			return "redirect: /html/welcome.html";
@@ -64,14 +60,15 @@ public class UserController {
 	@PostMapping(value = "/register1")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public String register(HttpSession session, @RequestBody User user) {
-
+		System.out.println(user);
 		User newUser = userService.createUser(user);
-
-		if (newUser != null) {
+		User test = new User();
+		if (!newUser.equals(test)) {
 			session.setAttribute("loggedInAccount", newUser);
-			return "redirect: /html/home.html";
+			System.out.println(session.getAttribute("loggedInAccount"));
+			return "redirect:/html/globalfeedpage.html";
 		} else {
-			return "redirect: /html/index.html";
+			return "";
 		}
 	}
 
@@ -86,16 +83,15 @@ public class UserController {
 	 * @Return void
 	 */
 	@PostMapping(value = "/updateUserDetails")
-	@ResponseStatus(code = HttpStatus.ACCEPTED)
-	public void updateUser(HttpSession session, @RequestBody User user) {
+	public String updateUser(HttpSession session, @RequestBody User user) {
 		User temp = (User) session.getAttribute("loggedInAccount");
 		System.out.println(temp + "   1");
 		String password = user.getPassword();
 		String bio = user.getBio();
-		if(password!=null) {
+		if (password != null) {
 			temp.setPassword(password);
 		}
-		if(bio!=null) {
+		if (bio != null) {
 			temp.setBio(bio);
 		}
 
@@ -104,10 +100,10 @@ public class UserController {
 
 		session.setAttribute("loggedInAccount", updatedUser);
 		System.out.println(session.getAttribute("loggedInAccount"));
-	}
-	
 
-	
+		return "redirect:/html/globalfeedpage.html";
+	}
+
 	/**
 	 * This method receives current session information, a MultipartFile object
 	 * containing the uploaded image, and a model interface to add a message
@@ -124,7 +120,7 @@ public class UserController {
 	@PostMapping("/upload")
 	public String uploadProfilePic(HttpSession session, @RequestParam("file") MultipartFile multipart, Model model) {
 		session.setAttribute("Session Id", 1);
-		
+
 		String fileName = multipart.getOriginalFilename();
 
 		System.out.println("File name: " + fileName);
@@ -133,11 +129,10 @@ public class UserController {
 
 		try {
 			message = S3Controller.uploadPic("ProfilePic", fileName, multipart.getInputStream(), session);
-		} 
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			message = "Error uploading file: " + ex.getMessage();
 		}
-		
+
 		model.addAttribute("message", message);
 		return "message";
 	}
@@ -151,14 +146,14 @@ public class UserController {
 	 * @return
 	 */
 	@PostMapping("/friends")
-	public String getAllFriends(@RequestBody User user, Model model){
-	//	User currentUser = (User) session.getAttribute("loggedInUser");
+	public String getAllFriends(@RequestBody User user, Model model) {
+		// User currentUser = (User) session.getAttribute("loggedInUser");
 		List<User> list = userService.getAllUsers(user);
 		model.addAttribute("friends", null);
 		model.addAttribute("friends", list);
 		return "friends";
 	}
-	
+
 	@PostMapping("logout")
 	public String logOut(HttpServletRequest req) {
 		req.getSession().invalidate();

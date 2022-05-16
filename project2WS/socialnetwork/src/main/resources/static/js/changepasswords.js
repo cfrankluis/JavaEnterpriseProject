@@ -1,10 +1,9 @@
 window.onload = function () {
-    document.getElementById("back").addEventListener("click", previousPage);
     document.getElementById("reset").addEventListener("click", changePassword);
 }
 
-function previousPage() {
-    window.history.back();
+function Previous() {
+    window.history.back()
 }
 
 function changePassword() {
@@ -27,14 +26,15 @@ function changePassword() {
         //this is the response 
         xhttp.onreadystatechange = function () {
             console.log("readyState is changing: ", xhttp.readyState);
-
-            if (xhttp.readyState == 4 && xhttp.status == 200) {
-                console.log("readyState is 4!!! AND status is 200!!!");
-                alert("Password updated successfully!!!");
-                location.assign("http://localhost:9022/globalfeedpage.html");
-            }
-            else{
-                alert("Password failed to update!");
+            if (xhttp.readyState == 4) {
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                    console.log("readyState is 4!!! AND status is 200!!!");
+                    alert("Password updated successfully!!!");
+                    location.assign(xhttp.responseURL);
+                }
+                else {
+                    alert("Password failed to update!");
+                }
             }
         }
         data = JSON.stringify(newPass);
