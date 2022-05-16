@@ -155,8 +155,9 @@ public class PostController {
 	}
 	
 	@GetMapping(value="/commentbypost", produces="application/json")
-	public List<Comment> getCommentByPost(@RequestBody Post post){
-		post = postService.getPostById(post.getPostId());
+	public List<Comment> getCommentByPost(int id){
+		Post post = postService.getPostById(id);
+		
 		return post.getComments();
 	}
 

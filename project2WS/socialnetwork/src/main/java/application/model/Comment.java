@@ -49,7 +49,7 @@ public class Comment {
 	
 
 	
-	@JsonIgnoreProperties(value={"username","password","email","hibernateLazyInitializer", "handler"}, allowSetters= true)
+	@JsonIgnoreProperties(value={"password","hibernateLazyInitializer", "handler"}, allowSetters= true)
 	@ManyToOne(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
 	@JoinColumn(name="user_FK")
 	private User author;

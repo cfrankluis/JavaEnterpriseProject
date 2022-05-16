@@ -15,7 +15,7 @@
 	<name>socialnetwork</name>
 	<description>Revature’s Social Network</description>
 	<properties>
-		<java.version>14</java.version>
+		<java.version>11</java.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>

@@ -62,16 +62,12 @@ public class User {
 	@OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
 	private List<Comment> comments;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	private List<SecurityAnswer> securityQuestions;
-
 	// Reference Objects
 	@OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
 	private List<Post> posts;
 
 	// Session ACCOUNT CONSTRUCTOR
 	public User(int id, String firstName, String lastName, String username, String email, String password, String bio) {
-		super();
 		this.userId = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -82,21 +78,8 @@ public class User {
 
 	}
 
-	public User(int id, String firstName, String lastName, String username, String email, String password, String bio,
-			List<SecurityAnswer> securityQuestions) {
-		super();
-		this.userId = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.username = username;
-		this.email = email;
-		this.password = password;
-		this.bio = bio;
-		this.securityQuestions = securityQuestions;
-	}
 
 	public User(String firstName, String lastName, String username, String email, String password, String bio) {
-		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.username = username;
