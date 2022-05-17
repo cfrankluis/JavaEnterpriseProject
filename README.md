@@ -49,7 +49,7 @@ To-do list:
 
 ## Contributors
 
-> Frank Carag
-> Dillon Meier
-> Gibbons Alty
+- Frank Carag
+- Dillon Meier
+- Gibbons Alty
 
