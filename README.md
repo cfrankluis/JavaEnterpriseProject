@@ -29,10 +29,10 @@ List of features ready and TODOs for future development
 ## Getting Started
 
 1. Create an AWS Account and create an EC2 instance https://aws.amazon.com/premiumsupport/knowledge-center/launch-instance-custom-ami/
-2. In AWS, create an RDS database
-3. datachanPassword : ‘your password here’
-4. datachanURL : ‘your data base End point here’
-5. datechanUsername : ‘your base username’
+2. In AWS, create an RDS database 
+   1. datachanPassword : ‘your password here’
+   2. datachanURL : ‘your data base End point here’
+   3. datechanUsername : ‘your base username’
 
 6. Set up S3 Bucket
 7. Clone this git repository `git clone https://github.com/cfrankluis/JavaEnterpriseProject.git`
