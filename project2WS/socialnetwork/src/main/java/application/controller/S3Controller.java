@@ -5,6 +5,7 @@ import java.io.InputStream;
 
 import javax.servlet.http.HttpSession;
 
+import application.model.User;
 import software.amazon.awssdk.awscore.exception.AwsServiceException;
 import software.amazon.awssdk.core.exception.SdkClientException;
 import software.amazon.awssdk.core.sync.RequestBody;
@@ -44,14 +45,17 @@ public class S3Controller {
 			throws S3Exception, AwsServiceException, SdkClientException, IOException {
 		String newFileName;
 		
+		User user = (User)session.getAttribute("loggedInAccount");
+		int id = user.getUserId();
+		
 		if (type.contentEquals("ProfilePic")) {
 			newFileName = "ProfilePics/" 
-						+ session.getAttribute("Session Id").toString() 
+						+ id
 						+ "/ProfilePic" 
 						+ fileName.substring(fileName.length()-4);
 		}
 		else {
-			newFileName = "PostPics/" + session.getAttribute("Session Id").toString() + "/" + fileName;
+			newFileName = "PostPics/" + id + "/" + fileName;
 		}
 		
 		

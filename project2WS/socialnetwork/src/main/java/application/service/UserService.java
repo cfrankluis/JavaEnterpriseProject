@@ -39,7 +39,6 @@ public class UserService {
 		if (user1 == null && user2 == null) {
 			return dao.save(user);
 		} else {
-			System.out.println("Account creation failed.");
 			return null;
 		}
 	}
@@ -74,6 +73,9 @@ public class UserService {
 	public User getUserByEmail(String email) {
 		return dao.findByEmail(email);
 	}
+	public User getUserByUsername(String email) {
+		return dao.findByUsername(email);
+	}
 
 	public User getUserById(int id) {
 		return dao.getById(id);
@@ -88,10 +90,6 @@ public class UserService {
 			return null;
 		}
 
-	}
-
-	public User getUserByUsername(String username) {
-		return dao.findByUsername(username);
 	}
 	
 }

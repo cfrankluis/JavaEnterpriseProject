@@ -5,11 +5,18 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
 import org.springframework.ui.Model;
+=======
+>>>>>>> cbf18eba3886381192e82e6b1996bf6662ddcbd4
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+<<<<<<< HEAD
+=======
+import org.springframework.web.bind.annotation.ResponseBody;
+>>>>>>> cbf18eba3886381192e82e6b1996bf6662ddcbd4
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,6 +49,7 @@ public class PostController {
 	 * @Author Dillon Meier
 	 * @param
 	 */
+<<<<<<< HEAD
 	@PostMapping("/post")
 	public String uploadPost(HttpSession session, String description, @RequestParam("file") MultipartFile multipart,
 			Model model) {
@@ -80,6 +88,9 @@ public class PostController {
 		return "message";
 
 	}
+=======
+	
+>>>>>>> cbf18eba3886381192e82e6b1996bf6662ddcbd4
 
 	
 	//GET RID OF THIS METHOD ONCE WE CAN

@@ -33,14 +33,15 @@ public class PostService {
 	 * 
 	 */
 	public void createPost(HttpSession session, String description, String imgUrl) {
+		User user = (User)session.getAttribute("loggedInAccount");
+		int i = user.getUserId();
 		
-		session.setAttribute("loggedinUser", new User(1, "dillon", "meier", "abc", "abc.123@youNme.com", "123", null));
 		
-		if(imgUrl.contentEquals("https://buckylebucket.s3.us-east-2.amazonaws.com/PostPics/"+ session.getAttribute("Session Id").toString() +"/")) {
+		if(imgUrl.contentEquals("https://buckylebucket.s3.us-east-2.amazonaws.com/PostPics/"+ i +"/")) {
 			String blankUrl = null;
 			imgUrl = blankUrl;
 		}
-		User currentUser = (User)session.getAttribute("loggedinUser");
+		User currentUser = (User)session.getAttribute("loggedInAccount");
 		Post post = new Post(description, imgUrl, currentUser);
 		
 		dao.save(post);

@@ -1,16 +1,18 @@
 window.onload = function(){
-    console.log("start")
-    document.getElementById("myEmailBtn").addEventListener("click", forgotPassword);
+    document.getElementById("resetpw").addEventListener("click", forgotPassword);
+}
+
+function Previous() {
+    window.history.back()
 }
 
 
-
 function forgotPassword(){
-    let myEmail = document.getElementById("exampleInputEmail").value;
-    console.log(myEmail)
+    let myEmail = document.getElementById("email").value;
+
       
     let user = {
-        email : myEmail
+        "email" : myEmail
     }
     //step 1
       let xhttp = new XMLHttpRequest();
@@ -23,10 +25,13 @@ function forgotPassword(){
         console.log("readyState is changing: ", xhttp.readyState);
         
         if(xhttp.readyState==4 && xhttp.status ==200){
-            console.log("readyState is 4!!! AND status is 200!!!");
-            console.log("my response: " + xhttp.responseText);
-
-            window.location.href = JSON.parse(xhttp.responseText);
+            alert(xhttp.responseText);
+            if(xhttp.responseText === "A password reset link has been emailed to you"){
+                location.assign("http://localhost:9022/html/welcome.html");
+            }
+            if(xhttp.responseText === "Email Address could not be found; Try again"){
+                location.reload();
+            }
         }
     }
     

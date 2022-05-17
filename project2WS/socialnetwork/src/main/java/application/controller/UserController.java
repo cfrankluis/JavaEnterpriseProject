@@ -1,7 +1,6 @@
 
 package application.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import application.model.Post;
 import application.model.User;
 import application.service.UserService;
+import application.toolbox.Verification;
 
 @Controller
 @RequestMapping
@@ -33,23 +33,19 @@ public class UserController {
 	public UserController(UserService service) {
 		this.userService = service;
 	}
-	
-
-	
 
 	@PostMapping(value = "/login")
-	public String loginAttempt(HttpSession session,@RequestBody User user) {
+	public String loginAttempt(HttpSession session, @RequestBody User user) {
 
 		User tryLogin = userService.getLogin(user.getUsername(), user.getPassword());
-	
-		
+
 		if (tryLogin.equals(null)) {
 			System.out.println("failed");
 			return "redirect: /html/welcome.html";
 		}
 
 		session.setAttribute("loggedInAccount", tryLogin);
-		System.out.println(tryLogin);
+		System.out.println("Account signed in: " + tryLogin);
 		return "redirect:/html/globalfeedpage.html";
 	}
 
@@ -65,16 +61,25 @@ public class UserController {
 	 */
 	@PostMapping(value = "/register1")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public String register(HttpSession session, @RequestBody User user) {
-
+	public @ResponseBody String register(HttpSession session, @RequestBody User user) {
+		String message;
+		if (user.getFirstName().isBlank() || user.getLastName().isBlank() || user.getEmail().isBlank()
+				|| user.getUsername().isBlank() || user.getPassword().isBlank()) {
+			message = "Field values cannot be blank.";
+			return message;
+		}
+		if (!Verification.checkUserInput(user.getEmail())) {
+			message = "Please enter a valid email address.";
+			return message;
+		}
 		User newUser = userService.createUser(user);
-
 		if (newUser != null) {
 			session.setAttribute("loggedInAccount", newUser);
-			return "redirect: /html/home.html";
+			message = "Account Creation Sucessfull!!!";
 		} else {
-			return "redirect: /html/index.html";
+			message = "Account Creation failed...";
 		}
+		return message;
 	}
 
 	/**
@@ -88,16 +93,15 @@ public class UserController {
 	 * @Return void
 	 */
 	@PostMapping(value = "/updateUserDetails")
-	@ResponseStatus(code = HttpStatus.ACCEPTED)
-	public void updateUser(HttpSession session, @RequestBody User user) {
+	public String updateUser(HttpSession session, @RequestBody User user) {
 		User temp = (User) session.getAttribute("loggedInAccount");
 		System.out.println(temp + "   1");
 		String password = user.getPassword();
 		String bio = user.getBio();
-		if(password!=null) {
+		if (password != null) {
 			temp.setPassword(password);
 		}
-		if(bio!=null) {
+		if (bio != null) {
 			temp.setBio(bio);
 		}
 
@@ -106,10 +110,10 @@ public class UserController {
 
 		session.setAttribute("loggedInAccount", updatedUser);
 		System.out.println(session.getAttribute("loggedInAccount"));
-	}
-	
 
-	
+		return "redirect:/html/globalfeedpage.html";
+	}
+
 	/**
 	 * This method receives current session information, a MultipartFile object
 	 * containing the uploaded image, and a model interface to add a message
@@ -124,9 +128,10 @@ public class UserController {
 	 * @param
 	 */
 	@PostMapping("/upload")
-	public String uploadProfilePic(HttpSession session, @RequestParam("file") MultipartFile multipart, Model model) {
-		session.setAttribute("Session Id", 1);
-		
+	@ResponseStatus(code = HttpStatus.ACCEPTED)
+	public @ResponseBody String uploadProfilePic(HttpSession session,
+			@RequestBody @RequestParam("file") MultipartFile multipart) {
+
 		String fileName = multipart.getOriginalFilename();
 
 		System.out.println("File name: " + fileName);
@@ -134,56 +139,55 @@ public class UserController {
 		String message = "";
 
 		try {
+
+			System.out.println("in try block");
 			message = S3Controller.uploadPic("ProfilePic", fileName, multipart.getInputStream(), session);
-		} 
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			message = "Error uploading file: " + ex.getMessage();
+			System.out.println("in catch block");
 		}
-		
-		model.addAttribute("message", message);
-		return "message";
+		System.out.println(message);
+		return message;
 	}
 
-	
-	
 	/**
 	 * returns the user that is currently logged in
+	 * 
 	 * @param session
 	 * @return
 	 * @Auther Gibbons
 	 */
 	@GetMapping("/currentUser")
 	public @ResponseBody User curentUser(HttpSession session) {
-////		public User(String firstName, String lastName, String username, String email, String password
-//		User userTest = new User("bob", "test", "asdf", "asdf@test.com", "password", null);//Dumby user
-//		userTest.setUserId(1);
-//		userTest.setBio("go away");
-		
-		User userTest = userService.getUserById(1);//dumby user
-		
+		//// public User(String firstName, String lastName, String username, String
+		//// email, String password
+		// User userTest = new User("bob", "test", "asdf", "asdf@test.com", "password",
+		//// null);//Dumby user
+		// userTest.setUserId(1);
+		// userTest.setBio("go away");
+
+		User userTest = userService.getUserById(1);// dumby user
+
 		List<Post> post = new ArrayList<Post>();
-		
+
 		Post post1 = new Post("first post", "image @", userTest);
 		post.add(post1);
-		
+
 		Post post2 = new Post("second post", "image @", userTest);
 		post.add(post2);
-		
+
 		Post post3 = new Post("last post", "image @", userTest);
 		post.add(post3);
-		
+
 		userTest.setPosts(post);
 
-		
-		session.setAttribute("loggedInAccount", userTest);//Dumby logic
+		session.setAttribute("loggedInAccount", userTest);// Dumby logic
 
-		
 		User user = (User) session.getAttribute("loggedInAccount");
 		System.out.println(user);
 		System.out.println(" back to js");
 		return user;
 	}
-
 
 	/**
 	 * This method receives session information and returns a list of all
@@ -194,17 +198,17 @@ public class UserController {
 	 * @return
 	 */
 	@PostMapping("/friends")
-	public String getAllFriends(@RequestBody User user, Model model){
-	//	User currentUser = (User) session.getAttribute("loggedInUser");
-		List<User> list = userService.getAllUsers(user);
-		model.addAttribute("friends", null);
-		model.addAttribute("friends", list);
-		return "friends";
+
+	public @ResponseBody User getAllFriends(@RequestBody User user) {
+		User newUser = userService.getAllUser(user);
+		return newUser;
 	}
-	
-	@PostMapping("logout")
+
+	@GetMapping("/logout")
 	public String logOut(HttpServletRequest req) {
+		User userSigningOut = (User)req.getSession().getAttribute("loggedInAccount");
 		req.getSession().invalidate();
-		return "redirect: /index.html";
+		System.out.println("User signed out: " + userSigningOut);
+		return "redirect:/html/welcome.html";
 	}
 }

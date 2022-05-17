@@ -13,8 +13,8 @@ function newPassword(){
     let myUsername = document.getElementById("username").value;
       
     let user = {
-        password : myPassword,
-        username : myUsername
+        "password" : myPassword,
+        "username" : myUsername
     }
     //step 1
       let xhttp = new XMLHttpRequest();
@@ -28,9 +28,13 @@ function newPassword(){
         
         if(xhttp.readyState==4 && xhttp.status ==200){
             console.log("readyState is 4!!! AND status is 200!!!");
-            console.log("my response: " + xhttp.responseText);
-
-            
+            alert(xhttp.responseText);
+            if(xhttp.responseText = "Username did not match any records"){
+                location.reload();
+            }
+            if(xhttp.responseText = "Password Sucessfully Reset!"){
+                location.assign("http://localhost:9022/html/welcome.html");
+            }
         }
     }
     

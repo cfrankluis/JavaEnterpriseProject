@@ -25,14 +25,22 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "user_table")
 @JsonIgnoreProperties(value = { "comments", "securityQuestions", "hibernateLazyInitializer",
-		"handler" }, allowSetters = true)
+"handler" }, allowSetters = true)
 public class User {
-
+	
 	private String page;
 	private boolean loggedIn;
-
+	/**
+	 * for password reset
+	 * @param email
+	 */
+	public User(String email) {
+		super();
+		this.email = email;
+	}
+	
 	// Required Columns
-
+	
 	@Id
 	@Column(name = "user_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,9 +70,6 @@ public class User {
 	@OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
 	private List<Comment> comments;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	private List<SecurityAnswer> securityQuestions;
-
 	// Reference Objects
 	@OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
 	private List<Post> posts;
@@ -80,19 +85,6 @@ public class User {
 		this.password = password;
 		this.bio = bio;
 
-	}
-
-	public User(int id, String firstName, String lastName, String username, String email, String password, String bio,
-			List<SecurityAnswer> securityQuestions) {
-		super();
-		this.userId = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.username = username;
-		this.email = email;
-		this.password = password;
-		this.bio = bio;
-		this.securityQuestions = securityQuestions;
 	}
 
 	public User(String firstName, String lastName, String username, String email, String password, String bio) {
@@ -116,65 +108,6 @@ public class User {
 		this.email = email;
 	}
 	
-	
-	/**
-	 * for password reset
-	 * @param email
-	 */
-	public User(String email) {
-		this.email = email;
-	}
-	
-	
-	
-	
-	
-	
-	
-
-	// Getters and Setters
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public void setPage(String page) {
-		this.page = page;
-	}
-
-	public String getUsername() {
-		return this.username;
-	}
-
-	public void setLoggedIn(boolean loggedIn) {
-		this.loggedIn = loggedIn;
-	}
-
-	public String getPassword() {
-		return this.password;
-	}
-
-	public String getPage() {
-		return this.page;
-	}
-
-	public String getEmail() {
-		return this.email;
-	}
-
-	public boolean getLoggedIn() {
-		return this.loggedIn;
-	}
-
-// Overrides
-	
 
 	@Override
 	public boolean equals(Object obj) {
@@ -195,8 +128,14 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "\nUser [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", username="
-				+ username + ", email=" + email + ", password=" + password + ", bio=" + bio + "]";
+		return "\tUser [userId=" + userId + ", username=" + username + ", email=" + email + ", password=" + password
+				+ ", firstName=" + firstName + ", lastName=" + lastName + ", bio=" + bio + ", loggedIn=" + loggedIn
+				+ ", confirmed=" + confirmed + ", page=" + page + "]";
 	}
+
+	
+	
+
+
 
 }
