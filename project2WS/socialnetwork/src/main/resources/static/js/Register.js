@@ -23,7 +23,7 @@ function registerUser() {
     }
 
     let xhttp = new XMLHttpRequest();
-    xhttp.open('Post', `http://localhost:9022/register1`);
+    xhttp.open('Post', `http://54.226.130.109:9022/register1`);
     xhttp.setRequestHeader("Accept", "application/json");
     xhttp.setRequestHeader("Content-Type", "application/json");
 
