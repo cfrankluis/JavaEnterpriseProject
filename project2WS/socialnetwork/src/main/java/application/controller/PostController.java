@@ -5,11 +5,11 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,44 +42,7 @@ public class PostController {
 	 * @Author Dillon Meier
 	 * @param
 	 */
-	@PostMapping("/post")
-	public String uploadPost(HttpSession session, String description, @RequestParam("file") MultipartFile multipart,
-			Model model) {
-		session.setAttribute("Session Id", 1);
-
-		String fileName = multipart.getOriginalFilename();
-		String imgUrl = "https://buckylebucket.s3.us-east-2.amazonaws.com/PostPics/"
-				+ session.getAttribute("Session Id").toString() + "/" + fileName;
-
-		System.out.println("Description: " + description);
-		System.out.println("File name: " + fileName);
-
-		String message = "";
-
-		try {
-			message = S3Controller.uploadPic("PostPic", fileName, multipart.getInputStream(), session);
-				if(message.contentEquals("Your file has been uploaded Successfully!")) {
-					postService.createPost(session, description, imgUrl);
-					System.out.println(message);
-				}
-				else {
-					message = "Post could not be uploaded: " + message;
-					System.out.println(message);
-				
-				}
-			
-		} catch (Exception ex) {
-			message = "Error uploading file: " + ex.getMessage();
-			System.out.println(message);
-		
-		}
-
-		model.addAttribute("message", message);
-		System.out.println(message);
 	
-		return "message";
-
-	}
 
 	
 	//GET RID OF THIS METHOD ONCE WE CAN
