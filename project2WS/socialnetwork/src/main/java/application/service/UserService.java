@@ -64,10 +64,9 @@ public class UserService {
 	 * @param user
 	 * @return
 	 */
-	public List<User> getAllUsers(User user) {
-		List<User> allUsers = dao.findAll();
-		allUsers.remove(user.getUserId() - 1);
-		return allUsers;
+	public User getAllUser(User user) {
+		User returnUser = dao.findByUsername(user.getUsername());
+		return returnUser;
 	}
 
 	public User getUserByEmail(String email) {

@@ -159,12 +159,9 @@ public class UserController {
 	 * @return
 	 */
 	@PostMapping("/friends")
-	public String getAllFriends(@RequestBody User user, Model model) {
-		// User currentUser = (User) session.getAttribute("loggedInUser");
-		List<User> list = userService.getAllUsers(user);
-		model.addAttribute("friends", null);
-		model.addAttribute("friends", list);
-		return "friends";
+	public @ResponseBody User getAllFriends(@RequestBody User user) {
+		User newUser = userService.getAllUser(user);
+		return newUser;
 	}
 
 	@GetMapping("/logout")
