@@ -23,8 +23,15 @@ public class PageController {
 		return "/html/profilepage.html";
 	}
 	
-//	@GetMapping("/forgot-password")
-//	public String forgotPassword() {
-//		return "/html/forgot-password.html";
+	@GetMapping("/forgot-password")
+	public String forgotPassword() {
+		return "/html/forgot-password.html";
+	}
+	
+//	@GetMapping("/confirm-account/*")
+//	public String accountConfirmed() {
+//		
 //	}
+
+
 }

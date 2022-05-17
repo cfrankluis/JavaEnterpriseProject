@@ -154,14 +154,15 @@ public class UserController {
 	 */
 	@GetMapping("/currentUser")
 	public @ResponseBody User curentUser(HttpSession session) {
-		System.out.println("in current user");
-//		public User(String firstName, String lastName, String username, String email, String password
-		User userTest = new User("bob", "test", "asdf", "asdf@test.com", "password", null);//Dumby user
-		userTest.setUserId(1);
-		userTest.setBio("go away");
+////		public User(String firstName, String lastName, String username, String email, String password
+//		User userTest = new User("bob", "test", "asdf", "asdf@test.com", "password", null);//Dumby user
+//		userTest.setUserId(1);
+//		userTest.setBio("go away");
+		
+		User userTest = userService.getUserById(1);//dumby user
+		
 		List<Post> post = new ArrayList<Post>();
 		
-//		Post(String content, String img, User author)
 		Post post1 = new Post("first post", "image @", userTest);
 		post.add(post1);
 		
@@ -172,11 +173,10 @@ public class UserController {
 		post.add(post3);
 		
 		userTest.setPosts(post);
-		session.setAttribute("loggedInAccount", userTest);//Dumby logic
+
 		
-		System.out.println(userTest.getPosts().get(0));
-		System.out.println(userTest.getPosts().get(1));
-		System.out.println(userTest.getPosts().get(2));
+		session.setAttribute("loggedInAccount", userTest);//Dumby logic
+
 		
 		User user = (User) session.getAttribute("loggedInAccount");
 		System.out.println(user);

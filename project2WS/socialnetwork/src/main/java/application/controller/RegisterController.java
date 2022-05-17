@@ -1,7 +1,13 @@
 package application.controller;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +44,7 @@ public class RegisterController {
 //		session.setViewName("register");
 //		return session;
 //	}
-	
+//	
 	@PostMapping(value="/register")
 	public void sendEmailLink(@RequestBody User sentUser) {
 		Confirmation confirmationToken = new Confirmation(sentUser);
@@ -54,26 +60,18 @@ public class RegisterController {
 
         emailService.sendEmail(mailMessage);
 	}	
+
 	
-	@RequestMapping(value="/confirm-account/*", method= {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView confirmUserAccount(ModelAndView modelAndView, @RequestParam("token")String confirmationToken){
-
-		Confirmation token = confirmationService.findByConfirmationToken(confirmationToken);
-
-        if(token != null){
-        	User user = userService.getUserByEmail(token.getUser().getEmail());
-        	user.setConfirmed(true);
-        	userService.createUser(user);
-            
-        	token.setConfirmationToken(null);
-            
-        }
-        else{
-            modelAndView.addObject("message","The link is invalid or broken!");
-            modelAndView.setViewName("error");
-        }
-
-        return modelAndView;
-    }
+	@GetMapping(value = "/confirm-account/*", params= {"token"} )
+	public void confirmUserAccount( String token, HttpSession session, HttpServletResponse response) throws IOException {
+		System.out.println(token);
+		Confirmation theToken = confirmationService.findByConfirmationToken(token);
+		User user = userService.getUserByEmail(theToken.getUser().getEmail());
+	    session.setAttribute("token", theToken);
+	    if (user == null) {
+	    	session.setAttribute("message", "Invalid Token");
+	    }
+	    response.sendRedirect("http://localhost:9022/html/welcome.html");// send them to the html page. that will reference the "processResetPassword" method
+	}
 	
 }

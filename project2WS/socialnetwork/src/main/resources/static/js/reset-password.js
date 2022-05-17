@@ -29,6 +29,8 @@ function newPassword(){
         if(xhttp.readyState==4 && xhttp.status ==200){
             console.log("readyState is 4!!! AND status is 200!!!");
             console.log("my response: " + xhttp.responseText);
+
+            
         }
     }
     

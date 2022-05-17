@@ -7,9 +7,17 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 	<link href="/css/FakeBlock.css" rel="stylesheet">
+
+
+	<style>
+		nav {
+			position: fixed;
+			top: 0;
+		}
+	</style>
 </head>
 
-<body>
+<body style="position: relative; height: 100vh; margin: 0;">
 	<nav class="navbar navbar-expand-lg navbar-custom">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="#"><img src="/FakeBlockLogo/newerFB.jpg"></a>
@@ -45,23 +53,27 @@
 			</div>
 		</div>
 	</nav>
+	<div class="text-center" class="card" style="float:inline-start">
+		<div class="card-body">
 
-	<div class="username">
-		<h3 id="name">Username</h3>
-	</div>
-
-	<div class="ProfilePic">
-		<img id="ProfilePic" src="#">
-	</div>
-
-	<div class="bio">
-		<h3 id="bio">Bio loading</h3>
-	</div>
-
-	<div id="posts">
-		<h5 id="postsAuthor">Post author</h3><br><br>
-			<p id="postsContent">content</p><br><br>
-			<!-- <img id="postsImg" src ="#"> -->
+			<div class="username" class="card-title">
+				<h3 id="name">Username</h3>
+			</div>
+			
+			<div class="ProfilePic"  class="card-img-top" >
+				<img id="ProfilePic" src="#">
+			</div>
+			
+			<div class="bio" class="card-text">
+				<h3 id="bio" class="text-center" class="badge bg-primary text-wrap">Bio loading</h3>
+			</div>
+		</div>
+			
+		<div id="posts" class="text-center" class="list-group list-group-flush">
+			<h5 id="postsAuthor">Post author</h3><br><br>
+				<p id="postsContent">content</p><br><br>
+				<!-- <img id="postsImg" src ="#"> -->
+		</div>
 	</div>
 
 
