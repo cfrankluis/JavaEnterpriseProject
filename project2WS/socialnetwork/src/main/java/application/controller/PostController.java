@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,13 +44,11 @@ public class PostController {
 	 * @param
 	 */
 	@PostMapping("/post")
-	public String uploadPost(HttpSession session, String description, @RequestParam("file") MultipartFile multipart,
-			Model model) {
-		session.setAttribute("Session Id", 1);
+	public @ResponseBody String uploadPost(HttpSession session, @RequestBody String description, @RequestParam("file") MultipartFile multipart) {
 
 		String fileName = multipart.getOriginalFilename();
 		String imgUrl = "https://buckylebucket.s3.us-east-2.amazonaws.com/PostPics/"
-				+ session.getAttribute("Session Id").toString() + "/" + fileName;
+				+ ((User)session.getAttribute("loggedInAccount")).getUserId() + "/" + fileName;
 
 		System.out.println("Description: " + description);
 		System.out.println("File name: " + fileName);
@@ -74,26 +73,9 @@ public class PostController {
 		
 		}
 
-		model.addAttribute("message", message);
 		System.out.println(message);
 	
-		return "message";
-
-	}
-
-	
-	//GET RID OF THIS METHOD ONCE WE CAN
-	//GET A USER FROM A SESSION
-	private User sampleUser() {
-		User testUser = new User();
-		testUser.setUserId(1);
-		testUser.setEmail("email");
-		testUser.setFirstName("firstname");
-		testUser.setLastName("lastname");
-		testUser.setPassword("password");
-		testUser.setUsername("username");
-		
-		return testUser;
+		return message;
 	}
 	
 	/**
@@ -115,7 +97,7 @@ public class PostController {
 	 * @author Frank Carag
 	 */
 	@PostMapping(value="/postlike", consumes="application/json")
-	public Post likePost(@RequestBody Post post) {
+	public Post likePost(HttpSession session,@RequestBody Post post) {
 		/*
 		 * JSON BODY FORMAT
 		 * {
@@ -125,40 +107,17 @@ public class PostController {
 		
 		//REPLACE THIS USER OBJECT
 		//Get User info from the session attribute
-		User testUser = sampleUser();
-		testUser.setUserId(1);
+		User testUser = (User)session.getAttribute("loggedInAccount");
 		
 		//Get full information about the post
 		post = postService.getPostById(post.getPostId());
-		System.out.println(post.getLikers());
-		return postService.likePost(post, testUser);
-	}
-	
-	@PostMapping(value="/postlikeTwo", consumes="application/json")
-	public Post likePostTwo(@RequestBody Post post) {
-		/*
-		 * JSON BODY FORMAT
-		 * {
-		 * 	"id" : postId
-		 * }
-		 */		
-		
-		//REPLACE THIS USER OBJECT
-		//Get User info from the session attribute
-		User testUser = sampleUser();
-		testUser.setUserId(2);
-		
-		//Get full information about the post
-		post = postService.getPostById(post.getPostId());
-		System.out.println(post.getLikers());
 		return postService.likePost(post, testUser);
 	}
 	
 	@GetMapping(value="/commentbypost", produces="application/json")
 	public List<Comment> getCommentByPost(int id){
 		Post post = postService.getPostById(id);
-		
 		return post.getComments();
 	}
-
+	
 }

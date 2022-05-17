@@ -65,7 +65,7 @@ public class User {
 	// Reference Objects
 	@OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
 	private List<Post> posts;
-
+	
 	// Session ACCOUNT CONSTRUCTOR
 	public User(int id, String firstName, String lastName, String username, String email, String password, String bio) {
 		this.userId = id;

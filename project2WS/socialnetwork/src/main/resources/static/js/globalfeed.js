@@ -1,13 +1,4 @@
 'use strict'
-// let globalVars = {
-//     //USER INFO HERE
-//     user :{
-//         ID: 0,
-//         name : "testUser",
-//         firstname: "firstname",
-//         lastname: "lastname"
-//     }
-// }
 
 window.onload = function(){
     console.log("CONNECTED");
@@ -16,24 +7,7 @@ window.onload = function(){
     //generateTestPost(1);
 }
 
-function sendPost(){
-    let postContent = document.getElementById("postContent").value;
-    if(postContent ){
-        console.log("AJAX request here");
-         let xhttp = new XMLHttpRequest();
-         xhttp.onreadystatechange = function(){
-             if(xhttp.readyState==4 && xhttp.status ==200){
-                 let responseJson = JSON.parse(xhttp.responseText);
-                 generatePost(responseJson);        
-            }
-        }
-        xhttp.open('POST', "http://localhost:9022/post");
-        xhttp.send();
-    }
-}
-
 function getAllPost(){
-    console.log("AJAX request here");
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
         if(xhttp.readyState==4 && xhttp.status ==200){
@@ -47,6 +21,43 @@ function getAllPost(){
     }
     xhttp.open('GET', "http://localhost:9022/global");
     xhttp.send();
+}
+
+function sendPost(){
+    let postContent = document.getElementById("postContent").value;
+    if(postContent ){
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function(){
+             if(xhttp.readyState==4 && xhttp.status ==200){
+                 let responseJson = JSON.parse(xhttp.responseText);
+                 generatePost(responseJson);        
+            }
+        }
+        xhttp.open('POST', "http://localhost:9022/post");
+        xhttp.send();
+    }
+}
+
+function sendComment(id){
+    let commentInput = document.getElementById(id+"_comField").value;
+    if(commentInput){
+        console.log(commentInput);
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function(){
+            if(xhttp.readyState==4 && xhttp.status ==200){
+                let responseJson = JSON.parse(xhttp.responseText);
+                generateComment(responseJson, id);     
+           }
+       }
+
+       xhttp.open('POST', "http://localhost:9022/comment");
+       let commentToSend = {
+           "content" : commentInput,
+           "post" : {"postId":id}
+       }
+       xhttp.setRequestHeader("content-type", "application/json");
+       xhttp.send(JSON.stringify(commentToSend));
+    }
 }
 
 function getComments(id){
@@ -72,6 +83,7 @@ function showComments(id){
         getComments(id);
     } else {
         commentForm.hidden = true;
+        commentForm.querySelector("input").value = '';
         hideComments(id);
     }
 }
@@ -112,15 +124,20 @@ function generatePost(postObject){
     let likeBtn = post.querySelector(".likebtn");
     let numOfLikes = post.querySelector("span");
     let addCommentForm = post.querySelector(".addcomment");
-    
+    let commentBtn = addCommentForm.querySelector("button");
+    let commentField = addCommentForm.querySelector("input");
+
     postHeader.innerText = postObject.author.username;
     postBody.innerText = postObject.content;
-    postFooter.innerText = postObject.dateCreated;
+
+    postFooter.innerText = (new Date(postObject.dateCreated)).toDateString();
+    numOfLikes.innerText = postObject.numOfLikes;
 
     numOfLikes.setAttribute("id",postObject.postId+"_numOfLikes");
     commentCheck.setAttribute("id",postObject.postId+"_showCom");
     likeBtn.setAttribute("id",postObject.postId+"_like");
     addCommentForm.setAttribute("id",postObject.postId+"_form");
+    commentField.setAttribute("id",postObject.postId+"_comField");
 
     addCommentForm.hidden = true;
     commentCheck.addEventListener('change',function(){
@@ -128,8 +145,12 @@ function generatePost(postObject){
     })
 
     likeBtn.addEventListener('click',function(){
-        likePost(postObject.postId);
+        sendLike(postObject.postId);
     });
+
+    commentBtn.addEventListener('click',function(){
+        sendComment(postObject.postId);
+    })
 
     let commentContainer = document.createElement("ul");
     commentContainer.setAttribute("class","list-group list-group-flush");
@@ -139,10 +160,26 @@ function generatePost(postObject){
     postContainer.prepend(post);
 }
 
-function likePost(id){
+function sendLike(id){
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(xhttp.readyState===4 && xhttp.status ===200){
+            let likedPost = JSON.parse(xhttp.responseText);
+            likePost(likedPost,id);
+        }
+    }
+    xhttp.open('POST', 'http://localhost:9022/postlike');
+    xhttp.setRequestHeader("content-type", "application/json");
+    let postToLike = {
+        "postId":id
+    };
+    xhttp.send(JSON.stringify(postToLike));
+}
+
+function likePost(post,id){
     let likeBtn = document.getElementById(id+"_like");
     let numOfLikes = document.getElementById(id+"_numOfLikes");
-    likeBtn.innerText = "Liked";
-    likeBtn.disabled = true;
-    numOfLikes.innerText = 1;
+    likeBtn.innerText = "Unlike";
+    //likeBtn.disabled = true;
+    numOfLikes.innerText = post.numOfLikes;
 }

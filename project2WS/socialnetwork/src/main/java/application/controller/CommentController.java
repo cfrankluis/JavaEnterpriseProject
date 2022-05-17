@@ -1,5 +1,9 @@
 package application.controller;
 
+import java.util.Date;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,24 +37,24 @@ public class CommentController {
 		return testUser;
 	}
 	
-	@PostMapping(value="/comment", consumes="application/json")
-	public Comment makeComment(@RequestBody Comment comment) {
+	@PostMapping(value="/comment", consumes="application/json", produces="application/json")
+	public Comment makeComment(@RequestBody Comment comment, HttpSession session) {
 		/*
 		 * JSON FORMAT
 		 * {
 		 * "content": "test comment",
-		 * "post" : {"id" : 1}
+		 * "post" : {"postId" : 1}
 		 * }
 		 */
-		User testUser = sampleUser();
-		
+		User testUser = (User)session.getAttribute("loggedInAccount");
 		comment.setAuthor(testUser);
-		
+		comment.setDateCreated(new Date());
+
 		return commentService.createComment(comment);
 	}
 	
-	@PostMapping(value="/commlike", consumes="application/json")
-	public Comment likeComment(@RequestBody Comment comment) {
+	@PostMapping(value="/commlike", consumes="application/json", produces="application/json")
+	public Comment likeComment(HttpSession session,@RequestBody Comment comment) {
 		/*
 		 * JSON BODY FORMAT
 		 * {
@@ -60,7 +64,9 @@ public class CommentController {
 		
 		//REPLACE THIS USER OBJECT
 		//Get User info from the session attribute
-		User testUser = sampleUser();
+		User testUser = (User)session.getAttribute("loggedInAccount");
+		System.out.println(testUser);
+		System.out.println(comment);
 		
 		comment = commentService.getCommentById(comment.getId());
 		if(comment != null)
