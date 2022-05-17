@@ -32,7 +32,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name="comment_table")
-@JsonIgnoreProperties(value={"post","likers","hibernateLazyInitializer", "handler"}, allowSetters= true)
+@JsonIgnoreProperties(value={"likers","hibernateLazyInitializer", "handler"}, allowSetters= true)
 public class Comment {
 	
 	@Id
@@ -47,9 +47,7 @@ public class Comment {
 	@Column(name="date_created", nullable=false)
 	private Date dateCreated;
 	
-
-	
-	@JsonIgnoreProperties(value={"username","password","email","hibernateLazyInitializer", "handler"}, allowSetters= true)
+	@JsonIgnoreProperties(value={"password","hibernateLazyInitializer", "handler"}, allowSetters= true)
 	@ManyToOne(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
 	@JoinColumn(name="user_FK")
 	private User author;

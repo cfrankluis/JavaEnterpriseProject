@@ -81,6 +81,10 @@ public class Profanity {
 		}
 		return str;
 	}
+	
+	public static void main(String[] args) {
+		System.out.println(replaceBadWords("cuss"));
+	}
 
 	
 	

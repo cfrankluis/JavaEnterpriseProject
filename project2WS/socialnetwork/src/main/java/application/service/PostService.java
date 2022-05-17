@@ -62,14 +62,28 @@ public class PostService {
 	 * @author Frank Carag
 	 */
 	public Post likePost(Post post, User user) {
-		Set<User> likers = post.getLikers();
-
-		if(likers.contains(user)) {
-			likers.remove(user);
+		List<User> likers = post.getLikers();
+		
+		int currentUserId = user.getUserId();
+		boolean found = false;
+		int index = 0;
+		for(User liker : likers) {
+			if(liker.getUserId() == currentUserId) {
+				found = true;
+				break;
+			}else
+				index++;
+		}
+		System.out.println(found);
+		
+		if(found) {
+			System.out.println(likers.remove(index));
 		} else {
 			likers.add(user);
 		}
-			
+		
+		System.out.println(likers);
+		
 		post.setLikers(likers);
 			
 		return dao.save(post);

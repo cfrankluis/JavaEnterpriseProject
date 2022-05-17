@@ -3,6 +3,11 @@ server:
   port: 9022
 
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: socialmedianow63@gmail.com
+    password: bkswsjjigiakypnj
   datasource:
     url: jdbc:postgresql://${datachanURL}/mydatabase
     username: ${datachanUsername}
@@ -18,10 +23,10 @@ spring:
       
       
       
-spring.mail.host: smtp.gmail.com
-spring.mail.port: 587
-spring.mail.username: socialmedianow63@gmail.com
-spring.mail.password: bkswsjjigiakypnj
+#spring.mail.host: smtp.gmail.com
+#spring.mail.port: 587
+#spring.mail.username: socialmedianow63@gmail.com
+#spring.mail.password: bkswsjjigiakypnj
 spring.mail.properties.mail.smtp.auth: true #needs to be here for email to work, ignore the warning
 spring.mail.properties.mail.smtp.starttls.enable: true #needs to be here for email to work, ignore the warning
 

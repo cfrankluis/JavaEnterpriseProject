@@ -61,6 +61,7 @@ public class UserController {
 	 */
 	@PostMapping(value = "/register1")
 	@ResponseStatus(code = HttpStatus.CREATED)
+<<<<<<< HEAD
 	public @ResponseBody String register(HttpSession session, @RequestBody User user) {
 		String message;
 		if (user.getFirstName().isBlank() || user.getLastName().isBlank() || user.getEmail().isBlank()
@@ -78,6 +79,18 @@ public class UserController {
 			message = "Account Creation Sucessfull!!!";
 		} else {
 			message = "Account Creation failed...";
+=======
+	public String register(HttpSession session, @RequestBody User user) {
+		System.out.println(user);
+		User newUser = userService.createUser(user);
+		User test = new User();
+		if (!newUser.equals(test)) {
+			session.setAttribute("loggedInAccount", newUser);
+			System.out.println(session.getAttribute("loggedInAccount"));
+			return "redirect:/html/globalfeedpage.html";
+		} else {
+			return "";
+>>>>>>> 38e24b5c1d9e829308e39e3ff41c7b8412f4ee99
 		}
 		return message;
 	}
@@ -128,9 +141,14 @@ public class UserController {
 	 * @param
 	 */
 	@PostMapping("/upload")
+<<<<<<< HEAD
 	@ResponseStatus(code = HttpStatus.ACCEPTED)
 	public @ResponseBody String uploadProfilePic(HttpSession session,
 			@RequestBody @RequestParam("file") MultipartFile multipart) {
+=======
+	public String uploadProfilePic(HttpSession session, @RequestParam("file") MultipartFile multipart, Model model) {
+		session.setAttribute("Session Id", 1);
+>>>>>>> 38e24b5c1d9e829308e39e3ff41c7b8412f4ee99
 
 		String fileName = multipart.getOriginalFilename();
 

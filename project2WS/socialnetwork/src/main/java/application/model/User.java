@@ -73,10 +73,9 @@ public class User {
 	// Reference Objects
 	@OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
 	private List<Post> posts;
-
+	
 	// Session ACCOUNT CONSTRUCTOR
 	public User(int id, String firstName, String lastName, String username, String email, String password, String bio) {
-		super();
 		this.userId = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -87,8 +86,8 @@ public class User {
 
 	}
 
+
 	public User(String firstName, String lastName, String username, String email, String password, String bio) {
-		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.username = username;

@@ -80,28 +80,29 @@
 	<template id="postTemplate">
 		<div class="card mb-3">
 			<div class="card-header">
-				<a href="#">PUT USERNAME HERE(link to profile)</a> <span>0</span>
-				likes
+				<a href="#">PUT USERNAME HERE(link to profile)</a>
+				<span>0</span> likes
 			</div>
-			<div class="card-body">PUT POST CONTENT HERE</div>
+			<div class="card-img-top" hidden></div>
+			<div class="card-body">
+				PUT POST CONTENT HERE
+			</div>
 			<div class="card-footer">
+				<span>POSTED ON:</span>
 				<p>PUT POST CREATED DATE HERE</p>
 				<div class="input-group">
 					<button class="likebtn btn btn-success btn-sm me-2">Like</button>
 					<div class="form-check form-switch">
-						<input class="commentCheck form-check-input" type="checkbox"
-							id="flexSwitchCheckDefault"> <label
-							class="form-check-label" for="flexSwitchCheckDefault">View
-							Comments</label>
+						<input class="commentCheck form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+						<label class="form-check-label" for="flexSwitchCheckDefault">View Comments</label>
 					</div>
 				</div>
 			</div>
 			<div class="addcomment input-group">
 				<div class="input-group">
-					<button class="btn btn-outline-secondary" type="button">Add
-						Comment</button>
+					<button class="btn btn-outline-secondary" type="button">Add Comment</button>
 					<input type="text" class="form-control">
-				</div>
+				  </div>
 			</div>
 		</div>
 	</template>
@@ -113,7 +114,7 @@
 	<template id="loadspinner">
 		<div class="spinner-border" role="status">
 			<span class="visually-hidden">Loading...</span>
-		</div>
+		  </div>
 	</template>
 
 	<script src="/js/globalfeed.js"></script>

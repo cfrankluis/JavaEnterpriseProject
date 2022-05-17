@@ -57,7 +57,7 @@ public class Post {
 
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	@JoinColumn(name = "liker_FK")
-	private Set<User> likers;
+	private List<User> likers;
 
 	@Transient
 	private int numOfLikes;
@@ -73,4 +73,11 @@ public class Post {
 		this.author = author;
 		this.dateCreated = new Date();
 	}
+
+	@Override
+	public String toString() {
+		return "Post [postId=" + postId + ", author=" + author.getUsername() + "]";
+	}
+	
+	
 }
