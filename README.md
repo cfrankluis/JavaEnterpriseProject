@@ -6,9 +6,16 @@ This is social networking application where everyone is friends with everyone. Y
 
 ## Technologies Used
 
-* Tech 1 - version 1.0
-* Tech 2 - version 2.0
-* Tech 3 - version 3.0
+
+* Java - vertion 11
+* Spring Boot - version 2.6.7 (Spring Boot managers the versions of everything below)
+* Spring Data
+* Spring Email
+* JUnit and Mockito
+* Amazon Web Service EC2
+* Amazon Web Service S3
+
+
 
 ## Features
 
