@@ -50,40 +50,40 @@ public class LogController {
 	
 
 
-	@PostMapping("/forgotPassword")
-	public void forgotPassword(HttpSession session, @RequestBody User currentUser) {
-		System.out.println("in the reset");
-		String userEmail = currentUser.getEmail(); 
-		if (userEmail != null) {
-			System.out.println("user: " + userEmail);
-			User user = userService.getUserByEmail(userEmail);
-
-			System.out.println("after user creation : " + user);
-			System.out.println("here " + 0);
-			Confirmation confirmationToken = new Confirmation(user);
-			System.out.println("here " + 0.5);
-			confirmationService.createConfirmationToken(confirmationToken);
-
-			System.out.println("here " + 1);
-	        SimpleMailMessage mailMessage = new SimpleMailMessage();
-	        
-	        System.out.println("here " + 2);
-	        mailMessage.setTo(userEmail);
-	        mailMessage.setSubject("Password reset link!");
-	        mailMessage.setText("To reset your password, please click here : "
-	        +"http://localhost:9022/reset-password/?token="+confirmationToken.getConfirmationToken() 
-	        + "\n\n your username is: " + user.getUsername());
-
-	        
-	        System.out.println("here " + 3);
-	        email.sendEmail(mailMessage);
-
-		} else {
-			session.setAttribute("message", "no email found");//we can use this to get tiger stuff in JS
-			System.out.println("end");
-		}
-
-	}
+//	@PostMapping("/forgotPassword")
+//	public void forgotPassword(HttpSession session, @RequestBody User currentUser) {
+//		System.out.println("in the reset");
+//		String userEmail = currentUser.getEmail(); 
+//		if (userEmail != null) {
+//			System.out.println("user: " + userEmail);
+//			User user = userService.getUserByEmail(userEmail);
+//
+//			System.out.println("after user creation : " + user);
+//			System.out.println("here " + 0);
+//			Confirmation confirmationToken = new Confirmation(user);
+//			System.out.println("here " + 0.5);
+//			confirmationService.createConfirmationToken(confirmationToken);
+//
+//			System.out.println("here " + 1);
+//	        SimpleMailMessage mailMessage = new SimpleMailMessage();
+//	        
+//	        System.out.println("here " + 2);
+//	        mailMessage.setTo(userEmail);
+//	        mailMessage.setSubject("Password reset link!");
+//	        mailMessage.setText("To reset your password, please click here : "
+//	        +"http://localhost:9022/reset-password/?token="+confirmationToken.getConfirmationToken() 
+//	        + "\n\n your username is: " + user.getUsername());
+//
+//	        
+//	        System.out.println("here " + 3);
+//	        email.sendEmail(mailMessage);
+//
+//		} else {
+//			session.setAttribute("message", "no email found");//we can use this to get tiger stuff in JS
+//			System.out.println("end");
+//		}
+//
+//	}
 
 
 		@GetMapping(value = "/reset-password/*", params= {"token"} )

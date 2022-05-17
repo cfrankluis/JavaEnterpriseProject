@@ -1,6 +1,7 @@
 
 package application.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,39 +62,37 @@ public class UserController {
 	 */
 	@PostMapping(value = "/register1")
 	@ResponseStatus(code = HttpStatus.CREATED)
-<<<<<<< HEAD
 	public @ResponseBody String register(HttpSession session, @RequestBody User user) {
+		System.out.println("in");
+		
 		String message;
 		if (user.getFirstName().isBlank() || user.getLastName().isBlank() || user.getEmail().isBlank()
 				|| user.getUsername().isBlank() || user.getPassword().isBlank()) {
 			message = "Field values cannot be blank.";
 			return message;
 		}
+		System.out.println("not blank");
 		if (!Verification.checkUserInput(user.getEmail())) {
 			message = "Please enter a valid email address.";
 			return message;
 		}
+		System.out.println("val");
 		User newUser = userService.createUser(user);
 		if (newUser != null) {
 			session.setAttribute("loggedInAccount", newUser);
 			message = "Account Creation Sucessfull!!!";
+			
+			System.out.println("success");
+
 		} else {
 			message = "Account Creation failed...";
-=======
-	public String register(HttpSession session, @RequestBody User user) {
-		System.out.println(user);
-		User newUser = userService.createUser(user);
-		User test = new User();
-		if (!newUser.equals(test)) {
-			session.setAttribute("loggedInAccount", newUser);
-			System.out.println(session.getAttribute("loggedInAccount"));
-			return "redirect:/html/globalfeedpage.html";
-		} else {
-			return "";
->>>>>>> 38e24b5c1d9e829308e39e3ff41c7b8412f4ee99
 		}
+		
+		System.out.println("fail");
 		return message;
 	}
+	
+	
 
 	/**
 	 * This method receives a User object and updates the userId with the Id of the
@@ -141,23 +140,13 @@ public class UserController {
 	 * @param
 	 */
 	@PostMapping("/upload")
-<<<<<<< HEAD
 	@ResponseStatus(code = HttpStatus.ACCEPTED)
 	public @ResponseBody String uploadProfilePic(HttpSession session,
-			@RequestBody @RequestParam("file") MultipartFile multipart) {
-=======
-	public String uploadProfilePic(HttpSession session, @RequestParam("file") MultipartFile multipart, Model model) {
-		session.setAttribute("Session Id", 1);
->>>>>>> 38e24b5c1d9e829308e39e3ff41c7b8412f4ee99
-
+	@RequestBody @RequestParam("file") MultipartFile multipart) {
 		String fileName = multipart.getOriginalFilename();
-
 		System.out.println("File name: " + fileName);
-
 		String message = "";
-
 		try {
-
 			System.out.println("in try block");
 			message = S3Controller.uploadPic("ProfilePic", fileName, multipart.getInputStream(), session);
 		} catch (Exception ex) {
@@ -184,22 +173,6 @@ public class UserController {
 		// userTest.setUserId(1);
 		// userTest.setBio("go away");
 
-		User userTest = userService.getUserById(1);// dumby user
-
-		List<Post> post = new ArrayList<Post>();
-
-		Post post1 = new Post("first post", "image @", userTest);
-		post.add(post1);
-
-		Post post2 = new Post("second post", "image @", userTest);
-		post.add(post2);
-
-		Post post3 = new Post("last post", "image @", userTest);
-		post.add(post3);
-
-		userTest.setPosts(post);
-
-		session.setAttribute("loggedInAccount", userTest);// Dumby logic
 
 		User user = (User) session.getAttribute("loggedInAccount");
 		System.out.println(user);
@@ -217,14 +190,14 @@ public class UserController {
 	 */
 	@PostMapping("/friends")
 
-	public @ResponseBody User getAllFriends(@RequestBody User user) {
-		User newUser = userService.getAllUser(user);
+	public @ResponseBody List<User> getAllFriends(@RequestBody User user) {
+		List<User> newUser = userService.getAllUsers(user);
 		return newUser;
 	}
 
 	@GetMapping("/logout")
 	public String logOut(HttpServletRequest req) {
-		User userSigningOut = (User)req.getSession().getAttribute("loggedInAccount");
+		User userSigningOut = (User) req.getSession().getAttribute("loggedInAccount");
 		req.getSession().invalidate();
 		System.out.println("User signed out: " + userSigningOut);
 		return "redirect:/html/welcome.html";

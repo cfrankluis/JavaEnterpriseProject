@@ -45,7 +45,7 @@ public class RegesterController {
 //		return session;
 //	}
 
-	@PostMapping(value = "/register1")
+	@PostMapping(value = "/regester1")
 	public void sendEmailLink(HttpSession session) {
 		User newUser = (User) session.getAttribute("loggedInAccount");
 		Confirmation confirmationToken = new Confirmation(newUser);
@@ -134,65 +134,4 @@ public class RegesterController {
 	    }
 	}
 	
-	
-
-//	    
-//
-//	    @RequestMapping(value="/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
-//	    public ModelAndView confirmUserAccount(ModelAndView modelAndView, @RequestParam("token")String confirmationToken)
-//	    {
-//	        ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
-//
-//	        if(token != null)
-//	        {
-//	        	UserEntity user = userRepository.findByEmailIdIgnoreCase(token.getUserEntity().getEmailId());
-//	            user.setEnabled(true);
-//	            userRepository.save(user);
-//	            modelAndView.setViewName("accountVerified");
-//	        }
-//	        else
-//	        {
-//	            modelAndView.addObject("message","The link is invalid or broken!");
-//	            modelAndView.setViewName("error");
-//	        }
-//
-//	        return modelAndView;
-//	    }
-//	}
-
 }
-
-//	    @RequestMapping(value="/register", method = RequestMethod.POST)
-//	    public ModelAndView registerUser(ModelAndView modelAndView, UserEntity userEntity)
-//	    {
-//
-//	    	UserEntity existingUser = userRepository.findByEmailIdIgnoreCase(userEntity.getEmailId());
-//	        if(existingUser != null)
-//	        {
-//	            modelAndView.addObject("message","This email already exists!");
-//	            modelAndView.setViewName("error");
-//	        }
-//	        else
-//	        {
-//	            userRepository.save(userEntity);
-//
-//	            ConfirmationToken confirmationToken = new ConfirmationToken(userEntity);
-//
-//	            confirmationTokenRepository.save(confirmationToken);
-//
-//	            SimpleMailMessage mailMessage = new SimpleMailMessage();
-//	            mailMessage.setTo(userEntity.getEmailId());
-//	            mailMessage.setSubject("Complete Registration!");
-//	            mailMessage.setFrom("YOUR EMAIL ADDRESS");
-//	            mailMessage.setText("To confirm your account, please click here : "
-//	            +"http://localhost:8080/confirm-account?token="+confirmationToken.getConfirmationToken());
-//
-//	            emailService.sendEmail(mailMessage);
-//
-//	            modelAndView.addObject("emailId", userEntity.getEmailId());
-//
-//	            modelAndView.setViewName("successfulRegisteration");
-//	        }
-//
-//	        return modelAndView;
-//	    }

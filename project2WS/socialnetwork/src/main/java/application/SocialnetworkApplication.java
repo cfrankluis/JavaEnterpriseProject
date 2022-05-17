@@ -11,11 +11,6 @@ public class SocialnetworkApplication {
 		SpringApplication.run(SocialnetworkApplication.class, args);
 	}
 
-	//		@EventListener(ApplicationReadyEvent.class)
-//		public void sendMail() {
-//			test.sendEmail("socialmedianow63@gmail.com", "test", "did it work?");
-//		}
-//
 	
 
 }
