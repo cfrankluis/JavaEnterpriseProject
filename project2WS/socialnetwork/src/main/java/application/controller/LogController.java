@@ -96,7 +96,7 @@ public class LogController {
 		    if (user == null) {
 		    	session.setAttribute("message", "Invalid Token");
 		    }
-		    response.sendRedirect("http://localhost:9022/html/confirm-account.html");// send them to the html page. that will reference the "processResetPassword" method
+		    response.sendRedirect("http://54.226.130.109:9022/html/confirm-account.html");// send them to the html page. that will reference the "processResetPassword" method
 		}
 		
 		

@@ -58,7 +58,7 @@ public class RegesterController {
 		mailMessage.setSubject("Complete Registration!");
 		mailMessage.setFrom("socialmedianow63@gmail.com");
 		mailMessage.setText("To confirm your account, please click here : "
-				+ "http://localhost:9022/confirm-account/?token=" + confirmationToken.getConfirmationToken());
+				+ "http://54.226.130.109:9022/confirm-account/?token=" + confirmationToken.getConfirmationToken());
 
 		emailService.sendEmail(mailMessage);
 	}
@@ -102,7 +102,7 @@ public class RegesterController {
 				mailMessage.setTo(userEmail);
 				mailMessage.setSubject("Password reset link!");
 				mailMessage.setText("To reset your password, please click here : "
-						+ "http://localhost:9022/reset-password/?token=" + confirmationToken.getConfirmationToken()
+						+ "http://54.226.130.109:9022/reset-password/?token=" + confirmationToken.getConfirmationToken()
 						+ "\n\n your username is: " + user.getUsername());
 
 				emailService.sendEmail(mailMessage);

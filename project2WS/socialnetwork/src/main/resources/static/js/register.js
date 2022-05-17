@@ -23,7 +23,7 @@ function registerUser() {
     }
 
     let xhttp = new XMLHttpRequest();
-    xhttp.open('Post', `http://localhost:9022/register1`);
+    xhttp.open('Post', `http://54.226.130.109:9022/register1`);
     xhttp.setRequestHeader("Accept", "application/json");
     xhttp.setRequestHeader("Content-Type", "application/json");
 
@@ -39,7 +39,7 @@ function registerUser() {
             }
             if (message === "Account Creation Sucessfull!!!") {
                 verifyEmail();
-                location.assign("http://localhost:9022/html/globalfeedpage.html");
+                location.assign("http://54.226.130.109:9022/html/globalfeedpage.html");
             }
         }
     }
@@ -50,7 +50,7 @@ function registerUser() {
 
 function verifyEmail() {
     let xhttp = new XMLHttpRequest();
-    xhttp.open('Post', `http://localhost:9022/register`);
+    xhttp.open('Post', `http://54.226.130.109:9022/register`);
         xhttp.onreadystatechange = function () {
             console.log("readyState is changing: ", xhttp.readyState);
             if (xhttp.readyState == 4 && xhttp.status == 201) {

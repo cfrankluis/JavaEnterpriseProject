@@ -56,7 +56,7 @@ public class RegisterController {
         mailMessage.setTo(toEmail);
         mailMessage.setSubject("Complete Registration!");
         mailMessage.setText("To confirm your account, please click here : "
-        +"http://localhost:9022/confirm-account/?token="+confirmationToken.getConfirmationToken());
+        +"http://54.226.130.109:9022/confirm-account/?token="+confirmationToken.getConfirmationToken());
 
         emailService.sendEmail(mailMessage);
 	}	
@@ -71,7 +71,7 @@ public class RegisterController {
 	    if (user == null) {
 	    	session.setAttribute("message", "Invalid Token");
 	    }
-	    response.sendRedirect("http://localhost:9022/html/welcome.html");// send them to the html page. that will reference the "processResetPassword" method
+	    response.sendRedirect("http://54.226.130.109:9022/html/welcome.html");// send them to the html page. that will reference the "processResetPassword" method
 	}
 	
 }
