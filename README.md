@@ -3,10 +3,7 @@
 ## Project Description
 This is social networking application where everyone is friends with everyone. You can post about anything and like anyone's post
 
-
 ## Technologies Used
-
-
 * Java - vertion 11
 * Spring Boot - version 2.6.7 (Spring Boot managers the versions of everything below)
 * Spring Data
@@ -14,11 +11,8 @@ This is social networking application where everyone is friends with everyone. Y
 * JUnit and Mockito
 * Amazon Web Service EC2
 * Amazon Web Service S3
-
-
-
+ 
 ## Features
-
 List of features ready and TODOs for future development
 * Login and Register Account
 * Upload profile pictures
@@ -26,15 +20,22 @@ List of features ready and TODOs for future development
 * Changing password
 * Modifying User Profile
 
-To-do list:
+## To-do list:
 * Fix issue on creating post
 * Add Email Verification
 * Add Security
 * Refactor Code base
 
 ## Getting Started
-   
-`git clone https://github.com/cfrankluis/JavaEnterpriseProject.git`
+
+1. Create an AWS Account and create an EC2 instance https://aws.amazon.com/premiumsupport/knowledge-center/launch-instance-custom-ami/
+2. In AWS, create an RDS database
+3. datachanPassword : ‘your password here’
+4. datachanURL : ‘your data base End point here’
+5. datechanUsername : ‘your base username’
+
+6. Set up S3 Bucket
+7. Clone this git repository `git clone https://github.com/cfrankluis/JavaEnterpriseProject.git`
 (include all environment setup steps)
 
 > Be sure to include BOTH Windows and Unix command  
@@ -52,4 +53,3 @@ To-do list:
 - Frank Carag
 - Dillon Meier
 - Gibbons Alty
-
