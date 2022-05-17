@@ -16,7 +16,7 @@ function changePassword() {
         console.log(newPass);
         //step 1
         let xhttp = new XMLHttpRequest();
-        xhttp.open('Post', `http://localhost:9022/updateUserDetails`);
+        xhttp.open('Post', `http://54.226.130.109/:9022/updateUserDetails`);
         xhttp.setRequestHeader("Accept", "application/json");
         xhttp.setRequestHeader("Content-Type", "application/json");
 

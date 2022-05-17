@@ -20,7 +20,7 @@ function getAllUsers() {
     }
 
 
-xhttp.open('Post', "http://localhost:9022/friends");
+xhttp.open('Post', "http://54.226.130.109:9022/friends");
 xhttp.send(JSON.stringify(data));
 }
 
@@ -35,7 +35,7 @@ function generateUsers(userObject) {
     let userCard = user.querySelector(".bio");
     
 
-    userHeader.innerText = <a href="'http://localhost:9022/profilepage.html/' + 'userObject.userId'">"userObject.firstName + " " + userObject.lastName"</a>;
+    userHeader.innerText = <a href="'http://54.226.130.109:9022/profilepage.html/' + 'userObject.userId'">"userObject.firstName + " " + userObject.lastName"</a>;
     userBody.innerText = <img src="'https://buckylebucket.s3.us-east-2.amazonaws.com/ProfilePics/' + userObject.userId +'/ProfilePic.jpg'"/>
 
     userCard.innerText = userObject.bio;

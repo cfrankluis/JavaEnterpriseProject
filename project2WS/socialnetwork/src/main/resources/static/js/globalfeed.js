@@ -22,7 +22,7 @@ function getAllPost(){
             }          
         }
     }
-    xhttp.open('GET', "http://localhost:9022/global");
+    xhttp.open('GET', "http://54.226.130.109:9022/global");
     xhttp.send();
 }
 
@@ -36,7 +36,7 @@ function sendPost(){
                  generatePost(responseJson);        
             }
         }
-        xhttp.open('POST', "http://localhost:9022/post");
+        xhttp.open('POST', "http://54.226.130.109:9022/post");
         xhttp.send();
     }
 }
@@ -53,7 +53,7 @@ function sendComment(id){
            }
        }
 
-       xhttp.open('POST', "http://localhost:9022/comment");
+       xhttp.open('POST', "http://54.226.130.109:9022/comment");
        let commentToSend = {
            "content" : commentInput,
            "post" : {"postId":id}
@@ -73,7 +73,7 @@ function getComments(id){
             }
         }
     }
-    xhttp.open('GET', `http://localhost:9022/commentbypost?id=${id}`);
+    xhttp.open('GET', `http://54.226.130.109:9022/commentbypost?id=${id}`);
 
     xhttp.send();
 }
@@ -171,7 +171,7 @@ function sendLike(id){
             likePost(likedPost,id);
         }
     }
-    xhttp.open('POST', 'http://localhost:9022/postlike');
+    xhttp.open('POST', 'http://54.226.130.109:9022/postlike');
     xhttp.setRequestHeader("content-type", "application/json");
     let postToLike = {
         "postId":id
