@@ -20,17 +20,21 @@ This is social networking application where everyone is friends with everyone. Y
 ## Features
 
 List of features ready and TODOs for future development
-* Awesome feature 1
-* Awesome feature 2
-* Awesome feature 3
+* Login and Register Account
+* Upload profile pictures
+* Like and Comment on Posts
+* Changing password
+* Modifying User Profile
 
 To-do list:
-* Wow improvement to be done 1
-* Wow improvement to be done 2
+* Fix issue on creating post
+* Add Email Verification
+* Add Security
+* Refactor Code base
 
 ## Getting Started
    
-(include git clone command)
+`git clone https://github.com/cfrankluis/JavaEnterpriseProject.git`
 (include all environment setup steps)
 
 > Be sure to include BOTH Windows and Unix command  
@@ -45,9 +49,7 @@ To-do list:
 
 ## Contributors
 
-> Here list the people who have contributed to this project. (ignore this section, if its a solo project)
-
-## License
-
-This project uses the following license: [<license_name>](<link>).
+> Frank Carag
+> Dillon Meier
+> Gibbons Alty
 
