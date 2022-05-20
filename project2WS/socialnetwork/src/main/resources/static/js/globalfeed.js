@@ -3,8 +3,6 @@
 window.onload = function(){
     console.log("CONNECTED");
     getAllPost();
-    document.getElementById("postSubmit").addEventListener('click',sendPost);
-    //generateTestPost(1);
 }
 function reload(){
     location.reload();
@@ -134,7 +132,7 @@ function generatePost(postObject){
     postHeader.innerText = postObject.author.username;
     if(postObject.img != null){
         postImg.src = postObject.img;
-        document.getElementById("Image").style.visibility = "visible";
+        document.getElementById("Image").removeAttribute("hidden");
     }
     postBody.innerText = postObject.content;
 
