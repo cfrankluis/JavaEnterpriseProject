@@ -132,7 +132,7 @@ function generatePost(postObject){
     postHeader.innerText = postObject.author.username;
     if(postObject.img != null){
         postImg.src = postObject.img;
-        document.getElementById("Image").removeAttribute("hidden");
+        postImg.hidden = false;
     }
     postBody.innerText = postObject.content;
 
@@ -146,6 +146,7 @@ function generatePost(postObject){
     commentField.setAttribute("id",postObject.postId+"_comField");
 
     addCommentForm.hidden = true;
+
     commentCheck.addEventListener('change',function(){
         showComments(postObject.postId);
     })
