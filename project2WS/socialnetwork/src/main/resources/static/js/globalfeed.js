@@ -120,6 +120,7 @@ function generatePost(postObject){
     let post = document.getElementById("postTemplate").content.cloneNode(true);
     
     let postHeader = post.querySelector(".card-header a");
+    let postImg = post.querySelector(".card-img-top");
     let postBody = post.querySelector(".card-body");
     let postCard = post.querySelector(".card");
     let postFooter = post.querySelector("p");
@@ -131,6 +132,9 @@ function generatePost(postObject){
     let commentField = addCommentForm.querySelector("input");
 
     postHeader.innerText = postObject.author.username;
+    if(postObj.img != null){
+        postImg.src = postObject.img;
+    }
     postBody.innerText = postObject.content;
 
     postFooter.innerText = (new Date(postObject.dateCreated)).toDateString();
