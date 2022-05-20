@@ -134,6 +134,7 @@ function generatePost(postObject){
     postHeader.innerText = postObject.author.username;
     if(postObject.img != null){
         postImg.src = postObject.img;
+        document.getElementById("Image").style.visibility = "visible";
     }
     postBody.innerText = postObject.content;
 
