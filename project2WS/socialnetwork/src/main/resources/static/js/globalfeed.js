@@ -130,7 +130,7 @@ function generatePost(postObject){
     let commentField = addCommentForm.querySelector("input");
 
     postHeader.innerText = postObject.author.username;
-    postHeader.href = "http://54.226.130.109:9022/profilepage/" + postObject.author.username;
+    postHeader.href = "http://54.226.130.109:9022/profilepage/?user=" + postObject.author.username;
     if(postObject.img != null){
         postImg.src = postObject.img;
         postImg.sizes = "(max-width: 500px)";
