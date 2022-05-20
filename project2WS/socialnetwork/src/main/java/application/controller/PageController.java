@@ -50,7 +50,6 @@ public class PageController {
 	}
 	@GetMapping("/post")
 	public String posted() {
-		System.out.println("in get /post");
 		return "/html/globalfeedpage.html";
 	}
 	
@@ -70,7 +69,6 @@ public class PageController {
 	 */
 	@PostMapping("/post")
 	public String uploadPost(HttpSession session, String description, @RequestParam("file") MultipartFile multipart) {
-		System.out.println("In upload post / page Controller method");
 		User user = (User)session.getAttribute("loggedInAccount");
 		int i = user.getUserId();
 
@@ -87,15 +85,12 @@ public class PageController {
 			message = S3Controller.uploadPic("PostPic", fileName, multipart.getInputStream(), session);
 				if(message.contentEquals("Your file has been uploaded Successfully!")) {
 					postService.createPost(session, description, imgUrl);
-					System.out.println(message + "in try if");
 				}
 				else {
 					message = "Post could not be uploaded: " + message;
-					System.out.println(message + "in try else");
 				}
 		} catch (Exception ex) {
 			message = "Error uploading file: " + ex.getMessage();
-			System.out.println(message + "in catch");
 		}
 		return "redirect:/html/globalfeedpage.html";
 	}
