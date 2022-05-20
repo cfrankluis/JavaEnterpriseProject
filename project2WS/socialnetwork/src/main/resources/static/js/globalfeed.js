@@ -132,7 +132,7 @@ function generatePost(postObject){
     let commentField = addCommentForm.querySelector("input");
 
     postHeader.innerText = postObject.author.username;
-    if(postObj.img != null){
+    if(postObject.img != null){
         postImg.src = postObject.img;
     }
     postBody.innerText = postObject.content;
