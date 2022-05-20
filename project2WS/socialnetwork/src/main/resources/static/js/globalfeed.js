@@ -132,6 +132,7 @@ function generatePost(postObject){
     postHeader.innerText = postObject.author.username;
     if(postObject.img != null){
         postImg.src = postObject.img;
+        postImg.sizes = "(max-width: 500px)";
         postImg.hidden = false;
     }
     postBody.innerText = postObject.content;
