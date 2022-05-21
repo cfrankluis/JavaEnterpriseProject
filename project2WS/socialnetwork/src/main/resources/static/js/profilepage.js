@@ -57,12 +57,6 @@ function getFriend(user) {
     xhttp.send(JSON.stringify(friend));
 }
 
-
-
-
-
-
-
 function printUsername(user) {
 
     console.log("in username " + user)
@@ -126,17 +120,159 @@ function getPosts(user) {
     }//for
 }//getPosts
 
+function sendComment(id){
+    let commentInput = document.getElementById(id+"_comField").value;
+    if(commentInput){
+        console.log(commentInput);
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function(){
+            if(xhttp.readyState==4 && xhttp.status ==200){
+                let responseJson = JSON.parse(xhttp.responseText);
+                generateComment(responseJson, id);     
+           }
+       }
 
+       xhttp.open('POST', "http://54.226.130.109:9022/comment");
+       let commentToSend = {
+           "content" : commentInput,
+           "post" : {"postId":id}
+       }
+       xhttp.setRequestHeader("content-type", "application/json");
+       xhttp.send(JSON.stringify(commentToSend));
+    }
+}
 
-jQuery(document).ready(function(){
+function getComments(id){
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(xhttp.readyState===4 && xhttp.status ===200){
+            let responseJson = JSON.parse(xhttp.responseText);
+            for (const comment of responseJson) {
+                generateComment(comment,id);
+            }
+        }
+    }
+    xhttp.open('GET', `http://54.226.130.109:9022/commentbypost?id=${id}`);
 
-    var totalheight = 0;
-    jQuery(".et-l--header .et_builder_inner_content .et_pb_section").each(function(){
-    totalheight = totalheight + jQuery(this).outerHeight();
-    });
+    xhttp.send();
+}
+
+function showComments(id){
+    let commentCheck = document.getElementById(id+"_showCom");
+    let commentForm = document.getElementById(id+"_form");
+    if(commentCheck.checked){
+        commentForm.hidden = false;
+        getComments(id);
+    } else {
+        commentForm.hidden = true;
+        commentForm.querySelector("input").value = '';
+        hideComments(id);
+    }
+}
+
+function hideComments(id){
+    let parent = document.getElementById(id+"_comments");
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
+
+function generateComment(comment,id){
+    let commentContainer = document.getElementById(id+"_comments");
+    let commentTemplate = document.getElementById("commentTemplate");
+    let commentContent = commentTemplate.content.cloneNode(true);
+    let commentWrapper = commentContent.querySelector("li");
+    let commentUsername = commentContent.querySelector("a");
+
+    commentUsername.innerText = comment.author.username;
+    commentUsername.setAttribute("href","#");
+
+    let content = document.createTextNode(comment.content);
+    commentWrapper.appendChild(content);
+
+    commentContainer.appendChild(commentContent);
+}
+
+function generatePost(postObject){
+    console.log(postObject);
+    let postContainer = document.getElementById("post-container");
+    let post = document.getElementById("postTemplate").content.cloneNode(true);
     
-    totalheight = totalheight + "px";
-    
-    jQuery("#et-main-area").css("padding-top",totalheight);
+    let postHeader = post.querySelector(".card-header a");
+    let postImg = post.querySelector(".card-img-top");
+    let postBody = post.querySelector(".card-body");
+    let postCard = post.querySelector(".card");
+    let postFooter = post.querySelector("p");
+    let commentCheck = post.querySelector(".commentCheck");
+    let likeBtn = post.querySelector(".likebtn");
+    let numOfLikes = post.querySelector("span");
+    let addCommentForm = post.querySelector(".addcomment");
+    let commentBtn = addCommentForm.querySelector("button");
+    let commentField = addCommentForm.querySelector("input");
+
+    postHeader.innerText = postObject.posts.author.username;
+    postHeader.href = "http://54.226.130.109:9022/profilepage/?user=" + postObject.posts.author.username;
+    if(postObject.posts.img != null){
+        postImg.src = postObject.posts.img;
+        postImg.sizes = "(max-width: 500px)";
+        postImg.hidden = false;
+    }
+    postBody.innerText = postObject.posts.content;
+
+    postFooter.innerText = (new Date(postObject.posts.dateCreated)).toDateString();
+    numOfLikes.innerText = postObject.posts.numOfLikes;
+
+    numOfLikes.setAttribute("id",postObject.posts.postId+"_numOfLikes");
+    commentCheck.setAttribute("id",postObject.posts.postId+"_showCom");
+    likeBtn.setAttribute("id",postObject.posts.postId+"_like");
+    addCommentForm.setAttribute("id",postObject.posts.postId+"_form");
+    commentField.setAttribute("id",postObject.posts.postId+"_comField");
+
+    addCommentForm.hidden = true;
+
+    commentCheck.addEventListener('change',function(){
+        showComments(postObject.posts.postId);
+    })
+
+    likeBtn.addEventListener('click',function(){
+        sendLike(postObject.posts.postId);
     });
+
+    commentBtn.addEventListener('click',function(){
+        sendComment(postObject.posts.postId);
+    })
+
+    let commentContainer = document.createElement("ul");
+    commentContainer.setAttribute("class","list-group list-group-flush");
+    commentContainer.setAttribute("id", postObject.posts.postId+"_comments");
+    postCard.appendChild(commentContainer);
+
+    postContainer.prepend(post);
+}
+
+function sendLike(id){
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(xhttp.readyState===4 && xhttp.status ===200){
+            let likedPost = JSON.parse(xhttp.responseText);
+            likePost(likedPost,id);
+        }
+    }
+    xhttp.open('POST', 'http://54.226.130.109:9022/postlike');
+    xhttp.setRequestHeader("content-type", "application/json");
+    let postToLike = {
+        "postId":id
+    };
+    xhttp.send(JSON.stringify(postToLike));
+}
+
+function likePost(post,id){
+    let likeBtn = document.getElementById(id+"_like");
+    let numOfLikes = document.getElementById(id+"_numOfLikes");
+    likeBtn.innerText = "Unlike";
+    //likeBtn.disabled = true;
+    numOfLikes.innerText = post.numOfLikes;
+}
+
+
     
