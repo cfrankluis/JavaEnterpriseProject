@@ -165,14 +165,14 @@ public class UserController {
 	 * @Author Dillon Meier
 	 */
 	@PostMapping("/currentFriend")
-	public @ResponseBody User currentFriend(HttpSession session, @RequestBody String username) {
-		User user = userService.getUserByUsername(username);
+	public @ResponseBody User currentFriend(HttpSession session, @RequestBody User user) {
+		User friend = userService.getUserByUsername(user.getUsername());
 		
-		List<Post> post = postService.getPostByAuthor(user);
+		List<Post> post = postService.getPostByAuthor(friend);
 
-		user.setPosts(post);
+		friend.setPosts(post);
 
-		return user;
+		return friend;
 	}
 
 	/**
