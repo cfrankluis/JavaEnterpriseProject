@@ -6,14 +6,9 @@ window.onload = function () {
 
 
 function getUser() {
-
-    // STEP 1: create the XMLHttpRequest Object
     let xhttp = new XMLHttpRequest();
-
-    // STEP 2: create the callback function for readyState changes
     xhttp.onreadystatechange = function () {
         console.log(xhttp.readyState);
-
         if (xhttp.readyState == 4 && xhttp.status == 200) {
             console.log("readyState is 4!!! AND status is 200!!! getAllReimbur");
 
@@ -25,12 +20,9 @@ function getUser() {
             getPosts(user);
         }
     }
-
-    //  STEP 3: prepare connection/request details
-    xhttp.open('GET', "http://54.226.130.109:9022/currentUser");
-    // STEP 4: send the request, providing any body object the request needs
+    xhttp.open('POST', "http://54.226.130.109:9022/currentUser");
     xhttp.send();
-}//getgetUser
+}
 
 
 
