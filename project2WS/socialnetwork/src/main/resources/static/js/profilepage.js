@@ -54,7 +54,7 @@ function getFriend(user) {
             getPosts(user);
         }
     }
-    xhttp.send(JSON.stringify(user));
+    xhttp.send(JSON.stringify(friend));
 }
 
 
