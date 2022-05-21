@@ -167,11 +167,11 @@ public class UserController {
 	@PostMapping("/currentFriend")
 	public @ResponseBody User currentFriend(HttpSession session, @RequestBody User user) {
 		User friend = userService.getUserByUsername(user.getUsername());
-		
+		System.out.println(friend);
 		List<Post> post = postService.getPostByAuthor(friend);
-
+		System.out.println("Post post request: " + post);
 		friend.setPosts(post);
-
+		System.out.println(friend);
 		return friend;
 	}
 
