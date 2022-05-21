@@ -1,9 +1,13 @@
 window.onload = function () {
-    console.log("onload");
-    getUser();
+    const queryString = window.location.search;
+    console.log(queryString);
+    //friendOrMe();
 }
 
-
+function friendOrMe(){
+    getUser();
+    getFriend();
+}
 
 function getUser() {
     let xhttp = new XMLHttpRequest();
@@ -24,6 +28,40 @@ function getUser() {
     }
     xhttp.send();
 }
+
+function getFriend() {
+
+    
+
+    friend = {
+        "username": "fill-in"
+    }
+
+    let xhttp = new XMLHttpRequest();
+    xhttp.open('POST', "http://54.226.130.109:9022/currentFriend");
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.setRequestHeader("Content-Type", "application/json");
+
+    xhttp.onreadystatechange = function () {
+        console.log(xhttp.readyState);
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            console.log("readyState is 4!!! AND status is 200!!! getAllReimbur");
+
+            let user = JSON.parse(xhttp.responseText);
+
+            printUsername(user);
+            printProfilePic(user);
+            printBio(user);
+            getPosts(user);
+        }
+    }
+
+    xhttp.send(JSON.stringify(friend));
+}
+
+
+
+
 
 
 

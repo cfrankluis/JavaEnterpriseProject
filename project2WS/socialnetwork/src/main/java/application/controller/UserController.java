@@ -33,8 +33,8 @@ public class UserController {
 	private PostService postService;
 
 	@Autowired
-	public UserController(UserService service, PostService postService) {
-		this.userService = service;
+	public UserController(UserService userService, PostService postService) {
+		this.userService = userService;
 		this.postService = postService;
 	}
 
@@ -148,6 +148,25 @@ public class UserController {
 	@PostMapping("/currentUser")
 	public @ResponseBody User currentUser(HttpSession session) {
 		User user = (User) session.getAttribute("loggedInAccount");
+		
+		List<Post> post = postService.getPostByAuthor(user);
+
+		user.setPosts(post);
+
+		return user;
+	}
+	
+	/**
+	 * returns the user that is currently logged in
+	 * 
+	 * @param Session
+	 * @param String
+	 * @return
+	 * @Author Dillon Meier
+	 */
+	@PostMapping("/currentFriend")
+	public @ResponseBody User currentFriend(HttpSession session, @RequestBody String username) {
+		User user = userService.getUserByUsername(username);
 		
 		List<Post> post = postService.getPostByAuthor(user);
 
