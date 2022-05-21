@@ -36,33 +36,25 @@ function getUser() {
 }
 
 function getFriend(user) {
-
-    
-
     friend = {
         "username": user
     }
-
     let xhttp = new XMLHttpRequest();
     xhttp.open('POST', "http://54.226.130.109:9022/currentFriend");
     xhttp.setRequestHeader("Accept", "application/json");
     xhttp.setRequestHeader("Content-Type", "application/json");
-
     xhttp.onreadystatechange = function () {
         console.log(xhttp.readyState);
         if (xhttp.readyState == 4 && xhttp.status == 200) {
             console.log("readyState is 4!!! AND status is 200!!! getAllReimbur");
-
             let user = JSON.parse(xhttp.responseText);
-
             printUsername(user);
             printProfilePic(user);
             printBio(user);
             getPosts(user);
         }
     }
-
-    xhttp.send(JSON.stringify(friend));
+    xhttp.send(JSON.stringify(user));
 }
 
 
