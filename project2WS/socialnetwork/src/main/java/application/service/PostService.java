@@ -1,5 +1,6 @@
 package application.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -100,5 +101,11 @@ public class PostService {
 			return dao.getById(id);
 		else
 			return null;
+	}
+	
+	public List<Post> getPostByAuthor(User user){
+		List<Post> posts = new ArrayList<Post>();
+		posts = dao.findAllByAuthor(user);
+		return posts;
 	}
 }

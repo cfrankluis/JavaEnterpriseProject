@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
+import application.dao.PostDao;
 import application.model.Post;
 import application.model.User;
+import application.service.PostService;
 import application.service.UserService;
 import application.toolbox.Verification;
 
@@ -28,10 +30,12 @@ import application.toolbox.Verification;
 @RequestMapping
 public class UserController {
 	private UserService userService;
+	private PostService postService;
 
 	@Autowired
-	public UserController(UserService service) {
+	public UserController(UserService service, PostService postService) {
 		this.userService = service;
+		this.postService = postService;
 	}
 
 	@PostMapping(value = "/login")
@@ -144,17 +148,8 @@ public class UserController {
 	@PostMapping("/currentUser")
 	public @ResponseBody User currentUser(HttpSession session) {
 		User user = (User) session.getAttribute("loggedInAccount");
-
-		List<Post> post = new ArrayList<Post>();
-
-		Post post1 = new Post("first post", "image @", user);
-		post.add(post1);
-
-		Post post2 = new Post("second post", "image @", user);
-		post.add(post2);
-
-		Post post3 = new Post("last post", "image @", user);
-		post.add(post3);
+		
+		List<Post> post = postService.getPostByAuthor(user);
 
 		user.setPosts(post);
 
