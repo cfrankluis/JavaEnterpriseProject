@@ -7,6 +7,8 @@ window.onload = function () {
 
 function getUser() {
     let xhttp = new XMLHttpRequest();
+    xhttp.open('POST', "http://54.226.130.109:9022/currentUser");
+    xhttp.setRequestHeader("Accept", "application/json");
     xhttp.onreadystatechange = function () {
         console.log(xhttp.readyState);
         if (xhttp.readyState == 4 && xhttp.status == 200) {
@@ -20,7 +22,6 @@ function getUser() {
             getPosts(user);
         }
     }
-    xhttp.open('POST', "http://54.226.130.109:9022/currentUser");
     xhttp.send();
 }
 
