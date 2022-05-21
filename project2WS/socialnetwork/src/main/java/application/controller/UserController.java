@@ -1,6 +1,7 @@
 
 package application.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
+import application.model.Post;
 import application.model.User;
 import application.service.UserService;
 import application.toolbox.Verification;
@@ -75,7 +77,7 @@ public class UserController {
 		}
 		return message;
 	}
-	
+
 	/**
 	 * This method receives a User object and updates the userId with the Id of the
 	 * currently logged in User via session attributes. The User object is then sent
@@ -119,7 +121,7 @@ public class UserController {
 	@PostMapping("/upload")
 	@ResponseStatus(code = HttpStatus.ACCEPTED)
 	public @ResponseBody String uploadProfilePic(HttpSession session,
-	@RequestBody @RequestParam("file") MultipartFile multipart) {
+			@RequestBody @RequestParam("file") MultipartFile multipart) {
 		String fileName = multipart.getOriginalFilename();
 		System.out.println("File name: " + fileName);
 		String message = "";
@@ -142,6 +144,20 @@ public class UserController {
 	@PostMapping("/currentUser")
 	public @ResponseBody User currentUser(HttpSession session) {
 		User user = (User) session.getAttribute("loggedInAccount");
+
+		List<Post> post = new ArrayList<Post>();
+
+		Post post1 = new Post("first post", "image @", user);
+		post.add(post1);
+
+		Post post2 = new Post("second post", "image @", user);
+		post.add(post2);
+
+		Post post3 = new Post("last post", "image @", user);
+		post.add(post3);
+
+		user.setPosts(post);
+
 		return user;
 	}
 
