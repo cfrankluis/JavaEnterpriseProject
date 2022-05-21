@@ -9,7 +9,7 @@
 	<link href="/css/FakeBlock.css" rel="stylesheet">
 </head>
 
-<body>
+<body style="position: relative; height: 100vh; margin: 0;">
 	<nav class="navbar navbar-expand-lg navbar-custom">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="/html/globalfeedpage.html"><img src="/FakeBlockLogo/newerFB.JPG"></a>
@@ -31,9 +31,13 @@
 							<li><a class="dropdown-item" href="/html/updatebio.html">Edit Bio</a></li>
 							<li><a class="dropdown-item" href="/html/profilepic.html">Upload Profile Pic</a></li>
 							<li><a class="dropdown-item" href="/html/changepassword.html">Change Password</a></li>
-							<li><hr class="dropdown-divider"></li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
 							<form action="/logout" method="get" id="signout">
-								<li><a class="dropdown-item" href="javascript:{}" onclick="document.getElementById('signout').submit(); return false;">Sign Out</a></li>
+								<li><a class="dropdown-item" href="javascript:{}"
+										onclick="document.getElementById('signout').submit(); return false;">Sign
+										Out</a></li>
 							</form>
 						</ul>
 					</li>
@@ -51,23 +55,48 @@
 			<div class="username" class="card-title">
 				<h3 id="name">Username</h3>
 			</div>
-			
-			<div class="ProfilePic"  class="card-img-top" >
+
+			<div class="ProfilePic" class="card-img-top">
 				<img id="ProfilePic" src="#">
 			</div>
-			
+
 			<div class="bio" class="card-text">
 				<h3 id="bio" class="text-center" class="badge bg-primary text-wrap">Bio loading</h3>
 			</div>
 		</div>
-			
+
 		<div id="posts" class="text-center" class="list-group list-group-flush">
 			<h5 id="postsAuthor">Post author</h3><br><br>
 				<p id="postsContent">content</p><br><br>
 				<!-- <img id="postsImg" src ="#"> -->
 		</div>
 	</div>
-
+	<div class="container">
+		<div class="row justify-content-md-center">
+			<div class="col col-lg-2"></div>
+			<div class="col-md-auto">
+				<div class="card" style="width: 26rem; position: absolute; left: 50%; top: 50%;">
+					<div class="card-header">
+						<div class="username" class="card-title">
+							<h3 id="name">Username</h3>
+						</div>
+					</div>
+					<div class="card-body">
+						<div class="ProfilePic" class="card-img-top">
+							<img id="ProfilePic" src="#">
+						</div>
+					</div>
+					<div class="card-footer">
+						<div class="bio" class="card-text">
+							<h3 id="bio" class="text-center" class="badge bg-primary text-wrap">Bio loading</h3>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col col-lg-2"></div>
+	</div>
+	
 
 
 	<script type="text/javascript" src="/js/profilepage.js"></script>
