@@ -29,7 +29,9 @@ function getUser() {
             printUsername(user);
             printProfilePic(user);
             printBio(user);
-            generatePost(user);
+            for (const posts of user.posts){
+                generatePost(posts);
+            }
         }
     }
     xhttp.send();
@@ -210,41 +212,41 @@ function generatePost(postObject){
     let commentBtn = addCommentForm.querySelector("button");
     let commentField = addCommentForm.querySelector("input");
 
-    postHeader.innerText = postObject.posts.author.username;
-    postHeader.href = "http://54.226.130.109:9022/profilepage/?user=" + postObject.posts.author.username;
-    if(postObject.posts.img != null){
-        postImg.src = postObject.posts.img;
+    postHeader.innerText = postObject.author.username;
+    postHeader.href = "http://54.226.130.109:9022/profilepage/?user=" + postObject.author.username;
+    if(postObject.img != null){
+        postImg.src = postObject.img;
         postImg.sizes = "(max-width: 500px)";
         postImg.hidden = false;
     }
-    postBody.innerText = postObject.posts.content;
+    postBody.innerText = postObject.content;
 
-    postFooter.innerText = (new Date(postObject.posts.dateCreated)).toDateString();
-    numOfLikes.innerText = postObject.posts.numOfLikes;
+    postFooter.innerText = (new Date(postObject.dateCreated)).toDateString();
+    numOfLikes.innerText = postObject.numOfLikes;
 
-    numOfLikes.setAttribute("id",postObject.posts.postId+"_numOfLikes");
-    commentCheck.setAttribute("id",postObject.posts.postId+"_showCom");
-    likeBtn.setAttribute("id",postObject.posts.postId+"_like");
-    addCommentForm.setAttribute("id",postObject.posts.postId+"_form");
-    commentField.setAttribute("id",postObject.posts.postId+"_comField");
+    numOfLikes.setAttribute("id",postObject.postId+"_numOfLikes");
+    commentCheck.setAttribute("id",postObject.postId+"_showCom");
+    likeBtn.setAttribute("id",postObject.postId+"_like");
+    addCommentForm.setAttribute("id",postObject.postId+"_form");
+    commentField.setAttribute("id",postObject.postId+"_comField");
 
     addCommentForm.hidden = true;
 
     commentCheck.addEventListener('change',function(){
-        showComments(postObject.posts.postId);
+        showComments(postObject.postId);
     })
 
     likeBtn.addEventListener('click',function(){
-        sendLike(postObject.posts.postId);
+        sendLike(postObject.postId);
     });
 
     commentBtn.addEventListener('click',function(){
-        sendComment(postObject.posts.postId);
+        sendComment(postObject.postId);
     })
 
     let commentContainer = document.createElement("ul");
     commentContainer.setAttribute("class","list-group list-group-flush");
-    commentContainer.setAttribute("id", postObject.posts.postId+"_comments");
+    commentContainer.setAttribute("id", postObject.postId+"_comments");
     postCard.appendChild(commentContainer);
 
     postContainer.prepend(post);
