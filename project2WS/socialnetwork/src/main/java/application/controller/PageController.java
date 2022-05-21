@@ -37,6 +37,7 @@ public class PageController {
 
 	@GetMapping("/profilepage")
 	public String greeting() {
+		System.out.println("wrong get");
 		return "/html/profilepage.html";
 	}
 	

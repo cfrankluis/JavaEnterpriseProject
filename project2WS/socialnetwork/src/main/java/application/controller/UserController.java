@@ -1,7 +1,6 @@
 
 package application.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +9,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
-import application.model.Post;
 import application.model.User;
 import application.service.UserService;
 import application.toolbox.Verification;
@@ -37,14 +34,10 @@ public class UserController {
 
 	@PostMapping(value = "/login")
 	public String loginAttempt(HttpSession session, @RequestBody User user) {
-
 		User tryLogin = userService.getLogin(user.getUsername(), user.getPassword());
-
 		if (tryLogin.equals(null)) {
-			System.out.println("failed");
 			return "redirect: /html/welcome.html";
 		}
-
 		session.setAttribute("loggedInAccount", tryLogin);
 		System.out.println("Account signed in: " + tryLogin);
 		return "redirect:/html/globalfeedpage.html";
@@ -63,37 +56,26 @@ public class UserController {
 	@PostMapping(value = "/register1")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public @ResponseBody String register(HttpSession session, @RequestBody User user) {
-		System.out.println("in");
-		
 		String message;
 		if (user.getFirstName().isBlank() || user.getLastName().isBlank() || user.getEmail().isBlank()
 				|| user.getUsername().isBlank() || user.getPassword().isBlank()) {
 			message = "Field values cannot be blank.";
 			return message;
 		}
-		System.out.println("not blank");
 		if (!Verification.checkUserInput(user.getEmail())) {
 			message = "Please enter a valid email address.";
 			return message;
 		}
-		System.out.println("val");
 		User newUser = userService.createUser(user);
 		if (newUser != null) {
 			session.setAttribute("loggedInAccount", newUser);
 			message = "Account Creation Sucessfull!!!";
-			
-			System.out.println("success");
-
 		} else {
 			message = "Account Creation failed...";
 		}
-		
-		System.out.println("fail");
 		return message;
 	}
 	
-	
-
 	/**
 	 * This method receives a User object and updates the userId with the Id of the
 	 * currently logged in User via session attributes. The User object is then sent
@@ -107,7 +89,6 @@ public class UserController {
 	@PostMapping(value = "/updateUserDetails")
 	public String updateUser(HttpSession session, @RequestBody User user) {
 		User temp = (User) session.getAttribute("loggedInAccount");
-		System.out.println(temp + "   1");
 		String password = user.getPassword();
 		String bio = user.getBio();
 		if (password != null) {
@@ -116,13 +97,9 @@ public class UserController {
 		if (bio != null) {
 			temp.setBio(bio);
 		}
-
 		User updatedUser = userService.updateUser(temp);
-		System.out.println(updatedUser + "   2");
-
 		session.setAttribute("loggedInAccount", updatedUser);
 		System.out.println(session.getAttribute("loggedInAccount"));
-
 		return "redirect:/html/globalfeedpage.html";
 	}
 
@@ -147,11 +124,9 @@ public class UserController {
 		System.out.println("File name: " + fileName);
 		String message = "";
 		try {
-			System.out.println("in try block");
 			message = S3Controller.uploadPic("ProfilePic", fileName, multipart.getInputStream(), session);
 		} catch (Exception ex) {
 			message = "Error uploading file: " + ex.getMessage();
-			System.out.println("in catch block");
 		}
 		System.out.println(message);
 		return message;
@@ -162,21 +137,12 @@ public class UserController {
 	 * 
 	 * @param session
 	 * @return
-	 * @Auther Gibbons
+	 * @Author Gibbons
 	 */
 	@GetMapping("/currentUser")
 	public @ResponseBody User curentUser(HttpSession session) {
-		//// public User(String firstName, String lastName, String username, String
-		//// email, String password
-		// User userTest = new User("bob", "test", "asdf", "asdf@test.com", "password",
-		//// null);//Dumby user
-		// userTest.setUserId(1);
-		// userTest.setBio("go away");
-
-
 		User user = (User) session.getAttribute("loggedInAccount");
-		System.out.println(user);
-		System.out.println(" back to js");
+		System.out.println("Session user set");
 		return user;
 	}
 
@@ -189,7 +155,6 @@ public class UserController {
 	 * @return
 	 */
 	@PostMapping("/friends")
-
 	public @ResponseBody List<User> getAllFriends(@RequestBody User user) {
 		List<User> newUser = userService.getAllUsers(user);
 		return newUser;
