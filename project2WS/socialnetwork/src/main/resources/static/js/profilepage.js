@@ -3,7 +3,7 @@ window.onload = function () {
     const urlParams = new URLSearchParams(queryString);
     const user = urlParams.get('user')
     console.log(user);
-    //friendOrMe();
+    friendOrMe();
 }
 
 function friendOrMe(){
