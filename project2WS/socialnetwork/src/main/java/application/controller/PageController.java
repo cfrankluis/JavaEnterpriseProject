@@ -55,7 +55,9 @@ public class PageController {
 	}
 	@GetMapping("/profilepage/?={user}")
 	public String friendPage(@PathVariable(value="user") String username) {
-		System.out.println(username);
+		System.out.println("before username");
+		System.out.println("username = " + username);
+		System.out.println("after username");
 		return "/html/profilepage.html/";
 	}
 	
