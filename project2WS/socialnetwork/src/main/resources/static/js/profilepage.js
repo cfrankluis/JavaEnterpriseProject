@@ -29,7 +29,7 @@ function getUser() {
             printUsername(user);
             printProfilePic(user);
             printBio(user);
-            getPosts(user);
+            generatePost(user);
         }
     }
     xhttp.send();
