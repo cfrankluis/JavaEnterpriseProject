@@ -7,8 +7,12 @@ window.onload = function () {
 }
 
 function friendOrMe(){
-    getUser();
-    getFriend();
+    if (user == null){
+        getUser();
+    }
+    else{
+        getFriend();
+    }
 }
 
 function getUser() {
@@ -36,7 +40,7 @@ function getFriend() {
     
 
     friend = {
-        "username": "fill-in"
+        "username": user
     }
 
     let xhttp = new XMLHttpRequest();
