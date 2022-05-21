@@ -1,17 +1,17 @@
 window.onload = function () {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const user = urlParams.get('user')
-    console.log(user);
     friendOrMe();
 }
 
 function friendOrMe(){
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const user = urlParams.get('user')
+    console.log(user);
     if (user == null){
         getUser();
     }
     else{
-        getFriend();
+        getFriend(user);
     }
 }
 
@@ -35,7 +35,7 @@ function getUser() {
     xhttp.send();
 }
 
-function getFriend() {
+function getFriend(user) {
 
     
 
