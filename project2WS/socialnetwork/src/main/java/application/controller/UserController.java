@@ -140,9 +140,8 @@ public class UserController {
 	 * @Author Gibbons
 	 */
 	@GetMapping("/currentUser")
-	public @ResponseBody User curentUser(HttpSession session) {
+	public @ResponseBody User currentUser(HttpSession session) {
 		User user = (User) session.getAttribute("loggedInAccount");
-		System.out.println("Session user set");
 		return user;
 	}
 

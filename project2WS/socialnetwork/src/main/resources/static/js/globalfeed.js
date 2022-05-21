@@ -3,6 +3,7 @@
 window.onload = function(){
     console.log("CONNECTED");
     getAllPost();
+    
 }
 function reload(){
     location.reload();

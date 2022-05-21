@@ -27,7 +27,7 @@ function getUser() {
     }
 
     //  STEP 3: prepare connection/request details
-    xhttp.open('GET', `http://54.226.130.109:9022/currentUser`);
+    xhttp.open('GET', "http://54.226.130.109:9022/currentUser");
     // STEP 4: send the request, providing any body object the request needs
     xhttp.send();
 }//getgetUser
