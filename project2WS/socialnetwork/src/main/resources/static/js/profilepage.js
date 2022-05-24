@@ -64,7 +64,7 @@ function getFriend(user) {
         }
     }
     //  STEP 3: prepare connection/request details
-    xhttp.open('GET', `http://` + ip + `:9022/currentFriend`);
+    xhttp.open('POST', `http://` + ip + `:9022/currentFriend`);
     // STEP 4: send the request, providing any body object the request needs
     xhttp.send(JSON.stringify(friend));
 
