@@ -43,7 +43,7 @@ function getUser() {
 function getFriend(user) {
 
     friend = {
-        "username": user
+        "username": user.value
     }
 
     let xhttp = new XMLHttpRequest();
