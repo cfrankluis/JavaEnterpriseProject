@@ -259,7 +259,8 @@ function generatePost(postObject){
     commentContainer.setAttribute("class","list-group list-group-flush");
     commentContainer.setAttribute("id", postObject.postId+"_comments");
     postCard.appendChild(commentContainer);
-
+    let space = document.createElement("br");
+    postContainer.prepend(space);
     postContainer.prepend(post);
 }
 
