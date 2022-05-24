@@ -20,7 +20,7 @@ function friendOrMe(){
 
 function getUser() {
     let xhttp = new XMLHttpRequest();
-    xhttp.open('POST', "http://54.226.130.109:9022/currentUser");
+    xhttp.open('POST', `http://`+ip+`:9022/currentUser`);
     xhttp.setRequestHeader("Accept", "application/json");
     xhttp.onreadystatechange = function () {
         console.log(xhttp.readyState);
