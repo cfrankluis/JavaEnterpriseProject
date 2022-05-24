@@ -45,7 +45,7 @@ function getFriend(user) {
         "username": user
     }
     let xhttp = new XMLHttpRequest();
-    xhttp.open('POST', "http://54.226.130.109:9022/currentFriend");
+    xhttp.open('POST', `http://`+ip+`:9022/currentFriend`);
     xhttp.setRequestHeader("Accept", "application/json");
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.onreadystatechange = function () {
@@ -145,7 +145,7 @@ function sendComment(id){
            }
        }
 
-       xhttp.open('POST', "http://54.226.130.109:9022/comment");
+       xhttp.open('POST', `http://`+ip+`:9022/comment`);
        let commentToSend = {
            "content" : commentInput,
            "post" : {"postId":id}
@@ -165,7 +165,7 @@ function getComments(id){
             }
         }
     }
-    xhttp.open('GET', `http://54.226.130.109:9022/commentbypost?id=${id}`);
+    xhttp.open('GET', `http://`+ip+`:9022/commentbypost?id=${id}`);
 
     xhttp.send();
 }
@@ -224,7 +224,7 @@ function generatePost(postObject){
     let commentField = addCommentForm.querySelector("input");
 
     postHeader.innerText = postObject.author.username;
-    postHeader.href = "http://54.226.130.109:9022/profilepage/?user=" + postObject.author.username;
+    postHeader.href = `http://`+ip+`:9022/profilepage/?user=` + postObject.author.username;
     if(postObject.img != null){
         postImg.src = postObject.img;
         postImg.sizes = "(max-width: 500px)";
@@ -271,7 +271,7 @@ function sendLike(id){
             likePost(likedPost,id);
         }
     }
-    xhttp.open('POST', 'http://54.226.130.109:9022/postlike');
+    xhttp.open('POST', `http://`+ip+`:9022/postlike`);
     xhttp.setRequestHeader("content-type", "application/json");
     let postToLike = {
         "postId":id
