@@ -5,22 +5,22 @@ window.onload = function () {
     friendOrMe();
 }
 
-function friendOrMe(){
+function friendOrMe() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const user = urlParams.get('user')
     console.log(user);
-    if (user == null){
+    if (user == null) {
         getUser();
     }
-    else{
+    else {
         getFriend(user);
     }
 }
 
 function getUser() {
     let xhttp = new XMLHttpRequest();
-    xhttp.open('POST', `http://`+ip+`:9022/currentUser`);
+    xhttp.open('POST', `http://` + ip + `:9022/currentUser`);
     xhttp.setRequestHeader("Accept", "application/json");
     xhttp.onreadystatechange = function () {
         console.log(xhttp.readyState);
@@ -32,7 +32,7 @@ function getUser() {
             printUsername(user);
             printProfilePic(user);
             printBio(user);
-            for (const posts of user.posts){
+            for (const posts of user.posts) {
                 generatePost(posts);
             }
         }
@@ -41,11 +41,13 @@ function getUser() {
 }
 
 function getFriend(user) {
+
     friend = {
         "username": user
     }
+
     let xhttp = new XMLHttpRequest();
-    xhttp.open('POST', `http://`+ip+`:9022/currentFriend`);
+    xhttp.open('POST', `http://` + ip + `:9022/currentFriend`);
     xhttp.setRequestHeader("Accept", "application/json");
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.onreadystatechange = function () {
@@ -56,25 +58,26 @@ function getFriend(user) {
             printUsername(account);
             printProfilePic(account);
             printBio(account);
-            for (const posts of account.posts){
+            for (const posts of account.posts) {
                 generatePost(posts);
             }
+        }
     }
-
     //  STEP 3: prepare connection/request details
-    xhttp.open('GET', `http://`+ip+`:9022/currentUser`);
+    xhttp.open('GET', `http://` + ip + `:9022/currentUser`);
     // STEP 4: send the request, providing any body object the request needs
-     xhttp.send(JSON.stringify(friend));
+    xhttp.send(JSON.stringify(friend));
+
 }//getgetUser
 
 
-   
+
 
 
 function printUsername(user) {
 
-    console.log("in username " + user)
-    let username = document.getElementById("name")
+    console.log("in username " + user);
+    let username = document.getElementById("name");
     username.innerHTML = "";
     username.innerHTML = user.username;
 }//printUsername
@@ -117,12 +120,12 @@ function getPosts(user) {
         console.log("i = " + i);
         postsAuthor = document.createElement("h5");
         // .posts[i].author
-        author =  document.createTextNode(user.username);
+        author = document.createTextNode(user.username);
         postsAuthor.appendChild(author);
         post.appendChild(postsAuthor);
 
         postsContent = document.createElement("p");
-        content =  document.createTextNode(user.posts[i].content);
+        content = document.createTextNode(user.posts[i].content);
         postsContent.appendChild(content);
         post.appendChild(postsContent);
 
@@ -134,47 +137,47 @@ function getPosts(user) {
     }//for
 }//getPosts
 
-function sendComment(id){
-    let commentInput = document.getElementById(id+"_comField").value;
-    if(commentInput){
+function sendComment(id) {
+    let commentInput = document.getElementById(id + "_comField").value;
+    if (commentInput) {
         console.log(commentInput);
         let xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function(){
-            if(xhttp.readyState==4 && xhttp.status ==200){
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
                 let responseJson = JSON.parse(xhttp.responseText);
-                generateComment(responseJson, id);     
-           }
-       }
+                generateComment(responseJson, id);
+            }
+        }
 
-       xhttp.open('POST', `http://`+ip+`:9022/comment`);
-       let commentToSend = {
-           "content" : commentInput,
-           "post" : {"postId":id}
-       }
-       xhttp.setRequestHeader("content-type", "application/json");
-       xhttp.send(JSON.stringify(commentToSend));
+        xhttp.open('POST', `http://` + ip + `:9022/comment`);
+        let commentToSend = {
+            "content": commentInput,
+            "post": { "postId": id }
+        }
+        xhttp.setRequestHeader("content-type", "application/json");
+        xhttp.send(JSON.stringify(commentToSend));
     }
 }
 
-function getComments(id){
+function getComments(id) {
     let xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function(){
-        if(xhttp.readyState===4 && xhttp.status ===200){
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
             let responseJson = JSON.parse(xhttp.responseText);
             for (const comment of responseJson) {
-                generateComment(comment,id);
+                generateComment(comment, id);
             }
         }
     }
-    xhttp.open('GET', `http://`+ip+`:9022/commentbypost?id=${id}`);
+    xhttp.open('GET', `http://` + ip + `:9022/commentbypost?id=${id}`);
 
     xhttp.send();
 }
 
-function showComments(id){
-    let commentCheck = document.getElementById(id+"_showCom");
-    let commentForm = document.getElementById(id+"_form");
-    if(commentCheck.checked){
+function showComments(id) {
+    let commentCheck = document.getElementById(id + "_showCom");
+    let commentForm = document.getElementById(id + "_form");
+    if (commentCheck.checked) {
         commentForm.hidden = false;
         getComments(id);
     } else {
@@ -184,22 +187,22 @@ function showComments(id){
     }
 }
 
-function hideComments(id){
-    let parent = document.getElementById(id+"_comments");
+function hideComments(id) {
+    let parent = document.getElementById(id + "_comments");
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     }
 }
 
-function generateComment(comment,id){
-    let commentContainer = document.getElementById(id+"_comments");
+function generateComment(comment, id) {
+    let commentContainer = document.getElementById(id + "_comments");
     let commentTemplate = document.getElementById("commentTemplate");
     let commentContent = commentTemplate.content.cloneNode(true);
     let commentWrapper = commentContent.querySelector("li");
     let commentUsername = commentContent.querySelector("a");
 
     commentUsername.innerText = comment.author.username;
-    commentUsername.setAttribute("href","#");
+    commentUsername.setAttribute("href", "#");
 
     let content = document.createTextNode(comment.content);
     commentWrapper.appendChild(content);
@@ -207,11 +210,11 @@ function generateComment(comment,id){
     commentContainer.appendChild(commentContent);
 }
 
-function generatePost(postObject){
+function generatePost(postObject) {
     console.log(postObject);
     let postContainer = document.getElementById("post-container");
     let post = document.getElementById("postTemplate").content.cloneNode(true);
-    
+
     let postHeader = post.querySelector(".card-header a");
     let postImg = post.querySelector(".card-img-top");
     let postBody = post.querySelector(".card-body");
@@ -225,8 +228,8 @@ function generatePost(postObject){
     let commentField = addCommentForm.querySelector("input");
 
     postHeader.innerText = postObject.author.username;
-    postHeader.href = `http://`+ip+`:9022/profilepage/?user=` + postObject.author.username;
-    if(postObject.img != null){
+    postHeader.href = `http://` + ip + `:9022/profilepage/?user=` + postObject.author.username;
+    if (postObject.img != null) {
         postImg.src = postObject.img;
         postImg.sizes = "(max-width: 500px)";
         postImg.hidden = false;
@@ -236,57 +239,56 @@ function generatePost(postObject){
     postFooter.innerText = (new Date(postObject.dateCreated)).toDateString();
     numOfLikes.innerText = postObject.numOfLikes;
 
-    numOfLikes.setAttribute("id",postObject.postId+"_numOfLikes");
-    commentCheck.setAttribute("id",postObject.postId+"_showCom");
-    likeBtn.setAttribute("id",postObject.postId+"_like");
-    addCommentForm.setAttribute("id",postObject.postId+"_form");
-    commentField.setAttribute("id",postObject.postId+"_comField");
+    numOfLikes.setAttribute("id", postObject.postId + "_numOfLikes");
+    commentCheck.setAttribute("id", postObject.postId + "_showCom");
+    likeBtn.setAttribute("id", postObject.postId + "_like");
+    addCommentForm.setAttribute("id", postObject.postId + "_form");
+    commentField.setAttribute("id", postObject.postId + "_comField");
 
     addCommentForm.hidden = true;
 
-    commentCheck.addEventListener('change',function(){
+    commentCheck.addEventListener('change', function () {
         showComments(postObject.postId);
     })
 
-    likeBtn.addEventListener('click',function(){
+    likeBtn.addEventListener('click', function () {
         sendLike(postObject.postId);
     });
 
-    commentBtn.addEventListener('click',function(){
+    commentBtn.addEventListener('click', function () {
         sendComment(postObject.postId);
     })
 
     let commentContainer = document.createElement("ul");
-    commentContainer.setAttribute("class","list-group list-group-flush");
-    commentContainer.setAttribute("id", postObject.postId+"_comments");
+    commentContainer.setAttribute("class", "list-group list-group-flush");
+    commentContainer.setAttribute("id", postObject.postId + "_comments");
     postCard.appendChild(commentContainer);
     let space = document.createElement("br");
     postContainer.prepend(space);
     postContainer.prepend(post);
 }
 
-function sendLike(id){
+function sendLike(id) {
     let xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function(){
-        if(xhttp.readyState===4 && xhttp.status ===200){
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
             let likedPost = JSON.parse(xhttp.responseText);
-            likePost(likedPost,id);
+            likePost(likedPost, id);
         }
     }
-    xhttp.open('POST', `http://`+ip+`:9022/postlike`);
+    xhttp.open('POST', `http://` + ip + `:9022/postlike`);
     xhttp.setRequestHeader("content-type", "application/json");
     let postToLike = {
-        "postId":id
+        "postId": id
     };
     xhttp.send(JSON.stringify(postToLike));
 }
 
-function likePost(post,id){
-    let likeBtn = document.getElementById(id+"_like");
-    let numOfLikes = document.getElementById(id+"_numOfLikes");
+function likePost(post, id) {
+    let likeBtn = document.getElementById(id + "_like");
+    let numOfLikes = document.getElementById(id + "_numOfLikes");
     likeBtn.innerText = "Unlike";
     //likeBtn.disabled = true;
     numOfLikes.innerText = post.numOfLikes;
 }
 
-}   
