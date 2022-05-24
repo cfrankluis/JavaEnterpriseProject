@@ -1,3 +1,8 @@
+const url = window.location.href;
+const ip = url.split('/')[2].split(':')[0];
+
+
+
 window.onload = function () {
     document.getElementById("reset").addEventListener("click", changePassword);
 }
@@ -16,7 +21,7 @@ function changePassword() {
         console.log(newPass);
         //step 1
         let xhttp = new XMLHttpRequest();
-        xhttp.open('Post', `http://54.226.130.109/:9022/updateUserDetails`);
+        xhttp.open('Post', `http://`+ip+`/:9022/updateUserDetails`);
         xhttp.setRequestHeader("Accept", "application/json");
         xhttp.setRequestHeader("Content-Type", "application/json");
 

@@ -1,3 +1,6 @@
+const url = window.location.href;
+const ip = url.split('/')[2].split(':')[0];
+
 window.onload = function(){
     document.getElementById("resetpw").addEventListener("click", forgotPassword);
 }
@@ -27,7 +30,7 @@ function forgotPassword(){
         if(xhttp.readyState==4 && xhttp.status ==200){
             alert(xhttp.responseText);
             if(xhttp.responseText === "A password reset link has been emailed to you"){
-                location.assign("http://54.226.130.109:9022/html/welcome.html");
+                location.assign("http://`+ip+`:9022/html/welcome.html");
             }
             if(xhttp.responseText === "Email Address could not be found; Try again"){
                 location.reload();
@@ -39,7 +42,7 @@ function forgotPassword(){
         
   
    // STEP 3: prepare connection/request details
-    xhttp.open('post', `http://54.226.130.109:9022/forgotPassword`);
+    xhttp.open('post', `http://`+ip+`:9022/forgotPassword`);
     
     
     

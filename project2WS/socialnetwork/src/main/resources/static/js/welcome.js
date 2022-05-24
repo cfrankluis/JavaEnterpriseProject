@@ -1,6 +1,10 @@
+const url = window.location.href;
+const ip = url.split('/')[2].split(':')[0];
+
 window.onload = function () {
     document.getElementById("login").addEventListener("click", login);
 }
+
 
 
 
@@ -15,7 +19,7 @@ function login() {
     }
     //step 1
     let xhttp = new XMLHttpRequest();
-    xhttp.open('Post', `http://54.226.130.109:9022/login`);
+    xhttp.open('Post', `http://`+ip+`:9022/login`);
     xhttp.setRequestHeader("Accept", "application/json");
     xhttp.setRequestHeader("Content-Type", "application/json");
 

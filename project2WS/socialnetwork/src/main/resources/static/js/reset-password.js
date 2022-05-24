@@ -1,3 +1,6 @@
+const url = window.location.href;
+const ip = url.split('/')[2].split(':')[0];
+
 window.onload = function(){
     console.log("asdf");
     document.getElementById("myPassword").addEventListener("click", newPassword);
@@ -33,7 +36,7 @@ function newPassword(){
                 location.reload();
             }
             if(xhttp.responseText = "Password Sucessfully Reset!"){
-                location.assign("http://54.226.130.109:9022/html/welcome.html");
+                location.assign("http://`+ip+`:9022/html/welcome.html");
             }
         }
     }
@@ -41,7 +44,7 @@ function newPassword(){
          
   
    // STEP 3: prepare connection/request details
-    xhttp.open('post', `http://54.226.130.109:9022/reset-password/`);
+    xhttp.open('post', `http://`+ip+`:9022/reset-password/`);
     
     
     

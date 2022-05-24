@@ -6,28 +6,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import application.SocialnetworkApplication;
 import application.model.Confirmation;
 import application.model.User;
 import application.service.ConfirmationService;
 import application.service.EmailService;
-import application.service.UserService;
-import lombok.Data;
-
-import javax.servlet.http.HttpSession;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import application.model.User;
 import application.service.UserService;
 import lombok.Data;
 
@@ -96,7 +85,7 @@ public class LogController {
 		    if (user == null) {
 		    	session.setAttribute("message", "Invalid Token");
 		    }
-		    response.sendRedirect("http://54.226.130.109:9022/html/confirm-account.html");// send them to the html page. that will reference the "processResetPassword" method
+		    response.sendRedirect("http://"+SocialnetworkApplication.ip+":9022/html/confirm-account.html");// send them to the html page. that will reference the "processResetPassword" method
 		}
 		
 		
