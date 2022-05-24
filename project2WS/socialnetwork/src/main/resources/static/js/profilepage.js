@@ -52,12 +52,13 @@ function getFriend(user) {
         console.log(xhttp.readyState);
         if (xhttp.readyState == 4 && xhttp.status == 200) {
             console.log("readyState is 4!!! AND status is 200!!! getAllReimbur");
-            let user = JSON.parse(xhttp.responseText);
-            printUsername(user);
-            printProfilePic(user);
-            printBio(user);
-            getPosts(user);
-        }
+            let account = JSON.parse(xhttp.responseText);
+            printUsername(account);
+            printProfilePic(account);
+            printBio(account);
+            for (const posts of account.posts){
+                generatePost(posts);
+            }
     }
 
     //  STEP 3: prepare connection/request details
