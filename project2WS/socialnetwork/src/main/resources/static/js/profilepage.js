@@ -289,5 +289,4 @@ function likePost(post,id){
     numOfLikes.innerText = post.numOfLikes;
 }
 
-
-    
+}   
