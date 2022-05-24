@@ -36,7 +36,7 @@ function newPassword(){
                 location.reload();
             }
             if(xhttp.responseText = "Password Sucessfully Reset!"){
-                location.assign("http://`+ip+`:9022/html/welcome.html");
+                location.assign("http://"+ip+":9022/html/welcome.html");
             }
         }
     }

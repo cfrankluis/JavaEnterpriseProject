@@ -5,8 +5,7 @@ const ip = url.split('/')[2].split(':')[0];
 
 window.onload = function(){
     getAllPost();
-    document.getElementById("postSubmit").addEventListener('click',sendPost);
-    //generateTestPost(1);
+    
 }
 function reload(){
     location.reload();
@@ -24,7 +23,7 @@ function getAllPost(){
             }          
         }
     }
-    xhttp.open('GET', "http://`+ip+`:9022/global");
+    xhttp.open('GET', `http://`+ip+`:9022/global`);
     xhttp.send();
 }
 
@@ -38,7 +37,7 @@ function sendPost(){
                  generatePost(responseJson);        
             }
         }
-        xhttp.open('POST', "http://`+ip+`:9022/post");
+        xhttp.open('POST', `http://`+ip+`:9022/post`);
         xhttp.send();
     }
 }
@@ -55,7 +54,7 @@ function sendComment(id){
            }
        }
 
-       xhttp.open('POST', "http://`+ip+`:9022/comment");
+       xhttp.open('POST', `http://`+ip+`:9022/comment`);
        let commentToSend = {
            "content" : commentInput,
            "post" : {"postId":id}
@@ -122,6 +121,7 @@ function generatePost(postObject){
     let post = document.getElementById("postTemplate").content.cloneNode(true);
     
     let postHeader = post.querySelector(".card-header a");
+    let postImg = post.querySelector(".card-img-top");
     let postBody = post.querySelector(".card-body");
     let postCard = post.querySelector(".card");
     let postFooter = post.querySelector("p");
@@ -133,6 +133,12 @@ function generatePost(postObject){
     let commentField = addCommentForm.querySelector("input");
 
     postHeader.innerText = postObject.author.username;
+    postHeader.href = `http://`+ip+`:9022/profilepage/?user=` + postObject.author.username;
+    if(postObject.img != null){
+        postImg.src = postObject.img;
+        postImg.sizes = "(max-width: 500px)";
+        postImg.hidden = false;
+    }
     postBody.innerText = postObject.content;
 
     postFooter.innerText = (new Date(postObject.dateCreated)).toDateString();
@@ -145,6 +151,7 @@ function generatePost(postObject){
     commentField.setAttribute("id",postObject.postId+"_comField");
 
     addCommentForm.hidden = true;
+
     commentCheck.addEventListener('change',function(){
         showComments(postObject.postId);
     })
@@ -173,7 +180,7 @@ function sendLike(id){
             likePost(likedPost,id);
         }
     }
-    xhttp.open('POST', 'http://`+ip+`:9022/postlike');
+    xhttp.open('POST',  `http://`+ip+`:9022/postlike`);
     xhttp.setRequestHeader("content-type", "application/json");
     let postToLike = {
         "postId":id

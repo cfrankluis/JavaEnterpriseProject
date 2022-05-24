@@ -42,7 +42,7 @@ function registerUser() {
             }
             if (message === "Account Creation Sucessfull!!!") {
                 verifyEmail();
-                location.assign("http://`+ip+`:9022/html/globalfeedpage.html");
+                location.assign("http://"+ip+":9022/html/globalfeedpage.html");
             }
         }
     }

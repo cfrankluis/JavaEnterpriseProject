@@ -27,26 +27,23 @@ List of features ready and TODOs for future development
 * Refactor Code base
 
 ## Getting Started
-
-1. Create an AWS Account and create an EC2 instance https://aws.amazon.com/premiumsupport/knowledge-center/launch-instance-custom-ami/
-2. In AWS, create an RDS database
-- datachanPassword : ‘your password here’
-- datachanURL : ‘your data base End point here’
-- datechanUsername : ‘your base username’
-
-6. Set up S3 Bucket
-7. Clone this git repository `git clone https://github.com/cfrankluis/JavaEnterpriseProject.git`
-(include all environment setup steps)
-
-> Be sure to include BOTH Windows and Unix command  
-> Be sure to mention if the commands only work on a specific platform (eg. AWS, GCP)
-
-- All the `code` required to get started
-- Images of what it should look like
+1. Setup Environment Variables
+```
+AWS_ACCESS_KEY_ID = AKIA37QIYLCKDCRDTUH3
+AWS_REGION = us-east-2
+AWS_SECRET_ACCESS_KEY = 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
+datachanURL = datachan.czwpdxwxjdsh.us-east-1.rds.amazonaws.com:5432
+datachanUsername = datachan
+datachanPassword = p4ssw0rd
+```
+2. Clone this git repository `git clone https://github.com/cfrankluis/JavaEnterpriseProject.git`
+3. Open project in STS 3
+4. Run as Spring boot project
+5. Open browser and go to `localhost:9022`
 
 ## Usage
-
-> Here, you instruct other people on how to use your project after they’ve installed it. This would also be a good place to include screenshots of your project in action.
+1. Register an account and press OK on the alert
+2. Login with your username and password
 
 ## Contributors
 

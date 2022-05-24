@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,6 +37,7 @@ public class PageController {
 
 	@GetMapping("/profilepage")
 	public String greeting() {
+		System.out.println("wrong get");
 		return "/html/profilepage.html";
 	}
 	
@@ -51,6 +53,13 @@ public class PageController {
 	@GetMapping("/post")
 	public String posted() {
 		return "/html/globalfeedpage.html";
+	}
+	@GetMapping("/profilepage/?={user}")
+	public String friendPage(@PathVariable(value="user") String username) {
+		System.out.println("before username");
+		System.out.println("username = " + username);
+		System.out.println("after username");
+		return "/html/profilepage.html/";
 	}
 	
 	/**
@@ -85,15 +94,12 @@ public class PageController {
 			message = S3Controller.uploadPic("PostPic", fileName, multipart.getInputStream(), session);
 				if(message.contentEquals("Your file has been uploaded Successfully!")) {
 					postService.createPost(session, description, imgUrl);
-					System.out.println(message);
 				}
 				else {
 					message = "Post could not be uploaded: " + message;
-					System.out.println(message);
 				}
 		} catch (Exception ex) {
 			message = "Error uploading file: " + ex.getMessage();
-			System.out.println(message);
 		}
 		return "redirect:/html/globalfeedpage.html";
 	}

@@ -19,7 +19,7 @@ function uploadProfilePic() {
             if (xhttp.readyState == 4 && xhttp.status == 202) {
                 let message = xhttp.responseText;
                 alert(message);
-                location.assign("http://`+ip+`:9022/html/profilepage.html");
+                location.assign("http://"+ip+":9022/html/profilepage.html");
             }
         }
         xhttp.send(formData);

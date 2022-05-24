@@ -1,5 +1,6 @@
 package application.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -35,7 +36,6 @@ public class PostService {
 	public void createPost(HttpSession session, String description, String imgUrl) {
 		User user = (User)session.getAttribute("loggedInAccount");
 		int i = user.getUserId();
-		
 		
 		if(imgUrl.contentEquals("https://buckylebucket.s3.us-east-2.amazonaws.com/PostPics/"+ i +"/")) {
 			String blankUrl = null;
@@ -101,5 +101,11 @@ public class PostService {
 			return dao.getById(id);
 		else
 			return null;
+	}
+	
+	public List<Post> getPostByAuthor(User user){
+		List<Post> posts = new ArrayList<Post>();
+		posts = dao.findAllByAuthor(user);
+		return posts;
 	}
 }

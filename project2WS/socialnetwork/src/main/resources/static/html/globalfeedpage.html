@@ -2,44 +2,37 @@
 <html>
 
 <head>
-<meta charset="ISO-8859-1">
-<title>FakeBlock</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
-	crossorigin="anonymous">
-<link href="/css/FakeBlock.css" rel="stylesheet">
+	<meta charset="ISO-8859-1">
+	<title>FakeBlock</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+	<link href="/css/FakeBlock.css" rel="stylesheet">
 </head>
 
 <body>
 	<nav class="navbar navbar-expand-lg navbar-custom">
 		<div class="container-fluid">
-			<a class="navbar-brand" onclick="reload()"><img
-				src="/FakeBlockLogo/newerFB.jpg"></a>
-			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
+			<a class="navbar-brand" onclick="reload()"><img src="/FakeBlockLogo/newerFB.JPG"></a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
 				aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="nav-item"><a class="nav-link"
-						href="/html/profilepage.html" style="color: white">Profile</a></li>
-					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" href="" style="color: white">The Block</a></li>
-					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle" href="" id="navbarDropdown"
-						role="button" data-bs-toggle="dropdown" aria-expanded="false"
-						style="color: white"> Account Settings </a>
+					<li class="nav-item"><a class="nav-link" href="/html/profilepage.html"
+							style="color: white">Profile</a></li>
+					<li class="nav-item"><a class="nav-link active" aria-current="page" href="" style="color: white">The
+							Block</a></li>
+					<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="" id="navbarDropdown"
+							role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white"> Account
+							Settings </a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<li><a class="dropdown-item" href="/html/updatebio.html">Edit
 									Bio</a></li>
 							<li><a class="dropdown-item" href="/html/profilepic.html">Upload
 									Profile Pic</a></li>
-							<li><a class="dropdown-item"
-								href="/html/changepassword.html">Change Password</a></li>
+							<li><a class="dropdown-item" href="/html/changepassword.html">Change Password</a></li>
 							<li>
 								<hr class="dropdown-divider">
 							</li>
@@ -50,7 +43,8 @@
 										Out</a>
 								</form>
 							</li>
-						</ul></li>
+						</ul>
+					</li>
 				</ul>
 				<a class="btn btn-secondary" href="/html/searchresults.html">Search</a>
 			</div>
@@ -64,10 +58,12 @@
 					<h4>Create Post</h4>
 				</div>
 				<div class="card-body p-0">
-					<textarea rows="5" class="form-control" type="text"
-						name="description" placeholder="Post content here" required></textarea>
+					<textarea rows="5" class="form-control" type="text" name="description"
+						placeholder="Post content here" required></textarea>
 				</div>
-				<input class="form-control" type="file" id="avatar" name="avatar" accept="image/png, image/jpeg">
+				<div>
+					<input class="form-control" type="file" id="file" name="file" accept="image/png, image/jpeg">
+				</div>
 				<div class="card-footer text-end">
 					<button class="btn btn-primary" type="submit">Post</button>
 				</div>
@@ -79,10 +75,10 @@
 	<template id="postTemplate">
 		<div class="card mb-3">
 			<div class="card-header">
-				<a href="#">PUT USERNAME HERE(link to profile)</a>
+				<a>PUT USERNAME HERE(link to profile)</a>
 				<span>0</span> likes
 			</div>
-			<div class="card-img-top" hidden></div>
+			<img id="Image" class="card-img-top" hidden>
 			<div class="card-body">
 				PUT POST CONTENT HERE
 			</div>
@@ -101,7 +97,7 @@
 				<div class="input-group">
 					<button class="btn btn-outline-secondary" type="button">Add Comment</button>
 					<input type="text" class="form-control">
-				  </div>
+				</div>
 			</div>
 		</div>
 	</template>
@@ -113,12 +109,11 @@
 	<template id="loadspinner">
 		<div class="spinner-border" role="status">
 			<span class="visually-hidden">Loading...</span>
-		  </div>
+		</div>
 	</template>
 
 	<script src="/js/globalfeed.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

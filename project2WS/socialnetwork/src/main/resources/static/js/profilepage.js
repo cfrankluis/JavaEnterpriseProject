@@ -2,26 +2,57 @@ const url = window.location.href;
 const ip = url.split('/')[2].split(':')[0];
 
 window.onload = function () {
-    console.log("onload");
-    getUser();
+    friendOrMe();
 }
 
-
+function friendOrMe(){
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const user = urlParams.get('user')
+    console.log(user);
+    if (user == null){
+        getUser();
+    }
+    else{
+        getFriend(user);
+    }
+}
 
 function getUser() {
-
-    // STEP 1: create the XMLHttpRequest Object
     let xhttp = new XMLHttpRequest();
-
-    // STEP 2: create the callback function for readyState changes
+    xhttp.open('POST', "http://54.226.130.109:9022/currentUser");
+    xhttp.setRequestHeader("Accept", "application/json");
     xhttp.onreadystatechange = function () {
         console.log(xhttp.readyState);
-
         if (xhttp.readyState == 4 && xhttp.status == 200) {
             console.log("readyState is 4!!! AND status is 200!!! getAllReimbur");
 
             let user = JSON.parse(xhttp.responseText);
 
+            printUsername(user);
+            printProfilePic(user);
+            printBio(user);
+            for (const posts of user.posts){
+                generatePost(posts);
+            }
+        }
+    }
+    xhttp.send();
+}
+
+function getFriend(user) {
+    friend = {
+        "username": user
+    }
+    let xhttp = new XMLHttpRequest();
+    xhttp.open('POST', "http://54.226.130.109:9022/currentFriend");
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.onreadystatechange = function () {
+        console.log(xhttp.readyState);
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            console.log("readyState is 4!!! AND status is 200!!! getAllReimbur");
+            let user = JSON.parse(xhttp.responseText);
             printUsername(user);
             printProfilePic(user);
             printBio(user);
@@ -32,9 +63,11 @@ function getUser() {
     //  STEP 3: prepare connection/request details
     xhttp.open('GET', `http://`+ip+`:9022/currentUser`);
     // STEP 4: send the request, providing any body object the request needs
-    xhttp.send();
+     xhttp.send(JSON.stringify(friend));
 }//getgetUser
 
+
+   
 
 
 function printUsername(user) {
@@ -100,17 +133,159 @@ function getPosts(user) {
     }//for
 }//getPosts
 
+function sendComment(id){
+    let commentInput = document.getElementById(id+"_comField").value;
+    if(commentInput){
+        console.log(commentInput);
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function(){
+            if(xhttp.readyState==4 && xhttp.status ==200){
+                let responseJson = JSON.parse(xhttp.responseText);
+                generateComment(responseJson, id);     
+           }
+       }
 
+       xhttp.open('POST', "http://54.226.130.109:9022/comment");
+       let commentToSend = {
+           "content" : commentInput,
+           "post" : {"postId":id}
+       }
+       xhttp.setRequestHeader("content-type", "application/json");
+       xhttp.send(JSON.stringify(commentToSend));
+    }
+}
 
-jQuery(document).ready(function(){
+function getComments(id){
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(xhttp.readyState===4 && xhttp.status ===200){
+            let responseJson = JSON.parse(xhttp.responseText);
+            for (const comment of responseJson) {
+                generateComment(comment,id);
+            }
+        }
+    }
+    xhttp.open('GET', `http://54.226.130.109:9022/commentbypost?id=${id}`);
 
-    var totalheight = 0;
-    jQuery(".et-l--header .et_builder_inner_content .et_pb_section").each(function(){
-    totalheight = totalheight + jQuery(this).outerHeight();
-    });
+    xhttp.send();
+}
+
+function showComments(id){
+    let commentCheck = document.getElementById(id+"_showCom");
+    let commentForm = document.getElementById(id+"_form");
+    if(commentCheck.checked){
+        commentForm.hidden = false;
+        getComments(id);
+    } else {
+        commentForm.hidden = true;
+        commentForm.querySelector("input").value = '';
+        hideComments(id);
+    }
+}
+
+function hideComments(id){
+    let parent = document.getElementById(id+"_comments");
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
+
+function generateComment(comment,id){
+    let commentContainer = document.getElementById(id+"_comments");
+    let commentTemplate = document.getElementById("commentTemplate");
+    let commentContent = commentTemplate.content.cloneNode(true);
+    let commentWrapper = commentContent.querySelector("li");
+    let commentUsername = commentContent.querySelector("a");
+
+    commentUsername.innerText = comment.author.username;
+    commentUsername.setAttribute("href","#");
+
+    let content = document.createTextNode(comment.content);
+    commentWrapper.appendChild(content);
+
+    commentContainer.appendChild(commentContent);
+}
+
+function generatePost(postObject){
+    console.log(postObject);
+    let postContainer = document.getElementById("post-container");
+    let post = document.getElementById("postTemplate").content.cloneNode(true);
     
-    totalheight = totalheight + "px";
-    
-    jQuery("#et-main-area").css("padding-top",totalheight);
+    let postHeader = post.querySelector(".card-header a");
+    let postImg = post.querySelector(".card-img-top");
+    let postBody = post.querySelector(".card-body");
+    let postCard = post.querySelector(".card");
+    let postFooter = post.querySelector("p");
+    let commentCheck = post.querySelector(".commentCheck");
+    let likeBtn = post.querySelector(".likebtn");
+    let numOfLikes = post.querySelector("span");
+    let addCommentForm = post.querySelector(".addcomment");
+    let commentBtn = addCommentForm.querySelector("button");
+    let commentField = addCommentForm.querySelector("input");
+
+    postHeader.innerText = postObject.author.username;
+    postHeader.href = "http://54.226.130.109:9022/profilepage/?user=" + postObject.author.username;
+    if(postObject.img != null){
+        postImg.src = postObject.img;
+        postImg.sizes = "(max-width: 500px)";
+        postImg.hidden = false;
+    }
+    postBody.innerText = postObject.content;
+
+    postFooter.innerText = (new Date(postObject.dateCreated)).toDateString();
+    numOfLikes.innerText = postObject.numOfLikes;
+
+    numOfLikes.setAttribute("id",postObject.postId+"_numOfLikes");
+    commentCheck.setAttribute("id",postObject.postId+"_showCom");
+    likeBtn.setAttribute("id",postObject.postId+"_like");
+    addCommentForm.setAttribute("id",postObject.postId+"_form");
+    commentField.setAttribute("id",postObject.postId+"_comField");
+
+    addCommentForm.hidden = true;
+
+    commentCheck.addEventListener('change',function(){
+        showComments(postObject.postId);
+    })
+
+    likeBtn.addEventListener('click',function(){
+        sendLike(postObject.postId);
     });
+
+    commentBtn.addEventListener('click',function(){
+        sendComment(postObject.postId);
+    })
+
+    let commentContainer = document.createElement("ul");
+    commentContainer.setAttribute("class","list-group list-group-flush");
+    commentContainer.setAttribute("id", postObject.postId+"_comments");
+    postCard.appendChild(commentContainer);
+
+    postContainer.prepend(post);
+}
+
+function sendLike(id){
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(xhttp.readyState===4 && xhttp.status ===200){
+            let likedPost = JSON.parse(xhttp.responseText);
+            likePost(likedPost,id);
+        }
+    }
+    xhttp.open('POST', 'http://54.226.130.109:9022/postlike');
+    xhttp.setRequestHeader("content-type", "application/json");
+    let postToLike = {
+        "postId":id
+    };
+    xhttp.send(JSON.stringify(postToLike));
+}
+
+function likePost(post,id){
+    let likeBtn = document.getElementById(id+"_like");
+    let numOfLikes = document.getElementById(id+"_numOfLikes");
+    likeBtn.innerText = "Unlike";
+    //likeBtn.disabled = true;
+    numOfLikes.innerText = post.numOfLikes;
+}
+
+
     

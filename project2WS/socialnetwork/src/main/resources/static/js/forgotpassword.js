@@ -30,7 +30,7 @@ function forgotPassword(){
         if(xhttp.readyState==4 && xhttp.status ==200){
             alert(xhttp.responseText);
             if(xhttp.responseText === "A password reset link has been emailed to you"){
-                location.assign("http://`+ip+`:9022/html/welcome.html");
+                location.assign(`http://`+ip+`:9022/html/welcome.html`);
             }
             if(xhttp.responseText === "Email Address could not be found; Try again"){
                 location.reload();
